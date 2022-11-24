@@ -12,7 +12,6 @@ target/
 .settings
 .springBeans
 .sts4-cache
-*.log
 
 ### IntelliJ IDEA ###
 .idea
@@ -38,3 +37,7 @@ bin/
 
 LOG_PATH_IS_UNDEFINED/
 log/
+
+build
+
+
