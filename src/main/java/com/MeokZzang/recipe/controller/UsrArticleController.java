@@ -47,7 +47,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/list")
-	public String showList(HttpServletRequest req, Model model) {
+	public String viewList(HttpServletRequest req, Model model) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId());
@@ -101,7 +101,7 @@ public class UsrArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(HttpServletRequest req, Model model, int id) {
+	public String viewDetail(HttpServletRequest req, Model model, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
