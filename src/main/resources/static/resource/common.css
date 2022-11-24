@@ -6,7 +6,6 @@
 	src: url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff2') format('woff2'),
 		url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamMedium.woff') format('woff');
 }
-
 @font-face {
 	font-family: 'LotteMartDream';
 	font-style: normal;
@@ -14,7 +13,6 @@
 	src: url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff2') format('woff2'),
 		url('https://cdn.jsdelivr.net/korean-webfonts/1/corps/lottemart/LotteMartDream/LotteMartDreamBold.woff') format('woff');
 }
-
 @font-face {
 	font-family: 'LotteMartDream';
 	font-style: normal;
@@ -72,18 +70,25 @@
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'MonoplexKR-Italic';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_Monoplex-kr@1.0/MonoplexKR-Italic.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Sans+KR:wght@100;300;400;500;700;900&family=Noto+Serif+KR:wght@200;300;400;500;600;700;900&display=swap');
 
 html > body {
-/*     font-family: 'RIDIBatang';
-    font-family: 'Gowun Batang', serif;
-	font-family: 'Lato', sans-serif;
-	font-family: 'Noto Sans KR', sans-serif; */
-	font-family: 'Noto Serif KR', serif;
+/*    	font-family: 'RIDIBatang'; */
+/*		font-family: 'Gowun Batang', serif; */
+/*      	font-family: 'Lato', sans-serif;  */
+/*		font-family: 'Noto Sans KR', sans-serif; */
+/* 		font-family: 'Noto Serif KR', serif; */
+    	font-family: 'MonoplexKR-Italic';
 }
 
 html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>body .ProseMirror, html>body .toastui-editor-md-mode {
-	font-family: 'Noto Serif KR', serif;
 	text-underline-position: under;
 }
 

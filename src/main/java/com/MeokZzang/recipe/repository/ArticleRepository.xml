@@ -13,17 +13,19 @@
 	</insert>
 
 	<select id="getArticles" resultType="Article">
-		SELECT *
-		FROM article
-		ORDER BY
-		id DESC
+		SELECT A.*, M.nickname AS extra__writerName
+		FROM article as A
+		INNER JOIN `member` as M
+		ON A.memberId = M.id
+		ORDER BY A.id DESC
 	</select>
 
 	<select id="getArticle" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE id
-		= #{id}
+		SELECT A.*, M.nickname AS extra__writerName
+		FROM article as A
+		INNER JOIN `member` as M
+		ON A.memberId = M.id
+		WHERE A.id = #{id}
 	</select>
 
 	<delete id="deleteArticle">
