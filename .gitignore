@@ -37,7 +37,9 @@ bin/
 
 LOG_PATH_IS_UNDEFINED/
 log/
-
+.log
+*.log
 build
+.today_common.log
 
 
