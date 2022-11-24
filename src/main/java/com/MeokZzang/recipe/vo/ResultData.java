@@ -1,7 +1,9 @@
 package com.MeokZzang.recipe.vo;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class ResultData<DT> {
 	@Getter
 	private String resultCode;
@@ -11,10 +13,6 @@ public class ResultData<DT> {
 	private DT data1;
 	@Getter
 	private String data1Name;
-
-	private ResultData() {
-
-	}
 
 	public static <DT>ResultData<DT> from(String resultCode, String msg) {
 		return from(resultCode, msg, null, null);
