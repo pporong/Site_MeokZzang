@@ -24,6 +24,7 @@ public class UsrArticleController {
 	private ArticleService articleService;
 
 	// 액션메서드 
+	// write
 	@RequestMapping("/usr/article/doAdd")
 	@ResponseBody
 	public ResultData<Article> doAdd(HttpServletRequest req, String title, String body) {
@@ -46,6 +47,7 @@ public class UsrArticleController {
 		return ResultData.newData(writeArticleRd, "article", article);
 	}
 
+	// list
 	@RequestMapping("/usr/article/list")
 	public String viewList(HttpServletRequest req, Model model) {
 		Rq rq = (Rq) req.getAttribute("rq");
@@ -57,7 +59,7 @@ public class UsrArticleController {
 		return "usr/article/list";
 	}
 	
-
+	// delete
 	@RequestMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(HttpServletRequest req, int id) {
@@ -78,28 +80,53 @@ public class UsrArticleController {
 		return Ut.jsReplace(Ut.f("%d번 게시물을 삭제했습니다", id), "../article/list");
 	}
 	
+	// modify
+	@RequestMapping("/usr/article/modify")
+	public String viewModify(HttpServletRequest req, Model model, int id) {
+		Rq rq = (Rq) req.getAttribute("rq");
+
+		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
+
+		if (article == null) {
+			return rq.jsHistoryBackOnView(Ut.f("%d번 게시물은 존재하지 않습니다", id));
+		}
+
+		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
+
+		if (actorCanModifyRd.isFail()) {
+			return rq.jsHistoryBackOnView(actorCanModifyRd.getMsg());
+		}
+
+		model.addAttribute("article", article);
+
+		return "usr/article/modify";
+	}
+	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public ResultData doModify(HttpServletRequest req, int id, String title, String body) {
+	public String doModify(HttpServletRequest req, int id, String title, String body) {
 
 		Rq rq = (Rq) req.getAttribute("rq");
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		if (article == null) {
-			return ResultData.from("F-1", Ut.f("%d번 게시물은 존재하지 않습니다 :(", id), "id", id);
+			return Ut.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
 		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
 
 		if (actorCanModifyRd.isFail()) {
-			return actorCanModifyRd;
+			return Ut.jsHistoryBack(actorCanModifyRd.getMsg());
 		}
+		
+		articleService.modifyArticle(id, title, body);
 
-		return articleService.modifyArticle(id, title, body);
+		return Ut.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), Ut.f("../article/detail?id=%d", id));
 
 	}
 
+	// detail
 	@RequestMapping("/usr/article/detail")
 	public String viewDetail(HttpServletRequest req, Model model, int id) {
 		Rq rq = (Rq) req.getAttribute("rq");
