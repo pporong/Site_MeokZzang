@@ -34,12 +34,16 @@ public class ArticleService {
 
 		ResultData actorCanDeleteRd = actorCanDelete(actorId, article);
 		article.setExtra__actorCanDelete(actorCanDeleteRd.isSuccess());
+		
+		ResultData actorCanModifyRd = actorCanModify(actorId, article);
+		article.setExtra__actorCanModify(actorCanModifyRd.isSuccess());
 
 	}
 
-	public List<Article> getForPrintArticles(int actorId) {
-		List<Article> articles = articleRepository.getArticles();
-
+	public List<Article> getForPrintArticles(int actorId, int boardId) {
+		
+		List<Article> articles = articleRepository.getForPrintArticles(boardId);
+		
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);
 		}
@@ -89,6 +93,9 @@ public class ArticleService {
 
 		return ResultData.from("S-1", "삭제 가능");
 	}
+
+
+
 
 
 }

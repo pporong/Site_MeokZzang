@@ -7,16 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Article {
+public class Board {
 	private int id;
 	private String regDate;
 	private String updateDate;
-	private int memberId;
-	private String title;
+	private String code;
+	private String name;
 	private String body;
-	private int boardId;
-	
-	private String extra__writerName;
-	private boolean extra__actorCanModify;
-	private boolean extra__actorCanDelete;
+	private boolean delStatus;
+	private String delDate;
 }
