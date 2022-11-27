@@ -2,17 +2,14 @@ package com.MeokZzang.recipe.repository;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 import com.MeokZzang.recipe.vo.Article;
 
 @Mapper
 public interface ArticleRepository {
 	
-	public void writeArticle(int memberId, String title, String body);
+	public void writeArticle(int memberId, int boardId, String title, String body);
 
 	public Article getForPrintArticle(int id);
 	
@@ -26,6 +23,6 @@ public interface ArticleRepository {
 
 	public int getLastInsertId();
 
-	
+	public int getArticlesCount(int boardId);
 
 }

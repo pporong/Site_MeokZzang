@@ -8,7 +8,7 @@
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		memberId = #{memberId},
-		boardId = 2,
+		boardId = #{boardId},
 		title = #{title},
 		`body` = #{body}
 	</insert>
@@ -68,5 +68,13 @@
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
+	
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		WHERE 1
+		<if test="boardId != 0"> AND A.boardId = #{boardId} </if>
+	</select>
+	
 	
 </mapper>
