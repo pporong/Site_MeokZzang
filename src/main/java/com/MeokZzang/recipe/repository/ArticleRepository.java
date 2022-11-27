@@ -15,7 +15,7 @@ public interface ArticleRepository {
 	
 	public List<Article> getArticles(int boardId);
 	
-	public List<Article> getForPrintArticles(int boardId);
+	public List<Article> getArticles(int boardId, int limitStart, int limitTake);
 	
 	public void deleteArticle(int id);
 

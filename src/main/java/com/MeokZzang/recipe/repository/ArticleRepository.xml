@@ -21,7 +21,8 @@
 		ON A.memberId = M.id
 		WHERE 1
 		<if test ="boardId != 0"> AND A.boardId = #{boardId} </if>
-		ORDER BY A.id DESC;
+		ORDER BY A.id DESC
+		<if test ="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
 	</select>
 	
 	<select id="getForPrintArticles" resultType="Article">

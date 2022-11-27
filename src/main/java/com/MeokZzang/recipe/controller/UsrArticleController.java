@@ -2,12 +2,11 @@ package com.MeokZzang.recipe.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.MeokZzang.recipe.service.ArticleService;
@@ -61,7 +60,7 @@ public class UsrArticleController {
 	
 	// list
 	@RequestMapping("/usr/article/list")
-	public String viewList(Model model, int boardId) {
+	public String viewList(Model model, @RequestParam(defaultValue = "1") int boardId, @RequestParam(defaultValue = "1") int page) {
 		
 		Board board = boardService.getBoardById(boardId);
 		
@@ -71,11 +70,18 @@ public class UsrArticleController {
 		
 		int articlesCount = articleService.getArticlesCount(boardId);
 
-		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId);
+		int itemsInAPage = 20;
+		
+		int pagesCount = (int) Math.ceil((double)articlesCount / itemsInAPage);
 
+		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, page, itemsInAPage);
+
+		model.addAttribute("boardId", boardId);
+		model.addAttribute("page", page);
 		model.addAttribute("board", board);
 		model.addAttribute("articles", articles);
-		model.addAttribute("articlesCount", articlesCount);		
+		model.addAttribute("articlesCount", articlesCount);	
+		model.addAttribute("pagesCount", pagesCount);
 
 		return "usr/article/list";
 	}
