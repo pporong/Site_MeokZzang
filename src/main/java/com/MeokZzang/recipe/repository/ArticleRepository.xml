@@ -12,27 +12,57 @@
 		title = #{title},
 		`body` = #{body}
 	</insert>
-
-	<!-- 게시판 분리작업 -->
+	
 	<select id="getArticles" resultType="Article">
-		SELECT A.*, M.nickname AS extra__writerName
+		SELECT A.*, M.name AS extra__writerName
 		FROM article AS A
 		LEFT JOIN `member` AS M
-		ON A.memberId = M.id
-		WHERE 1
-		<if test ="boardId != 0"> AND A.boardId = #{boardId} </if>
+		ON A.memberId = M.id WHERE 1
+		<if test="boardId != 0"> AND A.boardId = #{boardId} </if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					AND (
+					A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					)
+				</otherwise>
+			</choose>
+		</if>
 		ORDER BY A.id DESC
-		<if test ="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
-	</select>
+		<if test="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
+	</select> 
 	
 	<select id="getForPrintArticles" resultType="Article">
-		SELECT A.*, M.nickname AS extra__writerName
+		SELECT A.*, M.name AS extra__writerName
 		FROM article AS A
 		LEFT JOIN `member` AS M
-		ON A.memberId = M.id
-		WHERE 1
-		<if test ="boardId != 0"> AND A.boardId = #{boardId} </if>
-		ORDER BY A.id DESC;
+		ON A.memberId = M.id WHERE 1
+		<if test="boardId != 0"> AND A.boardId = #{boardId} </if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					AND (
+					A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+					OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+					)
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY A.id DESC
+		<if test="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
 	</select>
 
 	<select id="getArticle" resultType="Article">
@@ -75,6 +105,22 @@
 		FROM article AS A
 		WHERE 1
 		<if test="boardId != 0"> AND A.boardId = #{boardId} </if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'title'">
+					AND A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode == 'body'">
+					AND A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					AND ( 
+						A.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						OR A.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+				</otherwise>
+			</choose>
+		</if>
 	</select>
 	
 	
