@@ -23,7 +23,8 @@ public interface ArticleRepository {
 
 	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword);
 
-	public List<Article> getArticles(int boardId, String searchKeywordTypeCode, String searchKeyword, int limitStart,
-			int limitTake);
+	public int increaseHitCount(int id);
+
+	public int getArticleHitCount(int id);
 
 }

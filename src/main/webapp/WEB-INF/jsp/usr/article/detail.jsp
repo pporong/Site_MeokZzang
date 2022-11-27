@@ -3,6 +3,35 @@
 <c:set var="pageTitle" value="MEMBER JOIN" />
 <%@ include file="../common/head.jspf"%>
 
+<!-- 조회수 function -->
+<script>
+	const params = {};
+	params.id = parseInt('${param.id}');
+</script>
+
+<script>
+	function ArticleDetail__increaseHitCount(){
+		const localStorageKey = 'airtlce__' + params.id + '__alreadyView';
+		
+		if (localStorage.getItem(localStorageKey)) {
+			return;
+		}
+		localStorage.setItem(localStorageKey, true);
+		
+		$.get('../article/doIncreaseHitCountRd?', {
+			id : params.id,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.article-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	
+	$(function() {
+		ArticleDetail__increaseHitCount();
+	});
+	
+</script>
+
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
@@ -20,6 +49,11 @@
 						<th class="">게시판</th>
 						<td class="">${article.boardId }</td>
 					</tr>
+					<tr>
+						<th class="">조회수</th>
+						<td>
+							<span class="badge article-detail__hit-count">${article.hitCount }</span>
+						</td>
 					<tr>
 						<th>작성날짜</th>
 						<td>${article.regDate }</td>

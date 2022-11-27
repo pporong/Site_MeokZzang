@@ -15,8 +15,16 @@ public class Article {
 	private String title;
 	private String body;
 	private int boardId;
+	private int hitCount;
 	
 	private String extra__writerName;
 	private boolean extra__actorCanModify;
 	private boolean extra__actorCanDelete;
+	
+	public String getForPrintType1RegDate() {
+		return regDate.substring(2, 16).replace(" ", " ");
+	}
+	public String getForPrintType1updateDate() {
+		return regDate.substring(2, 16).replace(" ", " ");
+	}
 }
