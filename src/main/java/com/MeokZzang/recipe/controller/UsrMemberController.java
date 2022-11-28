@@ -172,6 +172,7 @@ public class UsrMemberController {
 
 		if(Ut.empty(loginPw)) {
 			loginPw = null;
+			return rq.jsHistoryBack("비밀번호를 입력해주세요");
 		}
 		if (Ut.empty(nickname)) {
 			return rq.jsHistoryBack("닉네임을 입력해주세요");

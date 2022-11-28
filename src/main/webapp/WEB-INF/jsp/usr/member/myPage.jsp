@@ -12,7 +12,7 @@
 
 				<tbody>
 					<tr>
-						<th class=>▶ 아이디 </th>
+						<th class="">▶ 아이디 </th>
 						<td>${rq.loginedMember.loginId }</td>
 					</tr>
 					<tr>
