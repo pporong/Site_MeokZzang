@@ -22,4 +22,6 @@ public interface MemberRepository {
 	public void modifyMyInfo(int id, String loginPw, String nickname, String cellphoneNum, String email);
 
 	public Member getForPrintMember(int id);
+	
+	public Member getArticleByMemberId();
 }

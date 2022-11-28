@@ -19,7 +19,8 @@ public class NeedLoginInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse resp, Object handler) throws Exception {
 		
 		if (!rq.isLogined()) {
-			rq.printReplaceJs("!! 로그인 후 이용 할 수 있습니다. !!", "../member/login");
+			String afterLoginUri = rq.getAfterLoginUri();
+			rq.printReplaceJs("!! 로그인 후 이용 할 수 있습니다. !!", "../member/login?afterLoginUri=" + afterLoginUri);
 			return false;
 		}
 

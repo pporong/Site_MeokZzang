@@ -30,6 +30,7 @@
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1 overflow-x-auto" method="POST" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${reply.id }" />
+			<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 				<table class="table table-compact w-full">
 					<colgroup>
 						<col width="200" />
@@ -73,7 +74,7 @@
 		</form>
 
 		<div class="btns flex justify-end my-3">
-			<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+			<a class="btn-text-link btn btn-outline btn-sm" href="${param.replaceUri }">뒤로가기</a>
 		</div>
 		
 	</div>

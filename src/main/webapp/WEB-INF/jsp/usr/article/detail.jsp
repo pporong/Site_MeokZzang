@@ -158,9 +158,10 @@
 				</tbody>
 			</table>
 		</div>
+		<!-- 게시글 수정 삭제 버튼 -->
 		<div class="btns my-3 flex justify-end">
 			<c:if test="${article.extra__actorCanModify }">
-				<a class="btn-text-link btn btn-outline btn-sm" href="../article/modify?id=${article.id }">수정</a>
+				<a class="btn-text-link btn btn-outline btn-sm mx-1" href="../article/modify?id=${article.id }">수정</a>
 			</c:if>
 			<c:if test="${article.extra__actorCanDelete }">
 				<a class="btn-text-link btn btn-outline btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
@@ -208,13 +209,13 @@
 							
 							<td>
 								<c:if test="${reply.extra__actorCanModify}">
-									<a class="btn-text-link" href="../reply/modify?id=${reply.id }">수정</a>
+									<a class="btn-text-link" href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
 								</c:if>
 							</td>
 							<td>
 								<c:if test="${reply.extra__actorCanDelete}">
 									<a class="btn-text-link " onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-									href="../reply/doDelete?id=${reply.id }">삭제</a>
+									href="../reply/doDelete?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">삭제</a>
 								</c:if>
 							</td>
 							
@@ -267,6 +268,7 @@
 					onsubmit="ReplyWrite__submitForm(this); return false;">
 					<input type="hidden" name="relTypeCode" value="article"/>
 					<input type="hidden" name="relId" value="${article.id }"/>
+					<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
 					  <table class="table table-zebra w-full text-sm">
 						<colgroup>
 							<col width="100" />
@@ -291,14 +293,21 @@
 			
 			<!-- 댓글 이용시 로그인여부 -->
 			<c:if test="${rq.notLogined }">
-				<a class="btn-text-link btn-sm btn-ghost" href="/usr/member/login">로그인</a> 후 이용해주세요
+				<a class="btn-text-link btn-sm btn-ghost" href="${rq.loginUri}">로그인</a> 후 이용해주세요
 			</c:if>
 		</div>
 
-		<!-- 뒤로가기, 삭제 버튼 -->
-		<div class="btns my-3">
-			<button type="button" onclick="history.back();">뒤로가기</button>
-		</div>
+		<!-- 뒤로가기 버튼 -->
+	<div class="btns my-3 flex justify-end">
+		<c:if test="${empty param.listUri}">
+			<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+		</c:if>
+		<c:if test="${not empty param.listUri}">
+			<a class="btn-text-link btn btn-outline btn-sm" href="${param.listUri }" > 뒤로가기</a>
+		</c:if>
+	</div>
+		
+		
 		</div>
 	</div>
 </section>

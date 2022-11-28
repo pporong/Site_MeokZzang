@@ -1,6 +1,7 @@
 package com.MeokZzang.recipe.vo;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,12 +29,15 @@ public class Rq {
 	private HttpServletRequest req;
 	private HttpServletResponse resp;
 	private HttpSession session;
+	private Map<String, String> paramMap;
 
 
-	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService) {
+	public Rq(HttpServletRequest req, HttpServletResponse resp, MemberService memberService, HttpServletRequest request) {
 		
 		this.req = req;
 		this.resp = resp;
+		
+		paramMap = Ut.getParamMap(req);
 		
 		this.session = req.getSession();
 		
@@ -121,4 +125,51 @@ public class Rq {
 		resp.setContentType("text/html; charset=UTF-8");
 		print(Ut.jsReplace(msg, url));
 	}
+	
+	public String getLoginUri() {
+		return "../member/login?afterLoginUri=" + getAfterLoginUri();
+	}
+
+	public String getAfterLoginUri() {
+
+		String requestUri = req.getRequestURI();
+
+		switch(requestUri) {
+		// login 시 계속 접근 할 수 없는 page
+		case "/usr/member/login" :
+		// 로그인 버튼 누른 후 join 버튼 누르면 err 발생
+		// case "/usr/member/join" :
+		case "/usr/member/findLoginId" :
+		case "/usr/member/findLoginPw" :
+			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
+		}
+
+		return getEncodedCurrentUri();
+	}
+	
+	public String getLogoutUri() {
+
+		String requestUri = req.getRequestURI();
+
+		switch(requestUri) {
+		// logout 시 계속 접근 할 수 없는 page
+		case "/usr/article/write" :
+		case "/usr/article/modify" :
+		case "/usr/member/myPage" :
+			return "../member/doLogout?afterLogoutUri=" + "/";
+		}
+
+		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
+	}	
+
+	public String getAfterLogoutUri() {	
+		return getEncodedCurrentUri();
+	}
+	
+	public String getArticleDetailUriFromArticleList(Article article) {
+
+		return "../article/detail?id=" + article.getId() + "&listUri=" +  getEncodedCurrentUri();
+	}
+
+
 }

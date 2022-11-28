@@ -38,6 +38,7 @@ function ArticleModify__submit(form) {
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="POST" action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id }" />
+			<input type="hidden" name="replaceUri" value="${param.replaceUri }" />
 			<input type="hidden" name="body" />
 			<table>
 				<colgroup>
@@ -95,7 +96,7 @@ function ArticleModify__submit(form) {
 		</form>
 
 		<div class="btns my-3">
-			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
+			<a class="btn-text-link btn btn-outline btn-sm" href="${param.replaceUri }">뒤로가기</a>
 		</div>
 	</div>
 </section>
