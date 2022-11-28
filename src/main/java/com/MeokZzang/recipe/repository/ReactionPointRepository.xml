@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.MeokZzang.recipe.repository.ReactionPointRepository">
+
+	<select id="getSumReactionPointByMemberId" resultType="int">
+		SELECT IFNULL(SUM(RP.point),0) AS s
+		FROM reactionPoint AS RP
+		WHERE RP.relTypeCode = #{relTypeCode}
+		AND RP.relId = #{relId}
+		AND RP.memberId = #{actorId}
+	</select>
+
+	<insert id="addGoodReactionPoint">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode = #{relTypeCode},
+		relId= #{relId},
+		memberId = #{actorId},
+		`point` = 1
+	</insert>
+	
+	<delete id="delGoodReactionPoint">
+		DELETE FROM reactionPoint
+		WHERE memberId = #{actorId}
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		AND `point` = 1
+	</delete>
+	
+	<insert id="addBadReactionPoint">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode = #{relTypeCode},
+		relId= #{relId},
+		memberId = #{actorId},
+		`point` = - 1
+	</insert>	
+	
+	<delete id="delBadReactionPoint">
+		DELETE FROM reactionPoint
+		WHERE memberId = #{actorId}
+		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		AND `point` = - 1
+	</delete>
+	
+	<!-- 멤버별 추천수 상황 -->
+	<select id="getRpInfoByMemberId">
+		SELECT RP.relTypeCode, RP.relId,
+		SUM(IF(RP.point &gt; 0, RP.point, 0)) AS goodReactionPoint,
+		SUM(IF(RP.point &lt; 0, RP.point * -1, 0)) AS badReactionPoint
+		FROM reactionPoint AS RP
+		WHERE RP.memberId = #{actorId}
+		GROUP BY RP.relTypeCode, RP.relId
+	</select>
+	
+</mapper>

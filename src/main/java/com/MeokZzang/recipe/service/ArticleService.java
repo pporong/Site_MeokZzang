@@ -46,8 +46,7 @@ public class ArticleService {
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 
-		List<Article> articles = articleRepository.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword,
-				limitStart, limitTake);
+		List<Article> articles = articleRepository.getForPrintArticles(boardId, searchKeywordTypeCode, searchKeyword, limitStart, limitTake);
 
 		for (Article article : articles) {
 			updateForPrintData(actorId, article);
@@ -102,7 +101,8 @@ public class ArticleService {
 	public int getArticlesCount(int boardId, String searchKeywordTypeCode, String searchKeyword) {
 		return articleRepository.getArticlesCount(boardId, searchKeywordTypeCode, searchKeyword);
 	}
-
+	
+	// hitCount
 	public ResultData<Integer> increaseHitCount(int id) {
 		
 		int affectedRowsCount = articleRepository.increaseHitCount(id);
@@ -118,8 +118,56 @@ public class ArticleService {
 		return articleRepository.getArticleHitCount(id);
 	}
 
+	// reacionPoint
+	// + good
+	public ResultData increaseGoodRp(int relId) {
+		int affectedRowsCount = articleRepository.increaseGoodRp(relId);
 
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
 
+		return ResultData.from("S-1", "좋아요 증가", "affectedRowsCount", affectedRowsCount);
+
+	}
+	
+	// - good
+	public ResultData decreaseGoodRp(int relId) {
+		int affectedRowsCount = articleRepository.decreaseGoodRp(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-2", "좋아요 취소", "affectedRowsCount", affectedRowsCount);
+		
+	}
+
+	// + bad
+	public ResultData increaseBadRp(int relId) {
+		int affectedRowsCount = articleRepository.increaseBadRp(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-1", "싫어요 증가", "affectedRowsCount", affectedRowsCount);
+
+	}
+
+	// - bad
+	public ResultData decreaseBadRp(int relId) {
+		int affectedRowsCount = articleRepository.decreaseBadRp(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-2", "싫어요 취소", "affectedRowsCount", affectedRowsCount);
+		
+	}
+
+	
 
 
 }

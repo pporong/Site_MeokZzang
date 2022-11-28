@@ -15,7 +15,7 @@
 						<tr>
 							<td>
 								<select class="text-center" name="boardId" data-value="${param.boardId}">
-									<option value="1"> 게시판 선택 </option>
+									<option value="1" selected="${param.boardId}"> 게시판 선택 </option>
 									<option value="1">공 지 사 항</option>
 									<option value="2">자 유 게 시 판</option>
 								</select>
@@ -52,6 +52,7 @@
 						<th>제목</th>
 						<th>작성자</th>
 						<th>조회수</th>
+						<th>추천</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,6 +67,7 @@
 							<td>
 								<span class="article-detail__hit-count">${article.hitCount }</span>
 							</td>
+							<td>${article.goodReactionPoint}</td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -27,4 +27,15 @@ public interface ArticleRepository {
 
 	public int getArticleHitCount(int id);
 
+	public int getSumReactionPointByMemberId(int actorId, int id);
+
+	public int increaseGoodRp(int relId);
+	
+	public int decreaseGoodRp(int relId);
+
+	public int increaseBadRp(int relId);
+
+	public int decreaseBadRp(int relId);
+	
+
 }

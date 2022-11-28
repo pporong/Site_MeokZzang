@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.MeokZzang.recipe.service.ArticleService;
 import com.MeokZzang.recipe.service.BoardService;
+import com.MeokZzang.recipe.service.ReactionPointService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Board;
@@ -25,6 +26,8 @@ public class UsrArticleController {
 	private ArticleService articleService;
 	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private ReactionPointService reactionPointService;
 	@Autowired
 	private Rq rq;
 
@@ -162,7 +165,22 @@ public class UsrArticleController {
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
 		model.addAttribute("article", article);
+		
+		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 
+		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
+		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+
+		if(actorCanMakeReactionRd.getResultCode().equals("F-2")) {
+			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
+
+			if(sumReactionPointByMemberId > 0) {
+				model.addAttribute("actorCanDelGoodRp", true);
+			} else {
+				model.addAttribute("actorCanDelBadRp", true);
+			}
+		}
+		model.addAttribute("isLogined",rq.isLogined());
 		return "usr/article/detail";
 	}
 	

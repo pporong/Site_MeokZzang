@@ -27,6 +27,18 @@
 						<td>${article.updateDate }</td>
 					</tr>
 					<tr>
+						<th>조회수</th>
+						<td>
+							<span class="badge article-detail__hit-count">${article.hitCount }</span>
+						</td>
+					</tr>
+					<tr>
+						<th>추천</th>
+						<td>
+							<span class="badge ">${article.goodReactionPoint }</span>
+						</td>
+					</tr>
+					<tr>
 						<th>작성자</th>
 						<td>${article.extra__writerName }</td>
 					</tr>
