@@ -3,8 +3,15 @@ package com.MeokZzang.recipe.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.MeokZzang.recipe.vo.Rq;
+
 @Controller
 public class UsrHomeController {
+	private Rq rq;
+
+	public UsrHomeController(Rq rq) {
+		this.rq = rq;
+	}
 	
 	@RequestMapping("/usr/home/main")
 	public String showMain() {

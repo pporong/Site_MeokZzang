@@ -11,8 +11,9 @@ import com.MeokZzang.recipe.vo.ResultData;
 public class MemberService {
 
 	private MemberRepository memberRepository;
+	private AttrService attrService;
 
-	public MemberService(MemberRepository memberRepository) {
+	public MemberService(MemberRepository memberRepository, AttrService attrService) {
 		this.memberRepository = memberRepository;
 	}
 
@@ -50,6 +51,40 @@ public class MemberService {
 	
 	public Member getMemberById(int id) {
 		return memberRepository.getMemberById(id);
+	}
+
+	public ResultData modifyMyInfo(int id, String loginPw, String nickname, String cellphoneNum, String email) {
+
+		memberRepository.modifyMyInfo(id, loginPw, nickname, cellphoneNum, email);
+
+		return ResultData.from("S-1", "회원 정보 변경 성공!");
+
+	}
+
+	public Member getForPrintMember(Member loginedMember, int id) {
+
+		Member member = memberRepository.getForPrintMember(id);
+
+		return member;
+	}
+
+	public String genMemberModifyAuthKey(int actorId) {
+		String memberModifyAuthKey = Ut.getTempPassword(10);
+
+		attrService.setValue("member", actorId, "extra", "memberModifyAuthKey", memberModifyAuthKey, Ut.getDateStrLater(60 * 5));
+
+		return memberModifyAuthKey;
+	}
+
+	public ResultData checkMemberModifyAuthKey(int actorId, String memberModifyAuthKey) {
+
+		String saved = attrService.getValue("member", actorId, "extra", "memberModifyAuthKey");
+
+		if(!saved.equals(memberModifyAuthKey)) {
+			return ResultData.from("F-1", "!! 인증코드가 일치하지 않거나 만료된 코드입니다. !!");
+		}
+
+		return ResultData.from("S-1", "정상 코드입니다");
 	}
 	
 }

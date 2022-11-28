@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.MeokZzang.recipe.repository.MemberRepository">
+<mapper
+	namespace="com.MeokZzang.recipe.repository.MemberRepository">
 
 	<insert id="join">
 		INSERT INTO `member`
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
 		`name` = #{name},
@@ -14,7 +16,7 @@
 		cellphoneNum = #{cellphoneNum},
 		email = #{email}
 	</insert>
-	
+
 	<select id="getLastInsertId" resultType="int">
 		SELECT LAST_INSERT_ID()
 	</select>
@@ -24,18 +26,52 @@
 		FROM `member` AS M
 		WHERE M.id = #{id}
 	</select>
-	
+
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
-		FROM `member` AS M
+		FROM `member`
+		AS M
 		WHERE M.loginId = #{loginId}
 	</select>
-	
+
 	<select id="getMemberByNameAndEmail" resultType="Member">
 		SELECT *
-		FROM `member` AS M
+		FROM
+		`member` AS M
 		WHERE M.name = #{name}
 		AND M.email = #{email}
 	</select>
+
+	<select id="getLoginedMemberName" resultType="Member">
+		SELECT M.name AS
+		extra__writerName
+		FROM `member` AS M
+		WHERE M.id = #{id}
+	</select>
+
+	<update id="modifyMyInfo">
+		UPDATE `member`
+		<set>
+			updateDate = NOW(),
+			<if test="loginPw != null">
+				loginPw = #{loginPw},
+			</if>
+			<if test="nickname != null">
+				nickname = #{nickname},
+			</if>
+			<if test="cellphoneNum != null">
+				cellphoneNum = #{cellphoneNum},
+			</if>
+			<if test="email != null">
+				email = #{email}
+			</if>
+		</set>
+		WHERE id = #{id};
+	</update>
 	
+	<select id="getForPrintMember" resultType="Member">
+		SELECT M.*
+		FROM `member` AS M
+		WHERE M.id = #{id}
+	</select>
 </mapper>

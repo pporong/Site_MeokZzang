@@ -10,7 +10,7 @@
 		memberId = #{actorId},
 		relTypeCode = 'article',
 		relId =  #{relId},
-		`body` = #{body};
+		`body` = #{body}
 	</insert>
 
 	<select id="getLastInsertId" resultType="int">
