@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="게시글 상세보기" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiLib.jspf"%>
 
 <!-- 조회수 function -->
 <script>
@@ -111,7 +112,11 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td>${article.getForPrintBody() }</td>
+						<td style="height:300px;">
+							<div class="toast-ui-viewer">
+								<script type="text/x-template">${article.getForPrintBody()}</script>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th class="">느낌 남기기</th>
@@ -153,7 +158,15 @@
 				</tbody>
 			</table>
 		</div>
-		
+		<div class="btns my-3 flex justify-end">
+			<c:if test="${article.extra__actorCanModify }">
+				<a class="btn-text-link btn btn-outline btn-sm" href="../article/modify?id=${article.id }">수정</a>
+			</c:if>
+			<c:if test="${article.extra__actorCanDelete }">
+				<a class="btn-text-link btn btn-outline btn-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+					href="../article/doDelete?id=${article.id }">삭제</a>
+			</c:if>
+		</div>
 		
 		<!-- 댓글 목록 -->
 		<div class="mt-5 ">
@@ -285,13 +298,6 @@
 		<!-- 뒤로가기, 삭제 버튼 -->
 		<div class="btns my-3">
 			<button type="button" onclick="history.back();">뒤로가기</button>
-			<c:if test="${article.extra__actorCanModify }">
-				<a class="btn-text-link" href="../article/modify?id=${article.id }">수정</a>
-			</c:if>
-			<c:if test="${article.extra__actorCanDelete }">
-				<a class="btn-text-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-					href="../article/doDelete?id=${article.id }">삭제</a>
-			</c:if>
 		</div>
 		</div>
 	</div>

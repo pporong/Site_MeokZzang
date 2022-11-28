@@ -2,28 +2,43 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="게시물 수정" />
 <%@ include file="../common/head.jspf"%>
+<%@ include file="../common/toastUiLib.jspf"%>
 
 <script>
-	let ArticleModify__submitDone = false;
-	function ArticleModify__submit(form) {
-		if (ArticleModify__submitDone) {
-			return;
-		}
-		form.body.value = form.body.value.trim();
-		if (form.body.value.length == 0) {
-			alert('내용을 입력해주세요');
-			form.body.focus();
-			return;
-		}
-		ArticleModify__submitDone = true;
-		form.submit();
+let ArticleModify__submitDone = false;
+function ArticleModify__submit(form) {
+	
+	if (ArticleModify__submitDone) {
+		return;
 	}
+	
+	 if(form.title.value == 0){
+		    alert('제목을 입력해주세요');
+		    return;
+		  }
+	 
+	const editor = $(form).find('.toast-ui-editor').data('data-toast-editor');
+	
+	const markdown = editor.getMarkdown().trim();
+	
+	if (markdown.length == 0) {
+		alert('내용을 입력해주세요');
+		editor.focus();
+		return;
+	}
+	
+	form.body.value = markdown;
+	ArticleModify__submitDone = true;
+	
+	form.submit();
+}
 </script>
 
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="POST" action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id }" />
+			<input type="hidden" name="body" />
 			<table>
 				<colgroup>
 					<col width="200" />
@@ -64,7 +79,11 @@
 					</tr>
 					<tr>
 						<th>내용</th>
-						<td><textarea class="w-full" name="body" placeholder="내용을 입력해주세요" >${article.body }</textarea></td>
+						<td>
+							<div class="toast-ui-editor">
+								<script type="text/x-template">${article.body}</script>
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th></th>
@@ -77,10 +96,6 @@
 
 		<div class="btns my-3">
 			<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-			<c:if test="${article.extra__actorCanDelete }">
-				<a class="btn-text-link" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-					href="../article/doDelete?id=${article.id }">삭제</a>
-			</c:if>
 		</div>
 	</div>
 </section>

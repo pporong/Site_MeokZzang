@@ -89,6 +89,7 @@ html > body {
 }
 
 html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents, html>body .ProseMirror, html>body .toastui-editor-md-mode {
+	font-family: 'MonoplexKR-Italic';
 	text-underline-position: under;
 }
 
