@@ -39,5 +39,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/article/doDelete");
 		ir.addPathPatterns("/usr/reactionPoint/doGoodReaction");
 		ir.addPathPatterns("/usr/reactionPoint/doBadReaction");
+		ir.addPathPatterns("/usr/reactionPoint/doGoodReactionReply");
+		ir.addPathPatterns("/usr/reactionPoint/doBadReactionReply");
 	}
 }

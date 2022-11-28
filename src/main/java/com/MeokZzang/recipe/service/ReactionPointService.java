@@ -13,6 +13,8 @@ public class ReactionPointService {
 	private ReactionPointRepository reactionPointRepository;
 	@Autowired
 	private ArticleService articleService;
+	@Autowired
+	private ReplyService replyService;
 
 	public ResultData actorCanMakeReaction(int actorId, String relTypeCode, int relId) {
 		if (actorId == 0) {
@@ -35,9 +37,11 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article" :
 				articleService.increaseGoodRp(relId);
+		case "reply" :
+				replyService.increaseGoodReplyRp(relId);
 				break;
 		}
-		return ResultData.from("S-1", "좋아요 처리 완료~");
+		return ResultData.from("S-1", "좋아요 완료~");
 		
 	}
 	// DelGood
@@ -48,9 +52,11 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article" :
 				articleService.decreaseGoodRp(relId);
+		case "reply" :
+				replyService.decreaseGoodReplyRp(relId);
 				break;
 		}
-		return ResultData.from("S-1", "좋아요 취소 처리 완료~");
+		return ResultData.from("S-2", "좋아요 취소 완료~");
 	}
 	
 	// AddBad
@@ -61,9 +67,11 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article" :
 				articleService.increaseBadRp(relId);
+		case "reply" :
+				replyService.increaseBadReplyRp(relId);
 				break;
 		}
-		return ResultData.from("S-1", "싫어요 처리 완료~");
+		return ResultData.from("S-3", "싫어요 완료~");
 	}
 	// DelBad
 	public ResultData deleteBadRp(int actorId, String relTypeCode, int relId) {
@@ -73,9 +81,11 @@ public class ReactionPointService {
 		switch (relTypeCode) {
 		case "article" :
 				articleService.decreaseBadRp(relId);
+		case "reply" :
+				replyService.decreaseBadReplyRp(relId);
 				break;
 		}
-		return ResultData.from("S-1", "싫어요 취소 처리 완료~");
+		return ResultData.from("S-4", "싫어요 취소 완료~");
 
 	}
 
@@ -90,5 +100,6 @@ public class ReactionPointService {
 	public void getBadRpCount(int relId) {
 		
 	}
+
 
 }

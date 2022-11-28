@@ -36,6 +36,8 @@ public interface ArticleRepository {
 	public int increaseBadRp(int relId);
 
 	public int decreaseBadRp(int relId);
+
+	public Article getArticle(int id);
 	
 
 }

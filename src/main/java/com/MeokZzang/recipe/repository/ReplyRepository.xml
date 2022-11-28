@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.MeokZzang.recipe.repository.ReplyRepository">
+
+	<insert id="writeReply">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		memberId = #{actorId},
+		relTypeCode = 'article',
+		relId =  #{relId},
+		`body` = #{body};
+	</insert>
+
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	<select id="getForPrintReplies" resultType="Reply">
+		SELECT R.*, M.nickname AS extra__writerName
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.relTypeCode = #{relTypeCode}
+		AND R.relId = #{relId}
+		ORDER BY R.id ASC
+	</select>
+	
+	<delete id="deleteReply">
+		DELETE FROM reply WHERE id = #{id}
+	</delete>
+	
+	<select id="getForPrintReply" resultType="Reply">
+		SELECT R.*, M.name AS extra__writerName
+		FROM reply AS R
+		LEFT JOIN `member` AS M
+		ON R.memberId = M.id
+		WHERE R.id = #{id}
+	</select>
+	
+	<update id="modifyReply">
+		UPDATE reply
+		SET updateDate = NOW(),
+		`body` = #{body}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="increaseGoodReplyRp">
+		UPDATE reply
+		SET goodReactionPoint = goodReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseGoodReplyRp">
+		UPDATE reply
+		SET goodReactionPoint = goodReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="increaseBadReplyRp">
+		UPDATE reply
+		SET badReactionPoint = badReactionPoint + 1
+		WHERE id = #{relId}
+	</update>
+	
+	<update id="decreaseBadReplyRp">
+		UPDATE reply
+		SET badReactionPoint = badReactionPoint - 1
+		WHERE id = #{relId}
+	</update>
+	
+	<select id="getReply" resultType="Reply">
+		SELECT * FROM Reply WHERE id = #{id}
+	</select>
+	
+</mapper>

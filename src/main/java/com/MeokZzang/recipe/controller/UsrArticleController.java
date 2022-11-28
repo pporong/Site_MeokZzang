@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.MeokZzang.recipe.service.ArticleService;
 import com.MeokZzang.recipe.service.BoardService;
 import com.MeokZzang.recipe.service.ReactionPointService;
+import com.MeokZzang.recipe.service.ReplyService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Board;
+import com.MeokZzang.recipe.vo.Reply;
 import com.MeokZzang.recipe.vo.ResultData;
 import com.MeokZzang.recipe.vo.Rq;
 
@@ -28,6 +30,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private ReactionPointService reactionPointService;
+	@Autowired
+	private ReplyService replyService;
 	@Autowired
 	private Rq rq;
 
@@ -82,7 +86,7 @@ public class UsrArticleController {
 		int pagesCount = (int) Math.ceil((double) articlesCount / itemsInAPage);
 		
 		List<Article> articles = articleService.getForPrintArticles(rq.getLoginedMemberId(), boardId, page, itemsInAPage, searchKeywordTypeCode, searchKeyword);
-
+		
 		model.addAttribute("board", board);
 		model.addAttribute("boardId", boardId);
 		model.addAttribute("page", page);
@@ -90,7 +94,6 @@ public class UsrArticleController {
 		model.addAttribute("searchKeyword", searchKeyword);
 		model.addAttribute("articles", articles);
 		model.addAttribute("articlesCount", articlesCount);
-        
 
 		return "usr/article/list";
 	}
@@ -107,7 +110,7 @@ public class UsrArticleController {
 		} 
 		// 삭제 권한 체크
 		if (article.getMemberId() != rq.getLoginedMemberId()) {
-			return rq.jsHistoryBack(Ut.f("%d번 게시물에 대한 권한이 없습니다.", id));
+			return rq.jsHistoryBack(Ut.f("%d번 게시물에 대한 삭제 권한이 없습니다.", id));
 		}
 
 		articleService.deleteArticle(id);
@@ -145,6 +148,10 @@ public class UsrArticleController {
 		if (article == null) {
 			return rq.jsHistoryBack(Ut.f("%d번 게시물은 존재하지 않습니다", id));
 		}
+		// 수정 권한 체크
+		if (article.getMemberId() != rq.getLoginedMemberId()) {
+			return rq.jsHistoryBack(Ut.f("%d번 게시물에 대한 수정 권한이 없습니다.", id));
+		}
 
 		ResultData actorCanModifyRd = articleService.actorCanModify(rq.getLoginedMemberId(), article);
 
@@ -166,10 +173,13 @@ public class UsrArticleController {
 
 		model.addAttribute("article", article);
 		
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
+		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
+		model.addAttribute("replies", replies);
 
 		if(actorCanMakeReactionRd.getResultCode().equals("F-2")) {
 			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
@@ -181,6 +191,7 @@ public class UsrArticleController {
 			}
 		}
 		model.addAttribute("isLogined",rq.isLogined());
+		
 		return "usr/article/detail";
 	}
 	
