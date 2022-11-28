@@ -29,10 +29,17 @@
 				</li>
 				<c:if test="${!rq.logined}">
 					<li class="hover:underline">
+						<a class="h-full px-3 flex items-center" href="${rq.joinUri }">
+							<span>JOIN</span>
+						</a>
+					</li>
+				</c:if>
+				<c:if test="${!rq.logined}">
+					<li class="hover:underline">
 						<a class="h-full px-3 flex items-center" href="${rq.loginUri}">
 							<span>LOGIN</span>
 						</a>
-						</li>
+					</li>
 				</c:if>
 				<c:if test="${rq.logined}">
 					<li class="hover:underline">

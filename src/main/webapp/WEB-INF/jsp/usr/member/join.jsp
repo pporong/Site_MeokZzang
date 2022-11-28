@@ -5,8 +5,13 @@
 
 <script>
 	let MemberJoin__submitDone = false;
+	
 	function MemberJoin__submit(form) {
 		
+		if (MemberJoin__submitDone) {
+			alert('처리중입니다');
+			return;
+		}
 		if (MemberJoin__submitDone) {
 			return;
 		}
@@ -115,7 +120,7 @@
 						<td class="">
 							<button class="btn btn-ghost btn-sm btn-outline" 
 							onclick="if(confirm('입력 내용이 정확합니까?') == false) return false;" 
-							type="submit" value="회원 가입">회원 가입</button>
+							type="submit">회원 가입</button>
 						</td>
 					</tr>
 				</tbody>

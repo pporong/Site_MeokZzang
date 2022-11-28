@@ -69,6 +69,17 @@ public class Rq {
 		return "usr/common/js";
 	}
 	
+	public String jsHistoryBackOnView(String resultCode, String msg) {
+		req.setAttribute("msg", String.format("[%s] %s", resultCode, msg));
+		req.setAttribute("historyBack", true);
+		return "usr/common/js";
+	}
+
+	public String jsHistoryBack(String resultCode, String msg) {
+		msg = String.format("[%s] %s", resultCode, msg);
+		return Ut.jsHistoryBack(msg);
+	}
+	
 	public String jsHistoryBack(String msg) {
 		return Ut.jsHistoryBack(msg);
 	}
@@ -116,10 +127,7 @@ public class Rq {
 
 		return Ut.getUriEncoded(getCurrentUri());
 	}
-	
-	public void initOnBeforeActionInterceptor() {
 
-	}
 
 	public void printReplaceJs(String msg, String url) {
 		resp.setContentType("text/html; charset=UTF-8");
@@ -160,7 +168,11 @@ public class Rq {
 		}
 
 		return "../member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
-	}	
+	}
+	
+	public String getJoinUri() {
+		return "../member/join?afterLoginUri=" + getAfterLoginUri();
+	}
 
 	public String getAfterLogoutUri() {	
 		return getEncodedCurrentUri();
@@ -170,6 +182,9 @@ public class Rq {
 
 		return "../article/detail?id=" + article.getId() + "&listUri=" +  getEncodedCurrentUri();
 	}
+	
+	// 삭제 금지
+	public void initOnBeforeActionInterceptor() {
 
-
+	}
 }
