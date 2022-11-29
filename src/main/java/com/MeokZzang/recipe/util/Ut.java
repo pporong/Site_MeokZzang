@@ -14,22 +14,18 @@ public class Ut {
 	public static boolean empty(Object obj) {
 
 		if (obj == null) {
-			System.err.println("여기야!!!!");
 			return true;
 		}
 		
 		if (obj instanceof Integer) {
-			System.err.println("여기야 2!!!!");
 			return ((int) obj) == 0;
 		}
 		
 		if (obj instanceof Long) {
-			System.err.println("여기야 3!!!!");
 			return ((long) obj) == 0;
 		}
 
 		if (obj instanceof String == false) {
-			System.err.println("여기야 4!!!!");
 			return true;
 		}
 		
