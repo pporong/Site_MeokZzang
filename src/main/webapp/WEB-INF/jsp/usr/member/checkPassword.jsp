@@ -19,14 +19,14 @@
 							<td>${rq.loginedMember.loginId }</td>
 						</tr>
 						<tr>
-							<th>▶ 비밀번호 </th>
+							<th>▶ 비밀번호 확인</th>
 							<td>
-								<input name="loginPw" required="required" class="w-full " placeholder="비밀번호를 입력해주세요"/>
+								<input name="loginPw" required="required" placeholder="비밀번호를 입력해주세요"/>
 							</td>	
 						</tr>
 						<tr>
 							<th></th>
-							<td><button class="btn btn-ghost btn-sm btn-outline" type="submit">비밀번호 확인</button></td>
+							<td><button class="btn btn-ghost btn-sm btn-outline" type="submit" value="비밀번호 확인">비밀번호 확인</button></td>
 						</tr>
 					</tbody>
 				</table>

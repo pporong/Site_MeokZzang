@@ -38,7 +38,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir = registry.addInterceptor(needLoginInterceptor);
 				ir.addPathPatterns("/usr/member/myPage");
 				ir.addPathPatterns("/usr/member/checkPassword");
-				ir.addPathPatterns("/usr/member/doCheckPassword");
+				ir.addPathPatterns("/usr/member/doCheckPw");
 				ir.addPathPatterns("/usr/member/modifyMyInfo");
 				ir.addPathPatterns("/usr/member/doModifyMyInfo");
 				ir.addPathPatterns("/usr/member/doLogout");
@@ -67,6 +67,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir = registry.addInterceptor(NeedLogoutInterceptor);
 				ir.addPathPatterns("/usr/member/login");
 				ir.addPathPatterns("/usr/member/doLogin");
+				ir.addPathPatterns("/usr/member/getLoginIdDup");
+				ir.addPathPatterns("/usr/member/doCheckLoginId");
 				ir.addPathPatterns("/usr/member/join");
 				ir.addPathPatterns("/usr/member/doJoin");
 				ir.addPathPatterns("/usr/member/findLoginId");
