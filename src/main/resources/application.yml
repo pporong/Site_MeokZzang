@@ -1,6 +1,17 @@
 server :
   port : 8081
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: 
+    password: 
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   mvc:
     view:
       prefix: /WEB-INF/jsp/
@@ -15,6 +26,10 @@ spring:
 mybatis:
   type-aliases-package: com.MeokZzang.recipe.vo
 custom:
+  siteName: MEOK ZZANG PASSWORD
+  siteMainUri: http://localhost:8081
+  emailFrom: no-reply@localhost
+  emailFromName: MEOK ZZANG
   logging:
     dir: log
     level: debug
