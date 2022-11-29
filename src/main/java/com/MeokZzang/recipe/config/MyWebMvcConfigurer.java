@@ -72,8 +72,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/usr/member/join");
 				ir.addPathPatterns("/usr/member/doJoin");
 				ir.addPathPatterns("/usr/member/findLoginId");
-				ir.addPathPatterns("/usr/member/doFindLoginId");
+				ir.addPathPatterns("/usr/member/goFindLoginId");
 				ir.addPathPatterns("/usr/member/findLoginPw");
-				ir.addPathPatterns("/usr/member/doFindLoginPw");
+				ir.addPathPatterns("/usr/member/goFindLoginPw");
 	}
 }

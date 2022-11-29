@@ -115,6 +115,26 @@ public class UsrMemberController {
 		return Ut.jsReplace(Ut.f("%s님 환영합니다", member.getNickname()), afterLoginUri);
 	}
 
+	// 로그인 아이디 찾기
+	@RequestMapping("/usr/member/findLoginId")
+	public String viewFindLoginId() {
+		return "usr/member/findLoginId";
+	}
+
+	@RequestMapping("/usr/member/goFindLoginId")
+	@ResponseBody
+	public String goFindLoginId(String name, String email,
+			@RequestParam(defaultValue = "/") String afterFindLoginIdUri) {
+
+		Member member = memberService.getMemberByNameAndEmail(name, email);
+
+		if (member == null) {
+			return Ut.jsHistoryBack("존재하지 않는 이름 또는 이메일입니다");
+		}
+
+		return Ut.jsReplace(Ut.f("회원님의 아이디는 [ %s ] 입니다", member.getLoginId()), afterFindLoginIdUri);
+	}
+
 	// logout
 	@RequestMapping("/usr/member/doLogout")
 	@ResponseBody
@@ -134,7 +154,7 @@ public class UsrMemberController {
 		return "usr/member/myPage";
 	}
 
-//	회원가입시 비밀번호 확인
+	// 회원가입시 비밀번호 확인
 	@RequestMapping("/usr/member/checkPassword")
 	public String showCheckPassword() {
 
@@ -144,17 +164,17 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doCheckPw")
 	@ResponseBody
 	public String doCheckPw(String loginPw, String replaceUri) {
-		
+
 		if (Ut.empty(loginPw)) {
 			System.out.println(loginPw + "       ??");
 			return rq.jsHistoryBack("!! 비밀번호를 입력 해 주세요. !!");
 		}
-		
+
 		if (rq.getLoginedMember().getLoginPw().equals(Ut.sha256(loginPw)) == false) {
 			System.out.println(loginPw + "일치하지않아!!!!!");
 			return Ut.jsHistoryBack("!! 비밀번호가 일치하지 않습니다. !!");
 		}
-		
+
 		// memberModifyAuthKey
 		if (replaceUri.equals("../member/modifyMyInfo")) {
 			String memberModifyAuthKey = memberService.genMemberModifyAuthKey(rq.getLoginedMemberId());
@@ -162,27 +182,26 @@ public class UsrMemberController {
 			replaceUri += "?memberModifyAuthKey=" + memberModifyAuthKey;
 		}
 
-		
 		return rq.jsReplace("", replaceUri);
 	}
-	
+
 	@RequestMapping("/usr/member/modifyMyInfo")
 	public String modifyMyInfo(String memberModifyAuthKey) {
-		
+
 		if (Ut.empty(memberModifyAuthKey)) {
 			return rq.jsHistoryBackOnView("!! 회원 수정 인증코드가 필요합니다. !!");
 		}
-		
+
 		ResultData checkMemberModifyAuthKeyRd = memberService.checkMemberModifyAuthKey(rq.getLoginedMemberId(),
 				memberModifyAuthKey);
 
 		if (checkMemberModifyAuthKeyRd.isFail()) {
 			return rq.jsHistoryBackOnView(checkMemberModifyAuthKeyRd.getMsg());
 		}
-		
+
 		return "usr/member/modifyMyInfo";
 	}
-	
+
 	// 개인정보수정
 	@RequestMapping("/usr/member/doModifyMyInfo")
 	@ResponseBody

@@ -7,6 +7,10 @@
 	<div class="container mx-auto px-3 ">
 		<form class="" method="POST" action="../member/doLogin">
 		<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
+		<div class="find-btn-box flex justify-end ">
+			<a href="${rq.findLoginIdUri }" class=" btn  btn-sm btn-ghost" type="submit">아이디 찾기</a>
+			<a href="${rq.findLoginPwUri }" class=" btn  btn-sm btn-ghost" type="submit">비밀번호 찾기</a>
+		</div>
 			<div class="">
 				<table class="table table-compact w-full">
 					<colgroup>

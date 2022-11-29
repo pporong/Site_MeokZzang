@@ -18,6 +18,8 @@
 									<option value="1" selected="${param.boardId}"> 게시판 선택 </option>
 									<option value="1">공 지 사 항</option>
 									<option value="2">자 유 게 시 판</option>
+									<option value="3">커뮤니티게시판</option>
+									<option value="4">레시피 게시판</option>
 								</select>
 							</td>
 							<td>
@@ -40,10 +42,12 @@
 		<div class="table-box-type-1 overflow-x-auto">
 			<table class="table table-compact w-full">
 				<colgroup>
-					<col width="80" />
-					<col width="140" />
-					<col />
-					<col width="140" />
+					<col width="10%" />
+					<col width="20%" />
+					<col width="40%" />
+					<col width="10%" />
+					<col width="5%" />
+					<col width="5%" />
 				</colgroup>
 				<thead>
 					<tr class="text-indigo-700">
