@@ -164,7 +164,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doCheckPw")
 	@ResponseBody
 	public String doCheckPw(String loginPw, String replaceUri) {
-
+		System.err.println("여기도야!!!!!!");
 		if (Ut.empty(loginPw)) {
 			System.out.println(loginPw + "       ??");
 			return rq.jsHistoryBack("!! 비밀번호를 입력 해 주세요. !!");

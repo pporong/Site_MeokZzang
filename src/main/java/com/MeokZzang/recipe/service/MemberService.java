@@ -15,6 +15,7 @@ public class MemberService {
 
 	public MemberService(MemberRepository memberRepository, AttrService attrService) {
 		this.memberRepository = memberRepository;
+		this.attrService = attrService;
 	}
 
 	public ResultData join(String loginId, String loginPw, String name, String nickname, String cellphoneNum, String email) {

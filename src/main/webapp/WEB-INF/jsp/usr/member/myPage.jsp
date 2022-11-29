@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="마이 페이지" />
 <%@ include file="../common/head.jspf"%>
+<%@ page import="com.MeokZzang.recipe.util.Ut" %>
 
 <section class="mt-8 text-xl">
 	<div class="container mx-auto px-3">
@@ -37,7 +38,7 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modify') }" 
+						<td><a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modifyMyInfo')}"
 							class="btn btn-outline btn-ghost btn-sm">회원 정보 수정</a>
 						</td>
 					</tr>
