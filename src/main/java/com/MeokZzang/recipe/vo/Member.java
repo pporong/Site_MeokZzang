@@ -33,4 +33,8 @@ public class Member {
 	public String getForPrintType2updateDate() {
 		return updateDate.substring(2, 16).replace(" ", "<br>");
 	}
+	
+	public boolean isAdmin() {
+		return this.authLevel == 7;
+	}
 }

@@ -1,5 +1,7 @@
 package com.MeokZzang.recipe.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.MeokZzang.recipe.vo.Member;
@@ -24,4 +26,9 @@ public interface MemberRepository {
 	public Member getForPrintMember(int id);
 	
 	public Member getArticleByMemberId();
+
+	public int getMembersCount(int authLevel, String searchKeywordTypeCode, String searchKeyword);
+
+	public List<Member> getForPrintMembers(int authLevel, String searchKeywordTypeCode, String searchKeyword,
+			int limitStart, int limitTake);
 }

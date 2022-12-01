@@ -44,58 +44,12 @@
 				</a>
 			</div>
 			
-			<div class="menu-box">
-				<ul class="flex justify-center">
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=1" class=""><span>공지사항</span></a></li>
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=4" class=""><span>레시피 게시판</span></a></li>
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a></li>
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=3" class=""><span>질문 게시판</span></a></li>
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=1" class=""><span>맛집 찾기</span></a></li>
-				</ul>
-			</div>
-			
-			
 			<div class="login-box flex justify-between">
 				<div class="write hover:underline">
-					<a href="/usr/article/write" class="hover:text-red-500">
-						<span>WRITE</span>
+					<a href="${rq.logoutUri}" class="hover:text-red-500">
+						<span>로그아웃</span>
 					</a>
 				</div>
-				<c:if test="${!rq.logined}">
-					<div class="login hover:underline">
-						<a href="${rq.loginUri}">
-							<span>LOGIN</span>
-						</a>
-					</div>
-				</c:if>
-				<c:if test="${rq.logined}">
-					<div class="logout hover:underline">
-						<a href="${rq.logoutUri}">
-							<span>LOGOUT</span>
-						</a>
-					</div>
-				</c:if>
-				<c:if test="${!rq.logined}">
-					<div class="join hover:underline">
-						<a href="${rq.joinUri}">
-							<span>JOIN</span>
-						</a>
-					</div>
-				</c:if>		
-				<c:if test="${rq.logined}">
-					<div class="mypage hover:underline">
-						<a href="/usr/member/myPage">
-							<span>MY PAGE</span>
-						</a>
-					</div>
-				</c:if>
-				<c:if test="${rq.admin}">
-					<div class="admin hover:underline">
-						<a class="" href="/adm/member/list">
-							<span>관리자</span>
-						</a>
-					</div>
-				</c:if>
 			</div>
 		</div>
 	</div>

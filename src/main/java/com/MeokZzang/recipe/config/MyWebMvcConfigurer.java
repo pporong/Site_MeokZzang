@@ -7,6 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.MeokZzang.recipe.interceptor.BeforeActionInterceptor;
+import com.MeokZzang.recipe.interceptor.NeedAdminInterceptor;
 import com.MeokZzang.recipe.interceptor.NeedLoginInterceptor;
 import com.MeokZzang.recipe.interceptor.NeedLogoutInterceptor;
 
@@ -21,6 +22,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 	// NeedLogoutInterceptor 불러오기
 	@Autowired
 	NeedLogoutInterceptor NeedLogoutInterceptor;
+	// NeedAdminInterceptor 불러오기 
+	@Autowired
+	NeedAdminInterceptor needAdminInterceptor;
 	
 	// 인터셉터 적용
 	public void addInterceptors(InterceptorRegistry registry) {
@@ -53,6 +57,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/usr/reactionPoint/doBadReaction");
 				ir.addPathPatterns("/usr/reactionPoint/doDeleteGoodReaction");
 				ir.addPathPatterns("/usr/reactionPoint/doDeleteBadReaction");
+				
 				ir.addPathPatterns("/usr/reactionPoint/doGoodReactionReply");
 				ir.addPathPatterns("/usr/reactionPoint/doDeleteGoodReactionReply");
 				ir.addPathPatterns("/usr/reactionPoint/doBadReactionReply");
@@ -62,6 +67,14 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/usr/reply/doDelete");
 				ir.addPathPatterns("/usr/reply/modify");
 				ir.addPathPatterns("/usr/reply/doModify");
+				
+				ir.addPathPatterns("/adm/**");
+				ir.addPathPatterns("/adm/member/login");
+				ir.addPathPatterns("/adm/member/doLogin");
+				ir.addPathPatterns("/adm/member/findLoginId");
+				ir.addPathPatterns("/adm/member/doFindLoginId");
+				ir.addPathPatterns("/adm/member/findLoginPw");
+				ir.addPathPatterns("/adm/member/doFindLoginPw");
 
 				// logout 필요
 				ir = registry.addInterceptor(NeedLogoutInterceptor);
@@ -75,5 +88,15 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/usr/member/goFindLoginId");
 				ir.addPathPatterns("/usr/member/findLoginPw");
 				ir.addPathPatterns("/usr/member/goFindLoginPw");
+				
+				// adm
+				ir = registry.addInterceptor(needAdminInterceptor);
+				ir.addPathPatterns("/adm/**");
+				ir.addPathPatterns("/adm/member/login");
+				ir.addPathPatterns("/adm/member/doLogin");
+				ir.addPathPatterns("/adm/member/findLoginId");
+				ir.addPathPatterns("/adm/member/doFindLoginId");
+				ir.addPathPatterns("/adm/member/findLoginPw");
+				ir.addPathPatterns("/adm/member/doFindLoginPw");
 	}
 }
