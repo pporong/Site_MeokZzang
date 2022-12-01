@@ -3,70 +3,10 @@
 <c:set var="pageTitle" value="MEOK ZZANG" />
 <%@ include file="../common/head.jspf"%>
 
-<div class=" h-20 flex container mx-auto text-2xl">
-
-		<div class="flex-grow"></div>
-		<ul class="flex">
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/">
-						<span>HOME</span>
-					</a>
-				</li>
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=1">
-						<span>NOTICE</span>
-					</a>
-				</li>
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=2">
-						<span>FREE</span>
-					</a>
-				</li>
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=3">
-						<span>COMMUNITY</span>
-					</a>
-				</li>
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/usr/article/list?boardId=4">
-						<span>RECIPE</span>
-					</a>
-				</li>
-				<li class="hover:underline">
-					<a class="h-full px-3 flex items-center" href="/usr/article/write">
-						<span>WRITE</span>
-					</a>
-				</li>
-				<c:if test="${!rq.logined}">
-					<li class="hover:underline">
-						<a class="h-full px-3 flex items-center" href="${rq.joinUri }">
-							<span>JOIN</span>
-						</a>
-					</li>
-				</c:if>
-				<c:if test="${!rq.logined}">
-					<li class="hover:underline">
-						<a class="h-full px-3 flex items-center" href="${rq.loginUri}">
-							<span>LOGIN</span>
-						</a>
-					</li>
-				</c:if>
-				<c:if test="${rq.logined}">
-					<li class="hover:underline">
-						<a class="h-full px-3 flex items-center" href="${rq.logoutUri}">
-							<span>LOGOUT</span>
-						</a>
-					</li>
-				</c:if>
-				<c:if test="${rq.logined}">
-					<li class="hover:underline">
-						<a class="h-full px-3 flex items-center" href="/usr/member/myPage">
-							<span>MYPAGE</span>
-						</a>
-					</li>
-				</c:if>
-		</ul>
-</div>
+	<div class="main-visual">
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. At consectetur similique dignissimos ipsum voluptatem labore numquam aut optio ea obcaecati illum recusandae magnam rerum perferendis excepturi dolorem placeat vel dolorum.
+		Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit nihil laborum provident blanditiis culpa vero atque qui incidunt deleniti quisquam. Inventore error aliquam velit minima recusandae quo laboriosam quasi facere!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta porro perspiciatis reiciendis facere animi tenetur ipsam beatae adipisci? Vel nisi quis velit at doloribus maxime provident quas fuga consequuntur necessitatibus!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex nam obcaecati qui libero perspiciatis aliquid fuga explicabo pariatur cumque eaque eligendi dolores quod nostrum officiis unde error delectus. Explicabo nemo.Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum earum nulla dolor soluta minima ducimus alias nam molestias explicabo amet. Velit maxime neque molestiae pariatur architecto odit autem ducimus molestias!
+	</div>
 
 </body>
 </html>

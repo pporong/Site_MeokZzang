@@ -110,7 +110,7 @@
 			isAjax : 'Y',
 			loginId : form.loginId.value
 		}, function(data) {
-			$('.loginIdMsg').html('<div class="mt-2">' + data.msg + '</div>');
+			$('.loginIdMsg').html(data.msg);
 			$('.loginIdMsg, .inputLoginId').addClass('has-fail');
 			$('.loginIdMsg, .inputLoginId').removeClass('has-success');
 			
@@ -129,62 +129,75 @@
 	}
 </script>
 
-<section class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
-		<form class="" method="POST" action="../member/doJoin" onsubmit="MemberJoin__submit(this); return false;">
-			 <table class="table table-compact w-full center-box">
-				<colgroup>
-					<col width="200" />
-				</colgroup>
-
-				<tbody>
-					<tr class="hover">
-						<th>▶ 아이디 </th>
-						<td>
-							<input class="w-96 inputLoginId" name="loginId" type="text" placeholder="아이디를 입력 해 주세요." onkeyup="checkLoginIdDupDebounced(this);" autocomplete="off"/>
-							<div class="loginIdMsg"></div>
-						</td>
-					</tr>
-
-					<tr class="hover">
-						<th class="">▶ 비밀번호 </th>
-						<td><input class="w-96" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" /></td>
-					</tr>
-					<tr class="hover">
-						<th class="">▶ 비밀번호 확인 </th>
-						<td><input class="w-96" name="loginPwConfirm" type="password" placeholder="비밀번호를 다시 한 번 입력해주세요" /></td>
-					</tr> 
-					<tr class="hover">
-						<th class="">▶ 이름 </th>
-						<td><input class="w-96" name="name" type="text" placeholder="이름을 입력 해 주세요." /></td>
-					</tr>
-					<tr class="hover">
-						<th class="">▶ 닉네임 </th>
-						<td><input class="w-96" name="nickname" type="text" placeholder="닉네임을 입력해주세요" /></td>
-					</tr>
-					<tr class="hover">
-						<th class="">▶ 전화 번호 </th>
-						<td><input class="w-96" name="cellphoneNum" type="text" placeholder="전화번호를 입력해주세요" /></td>
-					</tr>
-					<tr class="hover">
-						<th class="">▶ 이메일 </th>
-						<td><input class="w-96" name="email" type="text" placeholder="이메일을 입력해주세요" /></td>
-					</tr>
-
-					<tr class="">
-						<th></th>
-						<td class="">
-							<button class="btn btn-ghost btn-sm btn-outline" type="submit">회원 가입</button>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div class="container mx-auto btns flex justify-end">
-				<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+<section class="memberJoin_section">
+	<div class="form_wrap">
+		<div class="memberJoin_form">
+		<form class="members_form" method="POST" action="../member/doJoin" onsubmit="MemberJoin__submit(this); return false;">
+			<div class="memberJoin-input">
+					<div class="line flex">
+						<label for="user-loginId">▶ 아이디</label>
+						<div class="id_input-box input-box">
+							<input class="id-input" name="loginId" type="text" placeholder="아이디를 입력 해 주세요." onkeyup="checkLoginIdDupDebounced(this);" autocomplete="off"/>
+						</div>
+						<div class="loginIdMsg"></div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-loginPw">▶ 비밀번호</label>
+						<div class="pw_input-box input-box">
+							<input class="pw-input" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" />
+						</div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-loginPw user-loginPwConfirm">▶ 비밀번호 확인</label>
+						<div class="pw_input-box input-box">
+							<input class="pw-input" name="loginPwConfirm" type="password" placeholder="비밀번호를 다시 한 번 입력해주세요" />
+						</div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-name">▶ 이름</label>
+						<div class="name_input-box input-box">
+							<input class="name-input" name="name" type="text" placeholder="이름을 입력해주세요" />
+						</div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-nickname">▶ 닉네임</label>
+						<div class="nickname_input-box input-box">
+							<input class="nickname-input" name="nickname" type="text" placeholder="닉네임을 입력해주세요" />
+						</div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-cellphoneNum">▶ 전화번호</label>
+						<div class="cellphoneNum_input-box input-box">
+							<input class="cellphoneNum-input" name="cellphoneNum" type="text" placeholder="전화번호를 입력해주세요" />
+						</div>
+					</div>
+					
+					<div class="line line-2 flex">
+						<label for="user-email">▶ 이메일</label>
+						<div class="email_input-box input-box">
+							<input class="email-input" name="email" type="text" placeholder="이메일을 입력해주세요" />
+						</div>
+					</div>
+					
+				</div>
+				
+				<button class="j-btn" type="submit" value="회원가입">회원가입</button>
+				
+				</form>
+				
+			<!-- 뒤로가기 버튼 -->
+			<div class="find-btn">
+				<button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
 			</div>
-		</form>
+		</div>
 	</div>
 </section>
+
 
 </body>
 </html>

@@ -28,42 +28,38 @@
 	}
 </script>
 
-<section class="mt-8 text-xl ">
-	<div class="container mx-auto px-3 ">
-		<form class="" method="POST" action="../member/goFindLoginPw"
-		 onsubmit="MemberFindLoginPw__submit(this) ; return false;">
+<section class="findLoginPw_section">
+		
+	<div class="form_wrap">
+		<div class="find_loginPw_form">
+		<form class="members_form" method="POST" action="../member/goFindLoginPw" onsubmit="MemberFindLoginPw__submit(this) ; return false;">
 		<input type="hidden" name="afterFindLoginPwUri" value="${param.afterFindLoginPwUri}" />
-			<div class="">
-				<div class="find-btn-box flex justify-end ">
-					<a href="/usr/member/login" class="btn btn-active btn-ghost btn-sm" type="submit">로그인</a>
-					<a href="/usr/member/findLoginId" class="btn btn-active btn-ghost btn-sm" type="submit">아이디 찾기</a>
+			<div class="findLoginPw-input">
+					<div class="line">
+						<label for="user-loginId">아이디</label>
+						<div class="id_input-box">
+							<input class="id-input" name="loginId" type="text" placeholder="아이디를 입력해주세요" />
+						</div>
+					</div>
+					<div class="line line-2">
+						<label for="user-email">이메일</label>
+						<div class="email_input-box">
+							<input class="email-input" name="email" type="text" placeholder="이메일을 입력해주세요" />
+						</div>
+					</div>
 				</div>
-				<table class="table table-compact w-full center-box">
-					<colgroup>
-						<col width="200" />
-					</colgroup>
-
-					<tbody>
-						<tr class="hover">
-							<th>▶ 아이디</th>
-							<td><input class="w-96" name="loginId" type="text" placeholder="아이디를 입력해주세요" /></td>
-						</tr>
-						<tr class="hover">
-							<th>▶ 이메일</th>
-							<td><input class="w-96" name="email" type="text" placeholder="이메일을 입력해주세요" /></td>
-						</tr>
-						<tr class="">
-							<th></th>
-							<td><button class="btn btn-ghost btn-sm btn-outline" type="submit" >비밀번호 찾기</button></td>
-						</tr>					
-					</tbody>
-				</table>
+				
+				<button class="f-btn" type="submit" value="비밀번호 찾기">비밀번호 찾기</button>
+				
+				</form>
+				
+			<!-- 찾기 버튼 + 뒤로가기 -->
+			<div class="find-btn">
+				<a href="${rq.findLoginIdUri }" class="" type="submit">아이디 찾기</a>
+				<span class="l-bar"></span>
+				<button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
 			</div>
-		</form>
-	</div>
-
-	<div class="container mx-auto btns flex justify-end">
-		<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+		</div>
 	</div>
 </section>
 

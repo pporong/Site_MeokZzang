@@ -1,46 +1,45 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="먹짱 로그인" />
+<c:set var="pageTitle" value="로그인" />
 <%@ include file="../common/head.jspf"%>
 
-<section class="mt-8 text-xl ">
-	<div class="container mx-auto px-3 ">
-		<form class="" method="POST" action="../member/doLogin">
-		<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
-		<div class="find-btn-box flex justify-end ">
-			<a href="${rq.findLoginIdUri }" class=" btn  btn-sm btn-ghost" type="submit">아이디 찾기</a>
-			<a href="${rq.findLoginPwUri }" class=" btn  btn-sm btn-ghost" type="submit">비밀번호 찾기</a>
-		</div>
-			<div class="">
-				<table class="table table-compact w-full">
-					<colgroup>
-						<col width="200" />
-					</colgroup>
-
-					<tbody>
-						<tr>
-							<th>▶ 아이디</th>
-							<td><input class="w-96" name="loginId" type="text" placeholder="아이디를 입력해주세요" /></td>
-						</tr>
-						<tr>
-							<th>▶ 비밀번호</th>
-							<td><input class="w-96" name="loginPw" type="text" placeholder="비밀번호를 입력해주세요" /></td>
-						</tr>
-						<tr>
-							<th></th>
-							<td><button class="btn btn-ghost btn-sm btn-outline" type="submit" value="로그인">로그인</button></td>
-						</tr>
-					</tbody>
-				</table>
+<section class="login_section">
+		
+	<div class="login_form_wrap">
+		<div class="login-form">
+			<form class="members_form" method="POST" action="../member/doLogin">
+				<input type="hidden" name="afterLoginUri" value="${param.afterLoginUri}" />
+				<div class="login-input">
+					<div class="line">
+						<label for="user-loginId">아이디</label>
+						<div class="id_input-box">
+							<input class="id-input" name="loginId" type="text" placeholder="아이디를 입력해주세요" />
+						</div>
+					</div>
+					<div class="line line-2">
+						<label for="user-loginPw">비밀번호</label>
+						<div class="pw_input-box">
+							<input class="pw-input" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" />
+						</div>
+					</div>
+				</div>
+				
+				<button class="l-btn" type="submit" value="로그인">로그인</button>
+				
+				</form>
+				
+			<!-- 찾기 버튼 -->
+			<div class="find-btn">
+				<a href="${rq.findLoginIdUri }" class="" type="submit">아이디 찾기</a>
+				<span class="l-bar"></span>
+				<a href="${rq.findLoginPwUri }" class="" type="submit">비밀번호 찾기</a>
 			</div>
-		</form>
+		</div>
 	</div>
-
-	<div class="container mx-auto btns">
-		<button class="btn-text-link" type="button" onclick="history.back();">뒤로가기</button>
-	</div>
-
+	
 </section>
+
+
 
 </body>
 </html>
