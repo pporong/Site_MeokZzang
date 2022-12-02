@@ -190,6 +190,7 @@ public class UsrArticleController {
 				model.addAttribute("actorCanDelBadRp", true);
 			}
 		}
+		
 		model.addAttribute("isLogined",rq.isLogined());
 		
 		return "usr/article/detail";

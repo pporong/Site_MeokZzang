@@ -75,6 +75,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/adm/member/doFindLoginId");
 				ir.addPathPatterns("/adm/member/findLoginPw");
 				ir.addPathPatterns("/adm/member/doFindLoginPw");
+				ir.addPathPatterns("/adm/member/list");
 
 				// logout 필요
 				ir = registry.addInterceptor(NeedLogoutInterceptor);
@@ -98,5 +99,6 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/adm/member/doFindLoginId");
 				ir.addPathPatterns("/adm/member/findLoginPw");
 				ir.addPathPatterns("/adm/member/doFindLoginPw");
+				ir.addPathPatterns("/adm/member/list");
 	}
 }

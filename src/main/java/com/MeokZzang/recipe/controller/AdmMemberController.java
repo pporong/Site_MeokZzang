@@ -10,13 +10,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.MeokZzang.recipe.service.MemberService;
 import com.MeokZzang.recipe.vo.Member;
+import com.MeokZzang.recipe.vo.Rq;
 
 @Controller
 public class AdmMemberController {
 
 	@Autowired
 	private MemberService memberService;
-
+	@Autowired
+	private Rq rq;
+	
 	// list
 	@RequestMapping("/adm/member/list")
 	public String showList(Model model, @RequestParam(defaultValue = "0") int authLevel,
