@@ -50,10 +50,9 @@
 					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=4" class=""><span>레시피 게시판</span></a></li>
 					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a></li>
 					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=3" class=""><span>질문 게시판</span></a></li>
-					<li class="hover:text-blue-700"><a href="/usr/article/list?boardId=1" class=""><span>맛집 찾기</span></a></li>
+					<li class="hover:text-blue-700"><a href="/usr/data/resRecomm" class=""><span>맛집 찾기</span></a></li>
 				</ul>
 			</div>
-			
 			
 			<div class="login-box flex justify-between">
 				<div class="write hover:underline">

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class APIController {
 	
-	@RequestMapping("/usr/data/apiTest")
+	@RequestMapping("/usr/data/resRecomm")
 	String showTestPage() {
 		return "usr/data/API";
 	}
