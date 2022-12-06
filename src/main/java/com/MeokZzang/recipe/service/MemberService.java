@@ -56,7 +56,11 @@ public class MemberService {
 	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberRepository.getMemberByNameAndEmail(name, email);
 	}
-
+	
+	public Member getMemberByNickname(String nickname) {
+		return memberRepository.getMemberByNickname(nickname);
+	}
+	
 	public Member getMemberByLoginId(String loginId) {
 		return memberRepository.getMemberByLoginId(loginId);
 

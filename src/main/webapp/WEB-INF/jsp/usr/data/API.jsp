@@ -197,8 +197,8 @@
 <!-- 공공데이터포털 + kakao Map end -->
 
 <!-- 페이지 검색 -->
-<div class="container mx-auto px-5 mt-8" >
-		<div class="list_nav flex justify-between">
+<div class="container mx-auto px-5  con" >
+		<div class="list_nav flex justify-between mt-4">
 		<!-- 검색 박스 -->
 		<div> 총 갯수 : <span id="badge" class="badge"></span></div>
 		<input type="hidden" id="totalPage"/>
@@ -206,7 +206,7 @@
 					<table class="pull-right">
 						<tr>
 							<th class="badge" style="margin-top : 7px;">상 호 명</th>
-							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px;" type="text" placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
+							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px;" type="text" autocomplete="off"; placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
 							<td><button id="search" type="submit" class="btn btn-active btn-sm btn-warning">검색</button></td>
 						</tr>
 					</table>	
@@ -215,7 +215,7 @@
 		</div>
 		
 <!-- 상호명 리스트 -->	
-<div class="container mx-auto px-5">
+<div class="container mx-auto px-5 con">
 	<div class="flex mt-4 mx-auto">
 		<section class="text-xl mr-2" style = "width :50%;">
 		

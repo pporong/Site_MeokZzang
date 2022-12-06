@@ -54,9 +54,13 @@
 	}
 </script>
 
-<section class="mt-8 text-xl">
+<!-- 내 정보 수정 시작 -->
+<section class="modifyInfo_section mt-8 text-xl">
+    <div class="menual">
+       ** ▷ : 수정 가능 / ▶ : 수정 불가능
+    </div>
 	<div class="container mx-auto px-3">
-		<form class="" method="POST" action="../member/doModifyMyInfo" onsubmit="MemberModify__submit(this); return false;">
+		<form class="modifyMyInfo_form" method="POST" action="../member/doModifyMyInfo" onsubmit="MemberModify__submit(this); return false;">
 		<input type="hidden" name="memberModifyAuthKey" value="${param.memberModifyAuthKey }" />
 			 <table class="table table-compact w-full center-box">
 				<colgroup>
@@ -104,15 +108,16 @@
 					<tr class="">
 						<th></th>
 						<td class="">
-							<button class="btn btn-ghost btn-sm btn-outline" 
+							<button class="m-btn" 
 							onclick="if(confirm('변경 내용이 정확합니까?') == false) return false;" 
 							type="submit" value="회원 정보 수정">회원 정보 수정 완료</button>
 						</td>
 					</tr>
 				</tbody>
 			</table>
-			<div class="container mx-auto btns flex justify-end">
-				<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
+
+			<div class="con btn_box mx-auto btns flex justify-end">
+				<button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
 			</div>
 		</form>
 	</div>

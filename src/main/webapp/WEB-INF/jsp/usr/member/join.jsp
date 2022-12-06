@@ -6,6 +6,7 @@
 <script>
 	let MemberJoin__submitDone = false;
 	let validLoginId = "";
+	let validNickname ="";
 	
 	function MemberJoin__submit(form) {
 		
@@ -110,7 +111,7 @@
 			isAjax : 'Y',
 			loginId : form.loginId.value
 		}, function(data) {
-			$('.loginIdMsg').html(data.msg);
+			$('.loginIdMsg').html('<div class="mt-2">' + data.msg + '</div>');
 			$('.loginIdMsg, .inputLoginId').addClass('has-fail');
 			$('.loginIdMsg, .inputLoginId').removeClass('has-success');
 			
@@ -127,77 +128,125 @@
 			}
 		}, 'json');
 	}
+	
+	// 닉네임 중복체크
+	const checkNicknameDupDebounced = _.debounce(checkNicknameDup, 300);
+	
+	function checkNicknameDup(el) {
+		
+		console.log('checkNicknameDup called : ' + ++callCount);
+		console.log(el.value)
+		
+		const form = $(el).closest('form').get(0);
+		
+		if (form.nickname.value.length == 0) {
+			nickname = '';
+			return;
+		}
+		if (validNickname == form.nickname.value) {
+			return;
+		}
+		
+		$('.nicknameMsg').html('<div class="mt-2">확인중...</div>');
+		
+		$.get('../member/doCheckNickname', {
+			isAjax : 'Y',
+			nickname : form.nickname.value
+		}, function(data) {
+			$('.nicknameMsg').html('<div class="mt-2">' + data.msg + '</div>');
+			$('.nicknameMsg, .inputNickname').addClass('has-fail');
+			$('.nicknameMsg, .inputNickname').removeClass('has-success');
+			
+			if (data.success) {
+				validLoginId = data.data1;
+				$('.nicknameMsg, .inputNickname').addClass('has-success');
+				$('.nicknameMsg, .inputNickname').removeClass('has-fail');
+				
+			} else {
+				validNickname = '';
+			} if (data.resultCode == 'F-B'){
+				alert(data.msg);
+				location.replace('/');
+			}
+		}, 'json');
+	}
+	
 </script>
 
-<section class="memberJoin_section">
-	<div class="form_wrap">
-		<div class="memberJoin_form">
-		<form class="members_form" method="POST" action="../member/doJoin" onsubmit="MemberJoin__submit(this); return false;">
-			<div class="memberJoin-input">
-					<div class="line flex">
-						<label for="user-loginId">▶ 아이디</label>
-						<div class="id_input-box input-box">
-							<input class="id-input" name="loginId" type="text" placeholder="아이디를 입력 해 주세요." onkeyup="checkLoginIdDupDebounced(this);" autocomplete="off"/>
-						</div>
-						<div class="loginIdMsg"></div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-loginPw">▶ 비밀번호</label>
-						<div class="pw_input-box input-box">
-							<input class="pw-input" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" />
-						</div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-loginPw user-loginPwConfirm">▶ 비밀번호 확인</label>
-						<div class="pw_input-box input-box">
-							<input class="pw-input" name="loginPwConfirm" type="password" placeholder="비밀번호를 다시 한 번 입력해주세요" />
-						</div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-name">▶ 이름</label>
-						<div class="name_input-box input-box">
-							<input class="name-input" name="name" type="text" placeholder="이름을 입력해주세요" />
-						</div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-nickname">▶ 닉네임</label>
-						<div class="nickname_input-box input-box">
-							<input class="nickname-input" name="nickname" type="text" placeholder="닉네임을 입력해주세요" />
-						</div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-cellphoneNum">▶ 전화번호</label>
-						<div class="cellphoneNum_input-box input-box">
-							<input class="cellphoneNum-input" name="cellphoneNum" type="text" placeholder="전화번호를 입력해주세요" />
-						</div>
-					</div>
-					
-					<div class="line line-2 flex">
-						<label for="user-email">▶ 이메일</label>
-						<div class="email_input-box input-box">
-							<input class="email-input" name="email" type="text" placeholder="이메일을 입력해주세요" />
-						</div>
-					</div>
-					
-				</div>
-				
-				<button class="j-btn" type="submit" value="회원가입">회원가입</button>
-				
-				</form>
-				
-			<!-- 뒤로가기 버튼 -->
-			<div class="find-btn">
-				<button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
-			</div>
-		</div>
-	</div>
-</section>
+    <!-- 회원가입 시작 -->
+    <section class="memberJoin_section">
+        <div class="form_wrap">
+            <div class="memberJoin_form">
+                <form class="members_form" method="POST" action="../member/doJoin"
+                    onsubmit="MemberJoin__submit(this); return false;">
+                    <div class="memberJoin-input">
+                        <div class="line flex">
+                            <label for="user-loginId">▶ 아이디</label>
+                            <div class="id_input-box input-box">
+                                <input class="id-input" name="loginId" type="text" placeholder="아이디를 입력 해 주세요."
+                                    onkeyup="checkLoginIdDupDebounced(this);" autocomplete="off" />
+                            </div>
+                            <div class="loginIdMsg"></div>
+                        </div>
 
+                        <div class="line line-2 flex">
+                            <label for="user-loginPw">▶ 비밀번호</label>
+                            <div class="pw_input-box input-box">
+                                <input class="pw-input" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" />
+                            </div>
+                        </div>
+
+                        <div class="line line-2 flex">
+                            <label for="user-loginPw user-loginPwConfirm">▶ 비밀번호 확인</label>
+                            <div class="pw_input-box input-box">
+                                <input class="pw-input" name="loginPwConfirm" type="password"
+                                    placeholder="비밀번호를 다시 한 번 입력해주세요" />
+                            </div>
+                        </div>
+
+                        <div class="line line-2 flex">
+                            <label for="user-name">▶ 이름</label>
+                            <div class="name_input-box input-box">
+                                <input class="name-input" name="name" type="text" placeholder="이름을 입력해주세요" />
+                            </div>
+                        </div>
+                                                
+                        <div class="line line-2 flex">
+                            <label for="user-nickname">▶ 닉네임</label>
+                            <div class="nickname_input-box input-box">
+                                <input class="nickname-input" name="nickname" autocomplete="off" type="text" placeholder="닉네임을 입력해주세요" 
+                                onkeyup="checkNicknameDupDebounced(this);" />
+                            </div>
+                            <div class="nicknameMsg"></div>
+                        </div>
+
+                        <div class="line line-2 flex">
+                            <label for="user-cellphoneNum">▶ 전화번호</label>
+                            <div class="cellphoneNum_input-box input-box">
+                                <input class="cellphoneNum-input" name="cellphoneNum" type="text"
+                                    placeholder="전화번호를 입력해주세요" />
+                            </div>
+                        </div>
+
+                        <div class="line line-2 flex">
+                            <label for="user-email">▶ 이메일</label>
+                            <div class="email_input-box input-box">
+                                <input class="email-input" name="email" autocomplete="off" type="text" placeholder="이메일을 입력해주세요" />
+                            </div>
+                        </div>
+					</div>
+					
+                    <button class="j-btn" type="submit" value="회원가입">회원가입</button>
+
+                </form>
+
+                <!-- 뒤로가기 버튼 -->
+                <div class="find-btn ">
+                    <button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
+                </div>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>

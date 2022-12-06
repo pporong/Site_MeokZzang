@@ -3,9 +3,9 @@
 <c:set var="pageTitle" value="${board.name }게시판" />
 <%@ include file="../common/head.jspf"%>
 
-<section class="mt-8 text-xl">
+<section class="mt-8 text-xl con">
 	<div class="container mx-auto px-3">
-		<div class="list_nav flex justify-between">
+		<div class="list_nav flex justify-between mt-4 my-2">
 		<!-- 검색 박스 -->
 		<div> 게시물 갯수 : <span class="badge"> ${articlesCount } 개</span></div>
 			<div class="search-box">

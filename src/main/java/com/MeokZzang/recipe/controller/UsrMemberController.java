@@ -82,6 +82,24 @@ public class UsrMemberController {
 		return ResultData.from("S-A1", "사용 가능한 아이디 입니다.", "logindId", loginId);
 	}
 
+	// 닉네임 중복검사
+	@RequestMapping("usr/member/doCheckNickname")
+	@ResponseBody
+	public ResultData doCheckNickname(String nickname) {
+
+		if (Ut.empty(nickname)) {
+			return ResultData.from("F-A1", "닉네임을 입력해주세요");
+		}
+
+		Member oldMember = memberService.getMemberByNickname(nickname);
+
+		if (oldMember != null) {
+			return ResultData.from("F-A2", "이미 존재하는 닉네임 입니다.", "nickname", nickname);
+		}
+
+		return ResultData.from("S-A1", "사용 가능한 닉네임 입니다.", "nickname", nickname);
+	}
+
 	// login
 	@RequestMapping("/usr/member/login")
 	public String viewLogin() {
@@ -208,6 +226,7 @@ public class UsrMemberController {
 		return rq.jsReplace("", replaceUri);
 	}
 
+	// 개인정보수정
 	@RequestMapping("/usr/member/modifyMyInfo")
 	public String modifyMyInfo(String memberModifyAuthKey) {
 
@@ -225,7 +244,6 @@ public class UsrMemberController {
 		return "usr/member/modifyMyInfo";
 	}
 
-	// 개인정보수정
 	@RequestMapping("/usr/member/doModifyMyInfo")
 	@ResponseBody
 	public String doModifyMyInfo(String memberModifyAuthKey, String loginPw, String nickname, String cellphoneNum,

@@ -38,7 +38,7 @@
 	}
 </script>
 
-<section class="mt-8 text-xl">
+<section class="mt-8 text-xl con">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<form class="table-box-type-1 overflow-x-auto" method="POST" action="../article/doWrite" onsubmit="submitWriteForm(this); return false;">
@@ -59,7 +59,9 @@
 						<td>
 							<select name="boardId">
 								<option disabled> 게시판 선택 </option>
-								<option value="1"> 공 지 사 항 </option>
+								<c:if test="${rq.admin}">
+									<option value="1"> 공 지 사 항 </option>
+								</c:if>
 								<option value="2"> 자 유 게 시 판 </option>
 								<option value="3"> 커 뮤 니 티 </option>
 								<option value="4"> 레 시 피 게 시 판 </option>
@@ -82,18 +84,19 @@
 						</tr>
 						<tr>
 							<th class="text-indigo-700"></th>
-							<td class=""><button class="btn btn-ghost btn-sm" type="submit" value="등록">등록</button></td>
+							<td class=""><button class=" btn-sm hover:text-red-500" type="submit" value="등록">등록</button></td>
 						</tr>
 					</tbody>
 				</table>
 			</form>
 		</div>
 
-		<div class="btns">
-			<button type="button" onclick="history.back();">뒤로가기</button>
+		<div class="btns row my-4">
+			<button class="cell-r hover:text-blue-900 " type="button" onclick="history.back();">뒤로가기</button>
 		</div>
 	</div>
 </section>
+
 
 
 </body>

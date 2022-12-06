@@ -89,6 +89,9 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 				ir.addPathPatterns("/usr/member/goFindLoginId");
 				ir.addPathPatterns("/usr/member/findLoginPw");
 				ir.addPathPatterns("/usr/member/goFindLoginPw");
+
+				ir.addPathPatterns("/usr/member/getNicknameDup");
+				ir.addPathPatterns("/usr/member/doCheckNickname");
 				
 				// adm
 				ir = registry.addInterceptor(needAdminInterceptor);

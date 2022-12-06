@@ -3,41 +3,42 @@
 <c:set var="pageTitle" value="비밀 번호 확인" />
 <%@ include file="../common/head.jspf"%>
 
-<section class="mt-8 text-xl ">
-	<div class="container mx-auto px-3 ">
-		<form class="" method="POST" action="../member/doCheckPw">
-		<input type="hidden" name="replaceUri" value="${param.replaceUri}"/>
-			<div class="">
-				<table class="table table-compact w-full">
-					<colgroup>
-						<col width="200" />
-					</colgroup>
+ <!-- 비밀번호 확인 시작 -->
+    <section class="checkPW_section con">
 
-					<tbody>
-						<tr>
-							<th>▶ 아이디 </th>
-							<td>${rq.loginedMember.loginId }</td>
-						</tr>
-						<tr>
-							<th>▶ 비밀번호 확인</th>
-							<td>
-								<input name="loginPw" required="required" placeholder="비밀번호를 입력해주세요"/>
-							</td>	
-						</tr>
-						<tr>
-							<th></th>
-							<td><button class="btn btn-ghost btn-sm btn-outline" type="submit" value="비밀번호 확인">비밀번호 확인</button></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</form>
-	</div>
+        <div class="form_wrap">
+            <div class="chechPw_form">
+                <form class="pw_form" method="POST" action="../member/doCheckPw">
+                    <input type="hidden" name="replaceUri" value="${param.replaceUri}" />
+                    <div class="cPw-input">
+                        <div class="line">
+                            <div class="loginId_box">
+                                <div class="title">아이디</div>
+                                <div class="id_name">${rq.loginedMember.loginId }</div>
+                            </div>
+                        </div>
+                        <div class="line line-2">
+                            <label for="user-pw">비밀번호</label>
+                            <div class="pw_input_box">
+                                <input class="name-input" required="required" name="loginPw" type="password"
+                                    placeholder="비밀번호를 입력해주세요" />
+                            </div>
+                        </div>
 
-	<div class="container mx-auto btns flex justify-end">
-		<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
-	</div>
-</section>
+                    </div>
+
+                    <button class="c-btn" type="submit" value="비밀번호 확인">비밀번호 확인</button>
+
+                </form>
+
+                <!-- 뒤로가기 -->
+                <div class="btn_box flex justify-end">
+                    <button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
+                </div>
+            </div>
+        </div>
+
+    </section>
 
 </body>
 </html>

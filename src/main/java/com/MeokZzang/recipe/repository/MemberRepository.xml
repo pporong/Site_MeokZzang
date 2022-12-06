@@ -32,6 +32,7 @@
 		FROM `member`
 		AS M
 		WHERE M.loginId = #{loginId}
+		and delStatus = 0;
 	</select>
 
 	<select id="getMemberByNameAndEmail" resultType="Member">
@@ -40,6 +41,15 @@
 		`member` AS M
 		WHERE M.name = #{name}
 		AND M.email = #{email}
+		and delStatus = 0;
+	</select>
+	
+	<select id="getMemberByNickname" resultType="Member">
+		SELECT *
+		FROM
+		`member` AS M
+		WHERE M.name = #{nickname}
+		and delStatus = 0;
 	</select>
 
 	<select id="getLoginedMemberName" resultType="Member">
@@ -47,6 +57,7 @@
 		extra__writerName
 		FROM `member` AS M
 		WHERE M.id = #{id}
+		and delStatus = 0;
 	</select>
 
 	<update id="modifyMyInfo">
