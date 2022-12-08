@@ -21,6 +21,7 @@ public class Reply {
 	private String extra__writerName;
 	private boolean extra__actorCanDelete;
 	private boolean extra__actorCanModify;
+	private boolean extra___actorCanRecomm;
 
 	public String getForPrintType1RegDate() {
 		return regDate.substring(2, 16).replace(" ", " ");

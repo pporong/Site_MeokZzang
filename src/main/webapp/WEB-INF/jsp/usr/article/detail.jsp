@@ -45,7 +45,6 @@
 		}
 		
 		form.body.value = form.body.value.trim();
-
 		if (form.body.value.length < 2) {
 			alert('2글자 이상 입력해주세요');
 			form.body.focus();
@@ -55,9 +54,33 @@
 		ReplyWrite__submitFormDone = true;
 		form.submit();
 	}
-	function f_clickReplyBtn() {
-		alert(if(confirm('댓글을 등록 하시겠습니까?') == false) return false);
-	}	
+	
+</script>
+
+<script>
+// 댓추
+/* function replyRecomm(){
+
+	console.log($('#replyId').find('input:eq(0)').val())
+	var params = {
+		
+	}
+	
+	$.get('/usr/reactionPoint/doGoodReactionReply?', {
+		id : $('#replyId').find('input:eq(0)').val(),
+		relTypeCode : 'reply',
+		replaceUri : $('#replyId').find('input:eq(1)').val() ,
+		ajaxMode : 'Y'
+	}, function(data) {
+		console.log(data)
+	}, 'json');
+	
+	 
+}
+
+$(document).on('click', '#replyId', function(){
+	replyRecomm();
+}) */
 </script>
 
 <section class="mt-8 text-xl">
@@ -132,27 +155,28 @@
 								</div>
 							</c:if>
 
-							<!-- 싫어요를 누르고싶다면 좋아요를 취소 해! -->
-							<c:if test="${actorCanDelGoodRp }">
-						 		<div class="btns my-3 flex justify-center">
-									<!-- 추천 버튼 -->
-									<a id="" href="/usr/reactionPoint/doDeleteGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
-										class="btn gap-2 btn-sm mx-2 btn-like btn-warning"> 👍 좋아요 </a>
-									<a onclick="alert(this.title); return false;" title="싫어요를 누르고 싶다면 좋아요를 취소 해 주세요!" id="" href="#" 
-										class="btn gap-2 btn-sm btn-hate btn-outline"> 👎 싫어요 </a>
-								</div> 
-						 	</c:if>
-
-						 	<!-- 좋아요를 누르고싶다면 싫어요를 취소 해! -->
-							<c:if test="${actorCanDelBadRp }">
-							 	<div class="btns my-3 flex justify-center">
-									<!-- 추천 버튼 -->
-									<a onclick="alert(this.title); return false;" title="좋아요를 누르고 싶다면 싫어요를 취소 해 주세요!" id="" href="#" 
-										class="btn gap-2 btn-sm mx-2 btn-like btn-outline"> 👍 좋아요 </a>
-									<a href="/usr/reactionPoint/doDeleteBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
-										class="btn gap-2 btn-sm btn-hate btn-warning"> 👎 싫어요 </a>
-								</div> 
-						 	</c:if>
+								<!-- 싫어요를 누르고싶다면 좋아요를 취소 해! -->
+								<c:if test="${actorCanDelGoodRp }">
+							 		<div class="btns my-3 flex justify-center">
+										<!-- 추천 버튼 -->
+										<a id="" href="/usr/reactionPoint/doDeleteGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+											class="btn gap-2 btn-sm mx-2 btn-like btn-warning"> 👍 좋아요 </a>
+										<a onclick="alert(this.title); return false;" title="싫어요를 누르고 싶다면 좋아요를 취소 해 주세요!" id="" href="#" 
+											class="btn gap-2 btn-sm btn-hate btn-outline"> 👎 싫어요 </a>
+									</div> 
+							 	</c:if>
+	
+							 	<!-- 좋아요를 누르고싶다면 싫어요를 취소 해! -->
+								<c:if test="${actorCanDelBadRp }">
+								 	<div class="btns my-3 flex justify-center">
+										<!-- 추천 버튼 -->
+										<a onclick="alert(this.title); return false;" title="좋아요를 누르고 싶다면 싫어요를 취소 해 주세요!" id="" href="#" 
+											class="btn gap-2 btn-sm mx-2 btn-like btn-outline"> 👍 좋아요 </a>
+										<a href="/usr/reactionPoint/doDeleteBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}" 
+											class="btn gap-2 btn-sm btn-hate btn-warning"> 👎 싫어요 </a>
+									</div> 
+							 	</c:if>
+						 	
 						</td>
 					</tr>
 				</tbody>
@@ -168,7 +192,7 @@
 					href="../article/doDelete?id=${article.id }">삭제</a>
 			</c:if>
 		</div>
-		
+		 
 		<!-- 댓글 목록 -->
 		<div class="mt-5 ">
 			<div class="text-indigo-700"> 댓글 목록 <span class="badge badge-outline">${replies.size() }</span></div>
@@ -220,38 +244,22 @@
 							</td>
 							
 							<td>
-								<!-- 추천 기능 사용 가능? -->
-								<c:if test="${actorCanMakeReaction }">		
+								<!-- 댓글 추천 기능 사용 가능? -->
+								<c:if test="${actorCanMakeReactionReply }">		
 									<div class="btns my-3 flex justify-center">
-										<!-- 추천 버튼 -->
+										<!-- 댓추 -->
 										<a id="" href="/usr/reactionPoint/doGoodReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}" 
 											class="btn gap-2 btn-sm mx-2 btn-like btn-outline"> 👍 </a>
-										<a id="" href="/usr/reactionPoint/doBadReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}" 
-											class="btn gap-2 btn-sm btn-hate btn-outline"> 👎 </a>
 									</div>
 								</c:if>
-								<!-- 싫어요를 누르고싶다면 좋아요를 취소 해! -->
-								<c:if test="${actorCanDelGoodRp }">
-							 		<div class="btns my-3 flex justify-center">
-										<!-- 추천 버튼 -->
-										<a id="" href="/usr/reactionPoint/doDeleteBadReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}" 
-											class="btn gap-2 btn-sm mx-2 btn-like btn-warning"> 👍  </a>
-										<a onclick="alert(this.title); return false;" title="싫어요를 누르고 싶다면 좋아요를 취소 해 주세요!" id="" href="#" 
-											class="btn gap-2 btn-sm btn-hate btn-outline"> 👎 </a>
-									</div> 
-							 	</c:if>
-
-						 		<!-- 좋아요를 누르고싶다면 싫어요를 취소 해! -->
-								<c:if test="${actorCanDelBadRp }">
+									<!-- 댓추 취소 -->
+								<c:if test="${actorCanDelGoodRpReply }">
 								 	<div class="btns my-3 flex justify-center">
 										<!-- 추천 버튼 -->
-										<a onclick="alert(this.title); return false;" title="좋아요를 누르고 싶다면 싫어요를 취소 해 주세요!" id="" href="#" 
-											class="btn gap-2 btn-sm mx-2 btn-like btn-outline"> 👍 </a>
-										<a href="/usr/reactionPoint/doDeleteBadReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}" 
-											class="btn gap-2 btn-sm btn-hate btn-warning"> 👎 </a>
+										<a id="" href="/usr/reactionPoint/doDeleteGoodReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}" 
+											class="btn gap-2 btn-sm mx-2 btn-like btn-warning"> 👍 </a>
 									</div> 
-							 	</c:if>
-							
+								 </c:if>					
 							</td>
 						</tr>
 					</c:forEach>
@@ -266,7 +274,7 @@
 			<c:if test="${rq.logined }">
 				<form class="table-box-type-1 overflow-x-auto" method="POST" action="../reply/doWrite" 
 					onsubmit="ReplyWrite__submitForm(this); return false;">
-					<input type="hidden" name="relTypeCode" value="article"/>
+					<input type="hidden" name="relTypeCode" value="reply"/>
 					<input type="hidden" name="relId" value="${article.id }"/>
 					<input type="hidden" name="replaceUri" value="${rq.currentUri }" />
 					  <table class="table table-zebra w-full text-sm">

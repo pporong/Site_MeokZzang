@@ -87,13 +87,13 @@ public class UsrReactionPointController {
 	@ResponseBody
 	public String doGoodReactionReply(String relTypeCode, int relId, String replaceUri) {
 
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData actorCanMakeReactionReplyRd = reactionPointService.actorCanMakeReactionReply(rq.getLoginedMemberId(), relTypeCode, relId);
 		
-		if (actorCanMakeReactionRd.isFail()) {
+		if (actorCanMakeReactionReplyRd.isFail()) {
 			return rq.jsHistoryBackOnView("아무런 리액션을 취하지 않았어요! 리액션 후 이용 가능합니다!");
 		}
 		
-		ResultData addGoodRpReplyRd = reactionPointService.addGoodRp(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData addGoodRpReplyRd = reactionPointService.addGoodRpReply(rq.getLoginedMemberId(), relTypeCode, relId);
 
 		return rq.jsReplace(addGoodRpReplyRd.getMsg(), replaceUri);
 	}
@@ -103,45 +103,15 @@ public class UsrReactionPointController {
 	@ResponseBody
 	public String doDeleteGoodReactionReply(String relTypeCode, int relId, String replaceUri) {
 
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData actorCanMakeReactionReplyRd = reactionPointService.actorCanMakeReactionReply(rq.getLoginedMemberId(), relTypeCode, relId);
 
-		if (actorCanMakeReactionRd.isSuccess()) {
-			return rq.jsHistoryBackOnView(actorCanMakeReactionRd.getMsg());
+		if (actorCanMakeReactionReplyRd.isSuccess()) {
+			return rq.jsHistoryBackOnView(actorCanMakeReactionReplyRd.getMsg());
 		}
-		ResultData deleteGoodRpReplyRd = reactionPointService.deleteGoodRp(rq.getLoginedMemberId(), relTypeCode, relId);
+		ResultData deleteGoodRpReplyRd = reactionPointService.deleteGoodRpReply(rq.getLoginedMemberId(), relTypeCode, relId);
 		
 		return rq.jsReplace(deleteGoodRpReplyRd.getMsg(), replaceUri);
 	}
 
-	// doDLike
-	@RequestMapping("/usr/reactionPoint/doBadReactionReply")
-	@ResponseBody
-	public String doBadReactionReply(String relTypeCode, int relId, String replaceUri) {	
-
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-		
-		if (actorCanMakeReactionRd.isFail()) {
-			return rq.jsHistoryBackOnView("아무런 리액션을 취하지 않았어요! 리액션 후 이용 가능합니다!");
-		}
-		
-		ResultData addBadRpReplyRd = reactionPointService.addBadRp(rq.getLoginedMemberId(), relTypeCode, relId);
-
-		return rq.jsReplace(addBadRpReplyRd.getMsg(), replaceUri);
-	}
-	
-	// delDLike
-	@RequestMapping("/usr/reactionPoint/doDeleteBadReactionReply")
-	@ResponseBody
-	public String doDeleteBadReactionReply(String relTypeCode, int relId, String replaceUri) {
-
-		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), relTypeCode, relId);
-
-		if (actorCanMakeReactionRd.isSuccess()) {
-			return rq.jsHistoryBackOnView(actorCanMakeReactionRd.getMsg());
-		}
-		ResultData deleteBadRpReplyRd = reactionPointService.deleteBadRp(rq.getLoginedMemberId(), relTypeCode, relId);
-
-		return rq.jsReplace(deleteBadRpReplyRd.getMsg(), replaceUri);
-	}
 
 }

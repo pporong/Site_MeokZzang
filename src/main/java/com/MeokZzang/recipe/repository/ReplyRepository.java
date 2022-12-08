@@ -26,9 +26,5 @@ public interface ReplyRepository {
 
 	public int decreaseGoodReplyRp(int relId);
 
-	public int increaseBadReplyRp(int relId);
-
-	public int decreaseBadReplyRp(int relId);
-
 	public Article getReply(int id);
 }

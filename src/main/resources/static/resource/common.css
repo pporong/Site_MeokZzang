@@ -43,6 +43,9 @@ a{
 .table-box-type-1>table {
 	width: 100%;
 }
+.table-box-type-2>table {
+	width: 100%;
+}
 .cell{
   float: left ;
 }
@@ -60,6 +63,11 @@ a{
 } 
 .table-box-type-1>table th, .table-box-type-1>table td {
 	border: 1px solid black;
+	padding: 10px;
+	text-align: center;
+}
+
+.table-box-type-2>table th, .table-box-type-2>table td {
 	padding: 10px;
 	text-align: center;
 }
@@ -596,6 +604,7 @@ body {
 /* modifyMyInfo st */
 .modifyInfo_section {
   max-width: 1440px;
+  margin-top : 30px;
 }
     
 .modifyInfo_section >.menual {

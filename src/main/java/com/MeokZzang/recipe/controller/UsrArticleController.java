@@ -1,6 +1,9 @@
 package com.MeokZzang.recipe.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -176,11 +179,11 @@ public class UsrArticleController {
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "article", id);
 		
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
-
+		
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
 		model.addAttribute("actorCanMakeReaction", actorCanMakeReactionRd.isSuccess());
 		model.addAttribute("replies", replies);
-
+		
 		if(actorCanMakeReactionRd.getResultCode().equals("F-2")) {
 			int sumReactionPointByMemberId = (int) actorCanMakeReactionRd.getData1();
 
@@ -191,6 +194,20 @@ public class UsrArticleController {
 			}
 		}
 		
+		ResultData actorCanMakeReactionReplyRd = reactionPointService.actorCanMakeReactionReply(rq.getLoginedMemberId(), "reply", id);
+		model.addAttribute("actorCanMakeReactionReplyRd", actorCanMakeReactionReplyRd);
+		model.addAttribute("actorCanMakeReactionReply", actorCanMakeReactionReplyRd.isSuccess());
+		
+		System.err.println("sumReactionPointByMemberIdforReply ::" + actorCanMakeReactionReplyRd.getData1());
+		System.err.println("actorCanMakeReactionReplyRd.getResultCode() ::"+actorCanMakeReactionReplyRd.getResultCode());
+		
+		if(actorCanMakeReactionReplyRd.getResultCode().equals("F-3")) {
+			int sumReactionPointByMemberIdforReply = (int) actorCanMakeReactionReplyRd.getData1();
+			
+			if(sumReactionPointByMemberIdforReply == 0) {
+				model.addAttribute("actorCanDelGoodRpReply", true);
+			}
+		}
 		model.addAttribute("isLogined",rq.isLogined());
 		
 		return "usr/article/detail";

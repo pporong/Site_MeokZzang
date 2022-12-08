@@ -4,7 +4,7 @@
 <mapper namespace="com.MeokZzang.recipe.repository.ReactionPointRepository">
 
 	<select id="getSumReactionPointByMemberId" resultType="int">
-		SELECT IFNULL(SUM(RP.point),0) AS s
+		SELECT IFNULL(SUM(RP.point),0) AS '게시물 추천 여부'
 		FROM reactionPoint AS RP
 		WHERE RP.relTypeCode = #{relTypeCode}
 		AND RP.relId = #{relId}
@@ -43,6 +43,33 @@
 		DELETE FROM reactionPoint
 		WHERE memberId = #{actorId}
 		AND relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		AND `point` = - 1
+	</delete>
+	
+	<!-- 댓글 추천/추천취소 -->
+	<select id="getSumReactionPointByMemberIdforReply" resultType="int">
+		SELECT IFNULL(SUM(RP.point),0) AS '댓글 추천 여부'
+		FROM reactionPoint AS RP
+		WHERE RP.relTypeCode = 'reply'
+		AND RP.relId = #{relId}
+		AND RP.memberId = #{actorId}
+	</select>
+	
+	<insert id="addGoodReactionPointReply">
+		INSERT INTO reactionPoint
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		relTypeCode = 'reply',
+		relId= #{relId},
+		memberId = #{actorId},
+		`point` = 1
+	</insert>
+	
+	<delete id="delGoodReactionPointReply">
+		DELETE FROM reactionPoint
+		WHERE memberId = #{actorId}
+		AND relTypeCode = 'reply'
 		AND relId = #{relId}
 		AND `point` = - 1
 	</delete>

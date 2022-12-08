@@ -3,10 +3,9 @@
 <c:set var="pageTitle" value="회원 목록" />
 <%@ include file="../common/head.jspf"%>
 
-
-<section class="mt-8 text-xl">
-	<div class="container mx-auto px-3">
-		<div class="list_nav flex justify-between">
+<section class="mt-8 text-xl con">
+	<div class="container px-3" style="margin-top : 30px;">
+		<div class="list_nav flex justify-between" style="margin-bottom : 15px;">
 			<div class="flex">
 				<div> 회원 수 : <span class="badge"> ${membersCount } 명</span></div>
 				<div class="flex-grow"></div>
@@ -45,19 +44,23 @@
 		</div>
 		
 		<!-- 회원 리스트 -->
-		<div class="table-box-type-1 overflow-x-auto">
+		<div class="table-box-type-2 overflow-x-auto">
+			<h3 style="color : #304899; font-weight : bold;"> < 먹짱 회원 리스트 > </h3>
+			
 			<table class="table table-compact w-full">
 				<colgroup>
-					<col width="50" />
-					<col width="130" />
-					<col width="130" />
-					<col width="80" />
-					<col width="50" />
-					<col width="80" />
-					<col width="80" />
+					<col width="5%"/>
+					<col width="5%"/>
+					<col width="15%"/>
+					<col width="15%"/>
+					<col width="10%"/>
+					<col width="15%"/>
+					<col width="10%"/>
+					<col width="10%"/>
 				</colgroup>
 				<thead>
 					<tr class="text-indigo-700">
+						<th> <input class="checkbox_all_member_id" type="checkbox" /></th>
 						<th>번호</th>
 						<th>가입 날짜</th>
 						<th>갱신 날짜</th>
@@ -71,6 +74,7 @@
 				<tbody>
 					<c:forEach var="member" items="${members}">
 					<tr class="hover">
+						<td> <input class="checkbox_member_id" value="${member.id}" type="checkbox" /></td>
 						<td class="text-green-600">${member.id}</td>
 						<td>${member.forPrintType1RegDate}</td>
 						<td>${member.forPrintType1updateDate}</td>
@@ -78,10 +82,58 @@
 						<td class="">${member.authLevel}</td>
 						<td>${member.name}</td>
 						<td>${member.nickname}</td>
-						<tr>
+					<tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			
+			<!-- 체크 박스 fun -->
+			<script>
+			    $('.checkbox_all_member_id').change(function() {
+			    	const $all = $(this);
+			    	const allChecked = $all.prop('checked');
+			    	
+			    	$('.checkbox_member_id').prop('checked', allChecked);
+			    });
+			    
+			    $('.checkbox_member_id').change(function() {
+					const checkboxMemberIdCount = $('.checkbox_member_id').length;
+					const checkboxMemberIdCheckedCount = $('.checkbox_member_id:checked').length;
+					
+					const allChecked = checkboxMemberIdCount == checkboxMemberIdCheckedCount;
+					
+					$('.checkbox_all_member_id').prop('checked', allChecked);
+				})
+		    </script>
+		    
+		    <!-- 삭제 버튼 -->
+			<div class="flex justify-end mt-4">
+				<button class="btn btn-sm btn-outline btn-error btn-delete-selected-members">선택 삭제</button>
+			</div>
+			
+			<form hidden method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
+		    	<input type="hidden" name="ids" value="" />
+		    	<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
+		    </form>
+
+			<!-- 선택 삭제 fun -->
+		    <script>
+			    $('.btn-delete-selected-members').click(function() {
+			    	 const values = $('.checkbox_member_id:checked').map((index, el) => el.value).toArray();
+			    	 
+			    	 if ( values.length == 0 ) {
+			    		 alert('!! 삭제 할 회원을 선택 해주세요. !!');
+			    		 return;
+			    	 }
+			    	 
+			    	 if ( confirm('삭제 후 되돌릴 수 없습니다. 해당 회원을 정말 삭제하시겠습니까?') == false ) {
+			    		 return;
+			    	 }
+			    	 
+			    	 document['do-delete-members-form'].ids.value = values.join(',');
+			    	 document['do-delete-members-form'].submit();
+			    })
+		    </script>
 				
 			<!-- 게시물 페이징 -->	
 	 		<div class="page-menu flex justify-center">

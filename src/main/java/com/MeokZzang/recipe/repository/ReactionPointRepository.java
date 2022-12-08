@@ -14,7 +14,13 @@ public interface ReactionPointRepository {
 	public void addBadReactionPoint(int actorId, String relTypeCode, int relId);
 
 	public void delBadReactionPoint(int actorId, String relTypeCode, int relId);
+	
+	public void addGoodReactionPointReply(int actorId, String relTypeCode, int relId);
+
+	public void delGoodReactionPointReply(int actorId, String relTypeCode, int relId);
 
 	public void getRpInfoByMemberId(int actorId, String relTypeCode, int relId);
+
+	public int getSumReactionPointByMemberIdforReply(int actorId, String relTypeCode, int relId);
 
 }

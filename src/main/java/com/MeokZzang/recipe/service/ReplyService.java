@@ -134,30 +134,6 @@ public class ReplyService {
 		
 	}
 
-	// + bad
-	public ResultData increaseBadReplyRp(int relId) {
-		int affectedRowsCount = replyRepository.increaseBadReplyRp(relId);
-
-		if (affectedRowsCount == 0) {
-			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
-		}
-
-		return ResultData.from("S-1", "싫어요 증가", "affectedRowsCount", affectedRowsCount);
-
-	}
-
-	// - bad
-	public ResultData decreaseBadReplyRp(int relId) {
-		int affectedRowsCount = replyRepository.decreaseBadReplyRp(relId);
-
-		if (affectedRowsCount == 0) {
-			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
-		}
-
-		return ResultData.from("S-2", "싫어요 취소", "affectedRowsCount", affectedRowsCount);
-		
-	}
-
 	public Article getReply(int id) {
 		return replyRepository.getReply(id);
 	}

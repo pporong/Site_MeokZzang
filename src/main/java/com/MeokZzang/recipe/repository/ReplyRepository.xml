@@ -58,18 +58,6 @@
 		WHERE id = #{relId}
 	</update>
 	
-	<update id="increaseBadReplyRp">
-		UPDATE reply
-		SET badReactionPoint = badReactionPoint + 1
-		WHERE id = #{relId}
-	</update>
-	
-	<update id="decreaseBadReplyRp">
-		UPDATE reply
-		SET badReactionPoint = badReactionPoint - 1
-		WHERE id = #{relId}
-	</update>
-	
 	<select id="getReply" resultType="Reply">
 		SELECT * FROM Reply WHERE id = #{id}
 	</select>

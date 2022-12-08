@@ -55,7 +55,7 @@
 </script>
 
 <!-- 내 정보 수정 시작 -->
-<section class="modifyInfo_section mt-8 text-xl">
+<section class="modifyInfo_section text-xl con">
     <div class="menual">
        ** ▷ : 수정 가능 / ▶ : 수정 불가능
     </div>
