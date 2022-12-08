@@ -129,8 +129,18 @@ public class UsrMemberController {
 		}
 
 		rq.login(member);
+		
+		String infoMsg = Ut.f("%s님 환영합니다", member.getNickname());
+		
+		boolean isUsingTempPw = memberService.isUsingTempPw(member.getId());
+		
+		if(isUsingTempPw) {
+			infoMsg = "!! 임시 비밀번호는 보안에 취약합니다. 변경 해 주세요 !!";
+			afterLoginUri = "/usr/member/myPage";
+		}
+		
 
-		return Ut.jsReplace(Ut.f("%s님 환영합니다", member.getNickname()), afterLoginUri);
+		return Ut.jsReplace(infoMsg, afterLoginUri);
 	}
 
 	// 로그인 아이디 찾기

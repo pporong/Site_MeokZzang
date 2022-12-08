@@ -83,7 +83,7 @@ $(document).on('click', '#replyId', function(){
 }) */
 </script>
 
-<section class="mt-8 text-xl">
+<section class="mt-8 text-xl con">
 	<div class="container mx-auto px-3">
 		<div class="table-box-type-1">
 			<table>
@@ -217,7 +217,7 @@ $(document).on('click', '#replyId', function(){
 						<th class="">추천수</th>
 						<th class="">수정</th>
 						<th class="">삭제</th>
-						<th class="">기타</th>
+						<th class="">추천</th>
 
 					</tr>
 				</thead>
