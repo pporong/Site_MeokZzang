@@ -3,6 +3,7 @@ package com.MeokZzang.recipe.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Reply;
@@ -27,4 +28,5 @@ public interface ReplyRepository {
 	public int decreaseGoodReplyRp(int relId);
 
 	public Article getReply(int id);
+
 }

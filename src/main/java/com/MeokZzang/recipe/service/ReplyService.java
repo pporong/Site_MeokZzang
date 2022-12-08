@@ -90,7 +90,7 @@ public class ReplyService {
 
 		return ResultData.from("S-1", "삭제 가능");
 	}
-
+	
 	// 댓글 삭제
 	public ResultData<Integer> deleteReply(int id) {
 
@@ -107,7 +107,7 @@ public class ReplyService {
 
 		return reply;
 	}
-
+	
 	//
 	// 댓글 추천기능
 	// + good

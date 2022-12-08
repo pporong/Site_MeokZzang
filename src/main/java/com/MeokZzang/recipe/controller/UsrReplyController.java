@@ -81,6 +81,29 @@ public class UsrReplyController {
 
 		return rq.jsReplace(deleteReplyRd.getMsg(), replaceUri);
 	}
+	
+	// 댓글 삭제 ajax
+	@RequestMapping("/usr/reply/doDeleteAjax")
+	@ResponseBody
+	public ResultData doDeleteAjax(int id) {
+		if ( Ut.empty(id) ) {
+			return ResultData.from("F-1","!! id(을)를 입력해주세요 !!");
+		}
+
+		Reply reply = replyService.getForPrintReply(rq.getLoginedMember(), id);
+
+		if ( reply == null ) {
+			return ResultData.from("F-2", Ut.f("%d번 댓글은 존재하지 않습니다.", id));
+		}
+
+		if ( reply.isExtra__actorCanDelete() == false ) {
+			return ResultData.from("F-3", Ut.f("%d번 댓글에 대한 삭제 권한이 없습니다.", id));
+		}
+
+		ResultData deleteReplyRd = replyService.deleteReply(id);
+
+		return ResultData.from("S-1", deleteReplyRd.getMsg());
+	}
 
 	@RequestMapping("/usr/reply/modify")
 	public String modify(int id, String replaceUri, Model model) {
