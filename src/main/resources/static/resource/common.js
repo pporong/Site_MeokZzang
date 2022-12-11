@@ -1,3 +1,25 @@
+
+$(document).ready(function () {
+    
+    // 배너 슬라이드
+    $('.banner-slider').slick({
+        autoplay: true ,
+        autoplaySpeed : 3000 , 
+        dots: true ,
+        pauseOnHover: false ,
+        arrows : false ,
+    });
+    // 배너 슬라이드 버튼
+    $('.banner-visual>.section01>.banner-slider-wrap >.prev-btn').click(function(){
+        $('.main-slider').slick('slickPrev')
+    });
+    $('.banner-visual>.section01>.banner-slider-wrap >.next-btn').click(function(){
+        $('.main-slider').slick('slickNext')
+    });
+
+});
+
+
 $('select[data-value]').each(function(index, el) {
 	const $el = $(el);
 	

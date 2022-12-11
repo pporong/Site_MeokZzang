@@ -3,8 +3,32 @@
 <c:set var="pageTitle" value="MEOK ZZANG" />
 <%@ include file="../common/head.jspf"%>
 
-<!-- 메인 섹션 시작 -->
+<!-- banner visual 시작 -->
+<section class="banner-visual con">
 
+	<!-- 섹션 1 : banner -->
+	<div class="section01">
+		<div class="banner-slider-wrap">
+			<div class="banner-slider">
+				<a href="#">
+					<div class="content content01"></div>
+				</a>
+				<a href="#">
+					<div class="content content02"></div>
+				</a>
+				<a href="#">
+					<div class="content content03"></div>
+				</a>
+			</div>
+			
+		<!-- 슬라이드 버튼 -->
+		<div class="next-btn"></div>
+		<div class="prev-btn"></div>
+		
+		</div>
+	</div>
+
+</section>
 
 
 </body>
