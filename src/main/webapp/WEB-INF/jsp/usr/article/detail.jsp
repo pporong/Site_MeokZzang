@@ -337,17 +337,17 @@ $(document).on('click', '#replyId', function(){
 		</div>
 
 		<!-- 뒤로가기 버튼 -->
-	<div class="btns my-3 flex justify-end">
-		<c:if test="${empty param.listUri}">
-			<button class="btn-text-link btn btn-outline btn-sm" type="button" onclick="history.back();">뒤로가기</button>
-		</c:if>
-		<c:if test="${not empty param.listUri}">
-			<a class="btn-text-link btn btn-outline btn-sm" href="${param.listUri }" > 뒤로가기</a>
-		</c:if>
-	</div>
-		
-		
+		<div class="btns mb-3 flex justify-end">
+			<c:if test="${empty param.listUri}">
+				<button class=" my-3 fc_redH" type="button" onclick="history.back();"> 뒤로가기 </button>
+			</c:if>
+			<c:if test="${not empty param.listUri}">
+				<a class=" my-3 fc_redH" href="${param.listUri }" > 뒤로가기</a>
+			</c:if>
 		</div>
+		
+		
+	</div>
 	</div>
 </section>
 

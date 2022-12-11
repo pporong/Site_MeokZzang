@@ -78,7 +78,7 @@
 						<td class="text-green-600">${member.id}</td>
 						<td>${member.forPrintType1RegDate}</td>
 						<td>${member.forPrintType1updateDate}</td>
-						<td>${member.loginId}</td>
+						<td><a class="text-pink-600 hover:underline" href="/adm/member/detail?id=${member.id }">${member.loginId}</a></td>
 						<td class="">${member.authLevel}</td>
 						<td>${member.name}</td>
 						<td>${member.nickname}</td>
@@ -111,7 +111,7 @@
 				<button class="btn btn-sm btn-outline btn-error btn-delete-selected-members">선택 삭제</button>
 			</div>
 			
-			<form hidden method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
+			<form method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
 		    	<input type="hidden" name="ids" value="" />
 		    	<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 		    </form>

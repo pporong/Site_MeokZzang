@@ -46,13 +46,12 @@
             </div>
         </div>
 
-        <!-- 로그인 박스 -->
          <!-- 로그인 박스 -->
         <div class="login-box flex justify-end">
 
             <div class="control write hover:underline">
                 <a href="/usr/article/write" class="hover:text-red-500">
-                    <span>WRITE</span>
+                	<span>WRITE</span>
                 </a>
             </div>
 
@@ -111,7 +110,9 @@
                 <a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a>
             </div>
             <div class="menu cell">
-                <a href="/usr/data/resRecomm" class=""><span>맛집 찾기</span></a>
+                <a href="/usr/data/resRecomm" class="">                   
+					<span>맛집 찾기</span> <i class="fas fa-search"></i>
+				</a>
             </div>
         </div>
     </div>

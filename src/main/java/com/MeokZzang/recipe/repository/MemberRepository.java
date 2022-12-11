@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Member;
 
 @Mapper
@@ -35,4 +36,8 @@ public interface MemberRepository {
 			int limitStart, int limitTake);
 
 	public void deleteMember(int id);
+
+	public List<Article> getArticlesByMemberId(int id, int limitStart, int limitTake);
+
+	public int getArticlesCount(int id);
 }

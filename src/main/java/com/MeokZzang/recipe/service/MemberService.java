@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.MeokZzang.recipe.repository.MemberRepository;
 import com.MeokZzang.recipe.util.Ut;
+import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Member;
 import com.MeokZzang.recipe.vo.ResultData;
 
@@ -166,4 +167,22 @@ public class MemberService {
 	public boolean isUsingTempPw(int actorId) {
 		return attrService.getValue("member", actorId, "extra", "useTempPassword").equals("1");
 	}
+
+	public List<Article> getArticlesByMemberId(int id, int itemsInAPage, int page) {
+
+		int limitStart = (page - 1) * itemsInAPage;
+		int limitTake = itemsInAPage;
+		
+		List<Article> articles = memberRepository.getArticlesByMemberId(id, limitStart, limitTake);
+		
+		return articles;
+		
+	}
+
+	public int getArticlesCount(int id) {
+		return memberRepository.getArticlesCount(id);
+		
+	}
+
+
 }

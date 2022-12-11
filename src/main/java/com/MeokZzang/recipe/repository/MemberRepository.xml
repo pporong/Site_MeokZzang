@@ -48,6 +48,7 @@
 		SELECT *
 		FROM
 		`member` AS M
+		
 		WHERE M.name = #{nickname}
 		and delStatus = 0;
 	</select>
@@ -85,16 +86,6 @@
 		FROM
 		`member` AS M
 		WHERE M.id = #{id}
-	</select>
-
-	<select id="getArticleByMemberId" resultType="Member">
-		SELECT A.*, M.name
-		AS extra__writerName
-		FROM article AS A
-		LEFT JOIN `member` AS M
-		ON
-		A.memberId = M.id
-		WHERE 1 AND A.memberId = #{M.loginId}
 	</select>
 
 	<select id="getMembersCount" resultType="int">
@@ -176,5 +167,27 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<select id="getArticlesByMemberId" resultType="Article">
+		SELECT A.*, M.name
+		AS extra__writerName
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE 1 AND M.id = #{id}
+		ORDER BY A.id DESC
+		<if test="limitTake != -1">
+			LIMIT #{limitStart}, #{limitTake}
+		</if>
+	</select>
+	
+	<select id="getArticlesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM article AS A
+		LEFT JOIN `member` AS M
+		ON A.memberId = M.id
+		WHERE 1 AND M.id = #{id}
+		
+	</select>
 
 </mapper>

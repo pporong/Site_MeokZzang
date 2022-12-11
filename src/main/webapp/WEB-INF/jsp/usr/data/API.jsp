@@ -90,7 +90,7 @@
 		console.log("pageNum : ", pageNum)
 		
 		var keyWord = '';
-		console.log('test : ', $('#searchKeyword').val())
+		console.log('searchKeyword : ', $('#searchKeyword').val())
 		
 		if($('#searchKeyword').val() != undefined){
 			keyWord = $('#searchKeyword').val();			
@@ -119,6 +119,7 @@
 		$('#totalPage').val(data.msgHeader.totalPage);
 		
 		for(i in data.msgBody){
+			
 			listTable += '<tr><td class="cursor-pointer">' + data.msgBody[i].name + '</td>'
 					+ '<input type="hidden" value="' + data.msgBody[i].foodSeq + '"/></tr>';
 		}
@@ -161,6 +162,7 @@
 			$('#resTime').text(data.msgBody.openTime + ' ~ ' + data.msgBody.closeTime)
 			$('#resAddr').text(data.msgBody.addr1 + data.msgBody.addr2)
 			$('#resMenu').text(data.msgBody.foodMenuList[0].title)
+
 		}
 				
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -206,7 +208,7 @@
 					<table class="pull-right">
 						<tr>
 							<th class="badge" style="margin-top : 7px;">상 호 명</th>
-							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px;" type="text" autocomplete="off"; placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
+							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px;" type="text" autocomplete="off" placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
 							<td><button id="search" type="submit" class="btn btn-active btn-sm btn-warning">검색</button></td>
 						</tr>
 					</table>	

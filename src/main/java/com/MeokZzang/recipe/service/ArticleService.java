@@ -171,7 +171,4 @@ public class ArticleService {
 		return articleRepository.getArticle(id);
 	}
 
-	
-
-
 }

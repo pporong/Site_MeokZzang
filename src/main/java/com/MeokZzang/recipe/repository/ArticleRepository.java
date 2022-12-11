@@ -39,5 +39,4 @@ public interface ArticleRepository {
 
 	public Article getArticle(int id);
 	
-
 }

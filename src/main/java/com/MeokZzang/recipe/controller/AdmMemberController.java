@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.MeokZzang.recipe.service.ArticleService;
 import com.MeokZzang.recipe.service.MemberService;
+import com.MeokZzang.recipe.util.Ut;
+import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Member;
 import com.MeokZzang.recipe.vo.Rq;
 
@@ -21,8 +24,8 @@ public class AdmMemberController {
 	private MemberService memberService;
 	@Autowired
 	private Rq rq;
-	
-	// list
+
+	// 회원 목록
 	@RequestMapping("/adm/member/list")
 	public String showList(Model model, @RequestParam(defaultValue = "0") int authLevel,
 			@RequestParam(defaultValue = "loginId,name,nickname") String searchKeywordTypeCode,
@@ -48,22 +51,42 @@ public class AdmMemberController {
 		model.addAttribute("membersCount", membersCount);
 		model.addAttribute("members", members);
 
-		return "adm/member/list";
+		return "adm/member/memberList";
 	}
-	
+
 	// 관리자 회원 삭제 기능
 	@RequestMapping("/adm/member/doDeleteMembers")
 	@ResponseBody
-	public String doDelete(@RequestParam(defaultValue = "") String ids, @RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
-		
+	public String doDelete(@RequestParam(defaultValue = "") String ids,
+			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
+
 		List<Integer> memberIds = new ArrayList<>();
 
-		for ( String idStr : ids.split(",")) {
+		for (String idStr : ids.split(",")) {
 			memberIds.add(Integer.parseInt(idStr));
 		}
 
 		memberService.deleteMembers(memberIds);
 
 		return rq.jsReplace("선택 회원이 삭제되었습니다.", replaceUri);
+	}
+	
+	// 회원 글 목록
+	@RequestMapping("/adm/member/detail")
+	public String viewDetail(Model model, int id, @RequestParam(defaultValue = "1") int page) {
+
+		int articlesCount = memberService.getArticlesCount(rq.getLoginedMemberId());
+				
+		int itemsInAPage = 15;
+		int pagesCount = (int) Math.ceil((double) articlesCount / itemsInAPage);
+		
+		List<Article> articles = memberService.getArticlesByMemberId(rq.getLoginedMemberId(), itemsInAPage, page);
+		
+		model.addAttribute("articles", articles);
+		model.addAttribute("articlesCount", articlesCount);
+		model.addAttribute("pagesCount", pagesCount);
+		model.addAttribute("page", page);
+		
+		return "adm/member/memberDetail";
 	}
 }
