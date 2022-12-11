@@ -15,7 +15,7 @@
 html>body {
 	font-family: 'MonoplexKR-Italic';
 	width: 100%;
-  	height: 100vh;
+  	min-height: 100vh;
 
   	margin-top: 30px;
 	margin-bottom: 30px;
@@ -25,6 +25,7 @@ html>body, html>body .toast-ui-editor, html>body .toastui-editor-contents,
 	html>body .ProseMirror, html>body .toastui-editor-md-mode {
 	font-family: 'MonoplexKR-Italic';
 	text-underline-position: under;
+	font-size : 16px;
 }
 /* 노멀라이징 */
 *{
@@ -62,7 +63,7 @@ a{
   margin: 0 auto ;
 } 
 .table-box-type-1>table th, .table-box-type-1>table td {
-	border: 1px solid black;
+	border: 1px solid #304899;
 	padding: 10px;
 	text-align: center;
 }
@@ -731,6 +732,139 @@ body {
 }
 
 /* pwCheck layout en */
+
+/* article_detail_section st */
+.article_detail_section {
+  padding: 29px 29px 0;
+}
+.article_detail_section >.article_wrap {
+  border: 1px solid #304899 ;
+  border-radius: 6px;
+  padding: 29px 29px 0;
+}
+.article_detail_section >.article_wrap >.article_header {
+  position: relative;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #304899;
+}
+.article_detail_section >.article_wrap >.article_header >.articleTitle {
+
+}
+.article_detail_section >.article_wrap >.article_header >.articleTitle >.boardName {
+  color : #304899;
+  font-size: 15px;
+}
+.article_detail_section >.article_wrap >.article_header >.articleTitle >.titleName {
+  font-weight: bold;
+  font-size: 25px;
+  margin-top: 7px;
+  margin-bottom: 7px;
+} 
+
+.article_detail_section >.article_wrap >.article_header >.writerInfo {
+
+}
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profile_img {
+  background-color: orange;
+  margin-right: 10px;
+  width: 36px;
+  height: 36px;
+  margin-top: 7px;
+}
+/* 프로필 이미지 영역 */
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profile_img >img {
+  background-color: yellow;
+  margin-right: 10px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  vertical-align: top;
+}
+
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea {
+
+}
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea >.profileInfo {
+
+}
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea >.profileInfo >.profileNick {
+  font-size: 15px;
+  font-weight: bold;
+}
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea >.articleInfo {
+  font-size: 12px;
+  line-height: 13px;
+  color: #979797;
+}
+.article_detail_section >.article_wrap >.article_header >.articleTool {
+  font-size: 12px;
+  line-height: 13px;
+  color: #525050;
+  padding-top: 24px;
+} 
+.article_detail_section >.article_wrap >.article_header >.articleTool >.likeNum {
+
+}
+.article_detail_section >.article_wrap >.article_header >.articleTool >.likeNum >.like {
+  margin-right: 10px;
+}
+.article_detail_section >.article_wrap >.articleContainer {
+
+}
+.article_detail_section >.article_wrap >.articleContainer >.articleViewer{
+  min-height: 300px;
+}
+.article_detail_section >.article_wrap >.reactionBox {
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 30px;
+}
+.article_detail_section >.article_wrap >.reactionBox .btn_like {
+  margin-right: 20px;
+}
+.article_detail_section >.article_wrap >.reactionBox .btn_like:hover {
+  color: #304899;
+}
+.article_detail_section >.article_wrap >.reactionBox .btn_hate:hover {
+  color: #e04241;
+}
+
+/* 게시글 수정 삭제 버튼 */
+.article_detail_section >.article_wrap >.btns {
+  font-size: 15px;
+  font-weight: bold;
+}
+.article_detail_section >.article_wrap >.btns .mBtn:hover {
+  color: #304899;
+}
+.article_detail_section >.article_wrap >.btns .dBtn:hover {
+  color: #e04241;
+}
+
+/* 댓글 */
+.article_detail_section >.article_wrap >.replyBox {
+  border-top: 1px solid #bcbeea;
+}
+.article_detail_section >.article_wrap >.replyBox >.replyTitle {
+  color: #304899;
+  font-size: 15px;
+  margin-top: 15px;
+}
+.article_detail_section >.article_wrap >.replyBox >.replyTitle >span {
+  color: #e04241;
+}
+.article_detail_section >.article_wrap >.replyBox table >thead >.replyHead {
+  color: #304899;
+}
+
+.article_detail_section >.article_wrap >.replyBox >.writeWrap >.replyWrite {
+  color: #304899;
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+/* article_detail_section en */
 
 /* 팝업창 */
 .popUp {

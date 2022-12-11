@@ -34,7 +34,7 @@ function ArticleModify__submit(form) {
 }
 </script>
 
-<section class="mt-8 text-xl">
+<section class="mt-8 text-xl con">
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1" method="POST" action="../article/doModify" onsubmit="ArticleModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${article.id }" />
@@ -88,15 +88,15 @@ function ArticleModify__submit(form) {
 					</tr>
 					<tr>
 						<th></th>
-						<td><button type="submit" value="수정">수정</button></td>
+						<td><button class="fc_redH" type="submit" value="수정">수정</button></td>
 					</tr>
 				</tbody>
 
 			</table>
 		</form>
 
-		<div class="btns my-3">
-			<a class="btn-text-link btn btn-outline btn-sm" href="${param.replaceUri }">뒤로가기</a>
+		<div class="btns my-3 row">
+			<a class="fc_redH btn btn-outline btn-sm cell-r" href="${param.replaceUri }">뒤로가기</a>
 		</div>
 	</div>
 </section>

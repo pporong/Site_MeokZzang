@@ -207,8 +207,8 @@
 			<div class="search-box">
 					<table class="pull-right">
 						<tr>
-							<th class="badge" style="margin-top : 7px;">상 호 명</th>
-							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px;" type="text" autocomplete="off" placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
+							<th class="badge" style="margin-top : 7px; margin-right: 5px;">상 호 명</th>
+							<td><input id="searchKeyword" class="text-center" style="border : 1px solid grey; border-radius:5px; margin-right: 5px;" type="text" autocomplete="off" placeholder="검색어 입력" name="searchKeyword" maxlength="30"></td>
 							<td><button id="search" type="submit" class="btn btn-active btn-sm btn-warning">검색</button></td>
 						</tr>
 					</table>	
