@@ -5,7 +5,10 @@
 <%@ page import="com.MeokZzang.recipe.util.Ut" %>
    <section class="myPage_section con">
         <div class="info_wrap mx-auto px-3">
-            <div class="title">< 내 정보 상세보기 ></div>
+            <div class="title"> < 내 정보 상세보기 > </div>
+            <div class="row">
+            	<a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/deleteMyInfo')}" class="cell-r fc_redH" style="font-size : 12px;"> 회원탈퇴 </a>
+            </div>
             <table class="table w-full">
                 <colgroup>
                     <col width="200" />
@@ -42,6 +45,7 @@
                 <a href="../member/checkPassword?replaceUri=${Ut.getUriEncoded('../member/modifyMyInfo')}"
                     class="infoM_btn">회원 정보 수정</a>
             </div>
+          
         </div>
 
         <div class="con mx-auto btns flex justify-end">

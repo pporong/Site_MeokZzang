@@ -232,6 +232,13 @@ public class UsrMemberController {
 
 			replaceUri += "?memberModifyAuthKey=" + memberModifyAuthKey;
 		}
+		
+		// memberDeleteAuthKey
+		if (replaceUri.equals("../member/deleteMyInfo")) {
+			String memberDeleteAuthKey = memberService.genMemberDeleteAuthKey(rq.getLoginedMemberId());
+
+			replaceUri += "?memberDeleteAuthKey=" + memberDeleteAuthKey;
+		}
 
 		return rq.jsReplace("", replaceUri);
 	}
@@ -290,4 +297,50 @@ public class UsrMemberController {
 		return Ut.jsReplace(modifyMyInfoRd.getMsg(), "/");
 
 	}
+	
+	// 회원 탈퇴
+	@RequestMapping("/usr/member/deleteMyInfo")
+	public String deleteMyInfo(String memberDeleteAuthKey) {
+
+		if (Ut.empty(memberDeleteAuthKey)) {
+			return rq.jsHistoryBackOnView("!! 회원 삭제 인증코드가 필요합니다. !!");
+		}
+
+		ResultData checkMemberDeleteAuthKeyRd = memberService.checkMemberDeleteAuthKey(rq.getLoginedMemberId(),
+				memberDeleteAuthKey);
+
+		if (checkMemberDeleteAuthKeyRd.isFail()) {
+			return rq.jsHistoryBackOnView(checkMemberDeleteAuthKeyRd.getMsg());
+		}
+
+		return "usr/member/deleteMyInfo";
+	}
+	
+	@RequestMapping("/usr/member/doDeleteMyInfo")
+	@ResponseBody
+	public String doDeleteMyInfo(String memberDeleteAuthKey) {
+
+		// 인증코드 없으면 재접근 요청
+		if (Ut.empty(memberDeleteAuthKey)) {
+			return rq.jsHistoryBack("!! 회원 삭제 인증코드가 필요합니다. !!");
+		}
+
+		// 인증코드 확인
+		ResultData checkMemberDeleteAuthKeyRd = memberService.checkMemberDeleteAuthKey(rq.getLoginedMemberId(),
+				memberDeleteAuthKey);
+
+		if (checkMemberDeleteAuthKeyRd.isFail()) {
+			return rq.jsHistoryBack(checkMemberDeleteAuthKeyRd.getMsg());
+		}
+
+		// 회원 탈퇴진 행
+		memberService.deleteMyInfo(rq.getLoginedMemberId());
+
+		// 로그아웃
+		rq.logout();
+		
+		return Ut.jsReplace("회원탈퇴가 완료되었습니다.", "/");
+
+	}
+
 }

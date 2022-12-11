@@ -184,5 +184,33 @@ public class MemberService {
 		
 	}
 
+	public String genMemberDeleteAuthKey(int actorId) {
+		String memberDeleteAuthKey = Ut.getTempPassword(10);
+
+		attrService.setValue("member", actorId, "extra", "memberDeleteAuthKey", memberDeleteAuthKey, Ut.getDateStrLater(60 * 5));
+
+		return memberDeleteAuthKey;
+	}
+	
+	public ResultData checkMemberDeleteAuthKey(int actorId, String memberDeleteAuthKey) {
+		
+		String saved = attrService.getValue("member", actorId, "extra", "memberDeleteAuthKey");
+		
+		if(!saved.equals(memberDeleteAuthKey)) {
+			return ResultData.from("F-1", "!! 인증코드가 일치하지 않거나 만료된 코드입니다. !!");
+		}
+
+		return ResultData.from("S-1", "정상 코드입니다");
+	}
+
+	// 회원탈퇴
+	public void deleteMyInfo(int actorId) {
+		
+		// 탈퇴 전 인증코드 회수
+		attrService.remove("member", actorId, "extra", "memberDeleteAuthKey");
+		
+		memberRepository.deleteMember(actorId);
+		
+	}
 
 }
