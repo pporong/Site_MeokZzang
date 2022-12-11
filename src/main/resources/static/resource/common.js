@@ -17,7 +17,35 @@ $(document).ready(function () {
         $('.main-slider').slick('slickNext')
     });
 
+
+    // ---------------------------------------------
+    
+    // 업버튼 
+    $('.up-btn-area >.up-btn').click(function(){
+    
+        // $('html, body').scrollTop(0)
+        $('html, body').animate({
+          'scrollTop' : 0 ,
+        } , 800)
+        
+      });
+
 });
+
+//
+$(window).scroll(function(){
+  
+    let scrollTop = $(this).scrollTop()
+    // 내가 선택한 위치가 어딘지 알려주는 메서드
+  
+    if( scrollTop > 100 ){
+      $('.up-btn-area >.up-btn').addClass('active')
+    }
+    if( scrollTop < 100 ){
+      $('.up-btn-area >.up-btn').removeClass('active')
+    }
+    
+  });
 
 
 $('select[data-value]').each(function(index, el) {

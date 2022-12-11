@@ -1130,3 +1130,27 @@ body {
 }
 
 /* banner_section en*/
+
+/* up-btn-area st */
+.up-btn-area {
+  position: fixed;
+  right: 10px;
+  bottom: 5px;
+  background-color: transparent;
+  border: 0;
+}
+.up-btn-area >.up-btn {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: 0.5s ;
+}
+.up-btn-area >.up-btn.active {
+  opacity: 1;
+  visibility: visible ;
+}
+/* up-btn-area en */

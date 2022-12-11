@@ -3,8 +3,9 @@
 <c:set var="pageTitle" value="MEOK ZZANG" />
 <%@ include file="../common/head.jspf"%>
 
+<section class="main">
 <!-- banner visual 시작 -->
-<section class="banner-visual con">
+<div class="banner-visual con">
 
 	<!-- 섹션 1 : banner -->
 	<div class="section01">
@@ -28,8 +29,11 @@
 		</div>
 	</div>
 
+</div>
+
+
+
+	
 </section>
-
-
 </body>
 </html>
