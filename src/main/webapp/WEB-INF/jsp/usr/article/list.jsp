@@ -18,8 +18,7 @@
 									<option value="1" selected="${param.boardId}"> 게시판 선택 </option>
 									<option value="1">공 지 사 항</option>
 									<option value="2">자 유 게 시 판</option>
-									<option value="3">커뮤니티게시판</option>
-									<option value="4">레시피 게시판</option>
+									<option value="3">질 문 게 시 판</option>
 								</select>
 							</td>
 							<td>

@@ -55,11 +55,11 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
 		ir.addPathPatterns("/usr/article/doModify");
 		ir.addPathPatterns("/usr/article/doDelete");
 		
-		ir.addPathPatterns("/usr/recipe/write");
-		ir.addPathPatterns("/usr/recipe/doWrite");
-		ir.addPathPatterns("/usr/recipe/modify");
-		ir.addPathPatterns("/usr/recipe/doModify");
-		ir.addPathPatterns("/usr/recipe/doDelete");
+		ir.addPathPatterns("/usr/recipe/writeRecipe");
+		ir.addPathPatterns("/usr/recipe/doWriteRecipe");
+		ir.addPathPatterns("/usr/recipe/modifyRecipe");
+		ir.addPathPatterns("/usr/recipe/doModifyRecipe");
+		ir.addPathPatterns("/usr/recipe/doDeleteRecipe");
 
 		ir.addPathPatterns("/usr/reactionPoint/doGoodReaction");
 		ir.addPathPatterns("/usr/reactionPoint/doBadReaction");

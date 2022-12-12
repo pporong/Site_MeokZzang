@@ -55,17 +55,20 @@
 
     <!-- 메뉴 라인 -->
     <div class="menu_wrap1 con">
-        <div class="menu_wrap2 con row">
-            <div class="menu cell">
+        <div class="menu_wrap2 con flex justify-center">
+            <div class="menu ">
                 <a href="/usr/article/list?boardId=1" class=""><span>공지사항</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
                 <a href="/usr/recipe/recipeList" class=""><span>레시피 게시판</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
                 <a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
+                <a href="/usr/article/list?boardId=3" class=""><span>질문 게시판</span></a>
+            </div>
+            <div class="menu ">
                <a href="/usr/data/resRecomm" class="">                   
 					<span>맛집 찾기</span> <i class="fas fa-search"></i>
 				</a>

@@ -20,4 +20,9 @@
 		ORDER BY Re.recipeId DESC
 	</select>
 
+	<select id="getLastInsertId" resultType="int">
+		SELECT LAST_INSERT_ID()
+	</select>
+	
+	
 </mapper>

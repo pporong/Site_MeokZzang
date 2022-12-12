@@ -9,8 +9,10 @@ import com.MeokZzang.recipe.vo.Recipe;
 @Mapper
 public interface RecipeRepository {
 
-	List<Recipe> getRecipeList();
+	public List<Recipe> getRecipeList();
 
-	Recipe getRecipeDetail(int recipeId);
+	public Recipe getRecipeDetail(int recipeId);
+
+	public int getLastInsertId();
 
 }

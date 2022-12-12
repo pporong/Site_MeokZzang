@@ -63,8 +63,7 @@
 									<option value="1"> 공 지 사 항 </option>
 								</c:if>
 								<option value="2"> 자 유 게 시 판 </option>
-								<option value="3"> 커 뮤 니 티 </option>
-								<option value="4"> 레 시 피 게 시 판 </option>
+								<option value="3"> 질 문 게 시 판 </option>
 							</select>
 
 						</td>

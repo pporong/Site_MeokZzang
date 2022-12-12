@@ -64,6 +64,12 @@ integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QV
                 	<span>WRITE</span>
                 </a>
             </div>
+            
+            <div class="control write hover:underline">
+                <a href="/usr/recipe/writeRecipe" class="hover:text-red-500 font-bold">
+                	<span>RECIPE</span>
+                </a>
+            </div>
 
             <c:if test="${!rq.logined}">
                 <div class="control login hover:underline">
@@ -109,17 +115,20 @@ integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QV
 
     <!-- 메뉴 라인 -->
     <div class="menu_wrap1 con">
-        <div class="menu_wrap2 con row">
-            <div class="menu cell">
+        <div class="menu_wrap2 con flex justify-center">
+            <div class="menu ">
                 <a href="/usr/article/list?boardId=1" class=""><span>공지사항</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
                 <a href="/usr/recipe/recipeList" class=""><span>레시피 게시판</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
                 <a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a>
             </div>
-            <div class="menu cell">
+            <div class="menu ">
+                <a href="/usr/article/list?boardId=3" class=""><span>질문 게시판</span></a>
+            </div>
+            <div class="menu ">
                 <a href="/usr/data/resRecomm" class="">                   
 					<span>맛집 찾기</span> <i class="fas fa-search"></i>
 				</a>

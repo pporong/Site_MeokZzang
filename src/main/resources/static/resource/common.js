@@ -17,8 +17,9 @@ $(document).ready(function () {
         $('.main-slider').slick('slickNext')
     });
 
+});
 
-    // ---------------------------------------------
+$(document).ready(function () {
     
     // 업버튼 
     $('.up-btn-area >.up-btn').click(function(){
@@ -29,7 +30,6 @@ $(document).ready(function () {
         } , 800)
         
       });
-
 });
 
 //

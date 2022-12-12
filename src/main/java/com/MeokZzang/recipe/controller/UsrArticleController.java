@@ -56,7 +56,7 @@ public class UsrArticleController {
 			replaceUri = Ut.f("../article/detail?id=%d", id);
 		}
 
-		return rq.jsReplace(Ut.f("%d번 게시물 등록이 완료되었습니다. :)",id), replaceUri);
+		return rq.jsReplace(Ut.f("%d번 게시물 등록이 완료되었습니다. :)", id), replaceUri);
 	}
 	
 	@RequestMapping("/usr/article/write")
