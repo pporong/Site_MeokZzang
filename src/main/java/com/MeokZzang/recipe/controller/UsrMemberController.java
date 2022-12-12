@@ -333,7 +333,7 @@ public class UsrMemberController {
 			return rq.jsHistoryBack(checkMemberDeleteAuthKeyRd.getMsg());
 		}
 
-		// 회원 탈퇴진 행
+		// 회원 탈퇴 진행
 		memberService.deleteMyInfo(rq.getLoginedMemberId());
 
 		// 로그아웃

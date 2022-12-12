@@ -113,7 +113,6 @@
 			
 			<form method="POST" name="do-delete-members-form" action="../member/doDeleteMembers">
 		    	<input type="hidden" name="ids" value="" />
-		    	<input type="hidden" name="replaceUri" value="${rq.currentUri}" />
 		    </form>
 
 			<!-- 선택 삭제 fun -->

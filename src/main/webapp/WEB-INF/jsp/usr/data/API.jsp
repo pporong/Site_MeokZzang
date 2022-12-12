@@ -90,7 +90,6 @@
 		console.log("pageNum : ", pageNum)
 		
 		var keyWord = '';
-		console.log('searchKeyword : ', $('#searchKeyword').val())
 		
 		if($('#searchKeyword').val() != undefined){
 			keyWord = $('#searchKeyword').val();			
@@ -101,7 +100,6 @@
 		var url = 'http://apis.data.go.kr/6300000/tourFoodDataService/tourFoodDataListJson?serviceKey='+API_KEY
 				+'&pageNo='+pageNum+'&searchKeyword='+keyWord;
 		
-		console.log(url)
 		
 		const response = await  
 		fetch(url);
@@ -120,8 +118,13 @@
 		
 		for(i in data.msgBody){
 			
-			listTable += '<tr><td class="cursor-pointer">' + data.msgBody[i].name + '</td>'
-					+ '<input type="hidden" value="' + data.msgBody[i].foodSeq + '"/></tr>';
+			if(data.msgBody[i].foodSeq != 'FH0000934'){
+				
+				listTable += '<tr><td class="cursor-pointer">' + data.msgBody[i].name + '</td>'
+				+ '<input type="hidden" value="' + data.msgBody[i].foodSeq + '"/></tr>';
+				
+			}
+			
 		}
 		
 		$('#foodTable').html(listTable)

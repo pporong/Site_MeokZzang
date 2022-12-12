@@ -57,8 +57,7 @@ public class AdmMemberController {
 	// 관리자 회원 삭제 기능
 	@RequestMapping("/adm/member/doDeleteMembers")
 	@ResponseBody
-	public String doDelete(@RequestParam(defaultValue = "") String ids,
-			@RequestParam(defaultValue = "/adm/member/list") String replaceUri) {
+	public String doDelete(@RequestParam(defaultValue = "") String ids) {
 
 		List<Integer> memberIds = new ArrayList<>();
 
@@ -68,7 +67,7 @@ public class AdmMemberController {
 
 		memberService.deleteMembers(memberIds);
 
-		return rq.jsReplace("선택 회원이 삭제되었습니다.", replaceUri);
+		return rq.jsReplace("선택 회원이 삭제되었습니다.", "/adm/member/list");
 	}
 	
 	// 회원 글 목록
