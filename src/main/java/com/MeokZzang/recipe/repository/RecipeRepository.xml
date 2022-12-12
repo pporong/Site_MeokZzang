@@ -3,6 +3,21 @@
 
 <mapper namespace="com.MeokZzang.recipe.repository.RecipeRepository">
 
+	<select id="getRecipeList" resultType="Recipe">
+		SELECT Re.recipeId, Re.recipeName, Re.writerId, Re.recipeRegDate, 
+		Re.recipeTitleImg, Re.recipeHitCount, M.name AS extra__WriterName
+		FROM recipe AS Re
+		LEFT JOIN `member` AS M
+		ON Re.recipeId = M.id WHERE 1
+		ORDER BY Re.recipeId DESC
+	</select>
 
+	<select id="getRecipeDetail" resultType="Recipe">
+		SELECT Re.* from recipe AS Re
+		LEFT JOIN `member` AS M
+		ON Re.recipeId = M.id 
+		WHERE 1 AND Re.recipeId = 3
+		ORDER BY Re.recipeId DESC
+	</select>
 
 </mapper>
