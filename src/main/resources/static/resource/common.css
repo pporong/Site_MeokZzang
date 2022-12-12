@@ -853,12 +853,12 @@ body {
   margin-bottom: 15px;
 }
 
-.deleteMyInfoSection>.info_wrap {
+.deleteMyInfoSection >.deleteMyInfo_form>.info_wrap {
   width: fit-content;
   padding: 20px;
 }
 
-.deleteMyInfoSection>.info_wrap>.title {
+.deleteMyInfoSection .info_wrap>.title {
   font-weight: bold;
   font-size: 17px;
   text-align: center;
@@ -866,7 +866,7 @@ body {
 
 }
 
-.deleteMyInfoSection>.info_wrap>.btn-box {
+.deleteMyInfoSection .info_wrap>.btn-box {
   width: 200px;
   margin: 0 auto;
   margin-top: 20px;
@@ -882,11 +882,11 @@ body {
   transition: 0.5s;
 }
 
-.deleteMyInfoSection>.info_wrap>.btn-box:hover {
+.deleteMyInfoSection .info_wrap>.btn-box:hover {
   color: #e04241;
 }
 
-.deleteMyInfoSection>.info_wrap>.btns>.back_btn:hover {
+.deleteMyInfoSection .info_wrap>.btns>.back_btn:hover {
   color: #e04241;
 }
 

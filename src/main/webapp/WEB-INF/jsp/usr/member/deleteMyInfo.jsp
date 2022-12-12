@@ -5,9 +5,11 @@
 <%@ page import="com.MeokZzang.recipe.util.Ut" %>
 
  <section class="deleteMyInfoSection con">
+	<form class="deleteMyInfo_form" method="POST" action="../member/doDeleteMyInfo">
+		<input type="hidden" name="memberDeleteAuthKey" value="${param.memberDeleteAuthKey }" />
         <div class="info_wrap mx-auto px-3">
             <div class="title">
-                < 회원 탈퇴하기>
+                < 회원 탈퇴하기 >
             </div>
             <table class="table w-full">
                 <colgroup>
@@ -50,7 +52,8 @@
                 <button class="back_btn" type="button" onclick="history.back();">뒤로가기</button>
             </div>
         </div>
-    </section>
+	</form>
+</section>
 
 </body>
 </html>
