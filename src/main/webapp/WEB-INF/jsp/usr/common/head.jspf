@@ -114,7 +114,7 @@ integrity="sha512-XtmMtDEcNz2j7ekrtHvOVR4iwwaD6o/FUJe6+Zq+HgcCsk3kj4uSQQR8weQ2QV
                 <a href="/usr/article/list?boardId=1" class=""><span>공지사항</span></a>
             </div>
             <div class="menu cell">
-                <a href="/usr/article/list?boardId=4" class=""><span>레시피 게시판</span></a>
+                <a href="/usr/recipe/recipeList" class=""><span>레시피 게시판</span></a>
             </div>
             <div class="menu cell">
                 <a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a>
