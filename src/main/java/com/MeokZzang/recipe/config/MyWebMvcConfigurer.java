@@ -15,6 +15,7 @@ import com.MeokZzang.recipe.interceptor.NeedLogoutInterceptor;
 
 @Configuration
 public class MyWebMvcConfigurer implements WebMvcConfigurer {
+	
 	// BeforeActionInterceptor 불러오기
 	@Autowired
 	BeforeActionInterceptor beforeActionInterceptor;

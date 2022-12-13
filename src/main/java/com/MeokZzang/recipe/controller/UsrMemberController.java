@@ -64,8 +64,6 @@ public class UsrMemberController {
 		}
 		
 		int newMemberId = (int)joinRd.getBody().get("id");
-		
-//		Member member = memberService.getMemberById(joinRd.getData1());
 
 		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
 
@@ -79,8 +77,7 @@ public class UsrMemberController {
 			}
 		}
 
-		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요", afterJoinUri);
-//		return rq.jsReplace(Ut.f("%s님 !! 회원가입이 완료되었습니다~ 로그인 후 이용해주세요 :)", member.getName()), afterJoinUri);
+		return rq.jsReplace("회원가입이 완료되었습니다~ 로그인 후 이용해주세요 :)", afterJoinUri);
 	}
 
 	// id 중복검사
