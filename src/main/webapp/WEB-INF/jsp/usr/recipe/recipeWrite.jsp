@@ -8,100 +8,7 @@
 
 /* 입력데이터 유효성검사 스크립트 시작 */
 
-let RecipeWrite_submitFormDone = false;
 
-function RecipeWrite_submitForm(form) {
-	if (RecipeWrite_submitFormDone) {
-		alert('처리중...');
-		return;
-	}
-
-	form.recipeName.value = form.recipeName.value.trim();
-	if (form.recipeName.value.length == 0) {
-		alert('제목을 입력해주세요.');
-		form.recipeName.focus();
-		return;
-	}
-
-	form.recipeMsgBody.value = form.recipeMsgBody.value.trim();
-	if (form.recipeMsgBody.value.length == 0) {
-		alert('요리 과정을 입력해주세요.');
-		form.recipeMsgBody.focus();
-		return;
-	}
-	form.recipeBody.value = form.recipeBody.value.trim();
-	if (form.recipeBody.value.length == 0) {
-		alert('요리 소개를 입력해주세요.');
-		form.recipeBody.focus();
-		return;
-	}
-	form.recipePerson.value = form.recipePerson.value.trim();
-	if (form.recipePerson.value.length == 0) {
-		alert('인원을 선택 또는 입력해주세요.');
-		form.recipePerson.focus();
-		return;
-	}
-
-	form.recipeTime.value = form.recipeTime.value.trim();
-	if (form.recipeTime.value.length == 0) {
-		alert('소요시간을 선택 또는 입력해주세요.');
-		form.recipeTime.focus();
-		return;
-	}
-
-	form.recipeLevel.value = form.recipeLevel.value.trim();
-	if (form.recipeLevel.value == 0) {
-		alert('난이도를 선택해주세요.');
-		form.recipeLevel.focus();
-		return;
-	}
-	form.recipeCook.value = form.recipeCook.value.trim();
-	if (form.recipeCook.value == 0) {
-		alert('조리 방법을 선택해주세요.');
-		form.recipeCook.focus();
-		return;
-	}
-
-	// 조리순서 데이터 처리 스크립트 시작
-	var recipeMsgBodyArr = $('[name="recipeMsgBody"]');
-
-	var param = [];
-	for (var i = 0; i < recipeMsgBodyArr.length; i++) {
-		recipeMsgBodyArr[i].value = recipeMsgBodyArr[i].value.trim();
-		param.push(recipeMsgBodyArr[i].value);
-	}
-
-	var orderStr = '';
-	param.map(function(item) {
-		if (item != '' && item.length - 1) {
-			orderStr += item + '@';
-		}
-	});
-
-	// 마지막 구분자(@)제거
-	orderStr = orderStr.substr(0, orderStr.lastIndexOf('@'));
-
-	// 구성된 문자열을 input테그 값으로
-	document['do-write-recipe-form'].recipeMsgBody.value = orderStr;
-
-	// 연결된 조리순서 텍스트를 폼데이터로
-	form.recipeMsgBody.value = form.recipeMsgBody.value.trim();
-
-	// 조리순서 이미지 번호 순서대로 처리
-	var orderImgArr = $(".recipeOrderBox");
-	// 작성내용 갯수만큼 검사
-	for (var i = 0; i < recipeMsgBodyArr.length; i++) {
-		// 조리순서 이미지 번호 가져오기
-		var inputNameStr = orderImgArr[i].recipeName;
-		// 내용작성에 해당하는 순서
-		var tempStrForNaming = "file__order__0__extra__recipeOrderImg__" + (i + 1);
-		// 순서가 일치하지 않을 경우, 작성순서에 따른 번호로 name값 변경
-		if (tempStrForNaming !== inputNameStr) {
-			orderImgArr[i].recipeName = tempStrForNaming;
-		};
-	};
-
-	
 /* 재료 양념 입력칸 추가 및 삭제 스크립트 */
 
 const addStuffBox = () => {
@@ -133,25 +40,16 @@ var orderNum = 1;
 var lastOrderNum = 1;
 
 const add_orderBox = () => {
-	// 수정페이지에서 마지막 번호 가져오기
-	if (document.getElementById("lastOrderNum")) {
-		lastOrderNum = document.getElementById("lastOrderNum").value;
-		// 처음 한번만 orderNum를 lastOrderNum로 설정하기
-		if (lastOrderNum > orderNum) {
-			orderNum = lastOrderNum;
-		}
-	}
-	
-	++ orderNum;
+
 	const orderBox = document.getElementById("order");
 	const newOrderP = document.createElement('p');
 
 	newOrderP.innerHTML = "<div id='order' class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
 	    + "<div class='flex justify-center rounded-xl my-auto'>"
-        + "<label for='input-recipeOrder__1'> " + orderNum + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
-        + "<input type='file' id='input-recipeOrder__" + orderNum + "' accept='image/gif, image/jpeg, image/png'"
-		+ " name='file__order__0__extra__recipeOrderImg__" + orderNum + "' class='hidden recipeOrderBox' /></div>"
-   		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + orderNum + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
+        + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
+        + "<input type='file' id='input-recipeOrder__" + "' accept='image/gif, image/jpeg, image/png'"
+		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div>"
+   		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
 		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
    		+ "<div class='flex justify-center bg-gray-100 rounded-md' style='margin-top: 26px;'>"
         + "<textarea name='recipeMsgBody' class='w-full h-full text-lg p-3 border border-gray-300 rounded-lg' style='height: 220px;' rows='5' "
@@ -280,7 +178,7 @@ function characterCheck(obj) {
 			</p>
 			<!-- 추가 버튼 -->
 			<div class="mt-8">
-				<button onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
+				<button type="button" onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
 			</div>
 		</div>
 
@@ -292,11 +190,11 @@ function characterCheck(obj) {
 		<!-- 삭제 버튼 -->
 			<p>
 				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" name="recipeStuff" placeholder="예) 후추 톡톡 "/>
-					<button onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
+					<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 		<!-- 추가 버튼 -->
 			<div class="mt-8">
-				<button onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
+				<button type="button" onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
 			</div>
 		</div>
 	</div>
@@ -327,14 +225,15 @@ function characterCheck(obj) {
 			</div>
 		</div>
 
+	</div>
+				
 		<!-- 추가 버튼 -->
 		<div class=" flex justify-center mt-3" style="border-bottom: 1px solid #304899; padding-bottom: 15px;">
 			<div onclick="add_orderBox();" class="flex justify-center items-center">
-				<button class="btn btn-sm btn-outline fc_blueH">추가</button>
+				<button type="button" class="btn btn-sm btn-outline fc_blueH">추가</button>
 			</div>
 		</div>
-	</div>
-				
+		
 	<!-- 조리과정 데이터 -->
 		<input type="hidden" name="orderBody" />
 		<!-- 조리과정 등록 영역 끝 -->
