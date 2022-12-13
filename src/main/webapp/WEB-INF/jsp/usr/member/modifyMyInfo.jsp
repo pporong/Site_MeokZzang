@@ -60,7 +60,7 @@
        ** ▷ : 수정 가능 / ▶ : 수정 불가능
     </div>
 	<div class="container mx-auto px-3">
-		<form class="modifyMyInfo_form" method="POST" action="../member/doModifyMyInfo" onsubmit="MemberModify__submit(this); return false;">
+		<form class="modifyMyInfo_form" method="POST" enctype="multipart/form-data" action="../member/doModifyMyInfo" onsubmit="MemberModify__submit(this); return false;">
 		<input type="hidden" name="memberModifyAuthKey" value="${param.memberModifyAuthKey }" />
 			 <table class="table table-compact w-full center-box">
 				<colgroup>

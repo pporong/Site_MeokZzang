@@ -9,7 +9,7 @@
 		<!-- 검색 박스 -->
 		<div> 게시물 갯수 : <span class="badge"> ${articlesCount } 개</span></div>
 			<div class="search-box">
-				<form method="get" name="search" action="../article/list?boardId=${boardId }
+				<form method="post" enctype="multipart/form-data" name="search" action="../article/list?boardId=${boardId } 
 					&searchKeywordTypeCode=${searchKeywordTypeCode}&searchKeyword=${searchKeyword}">
 					<table class="pull-right">
 						<tr>

@@ -177,7 +177,7 @@
     <section class="memberJoin_section">
         <div class="form_wrap">
             <div class="memberJoin_form">
-                <form class="members_form" method="POST" action="../member/doJoin"
+                <form class="members_form" method="POST" enctype="multipart/form-data" action="../member/doJoin"
                     onsubmit="MemberJoin__submit(this); return false;">
                     <div class="memberJoin-input">
                         <div class="line flex">
@@ -234,6 +234,14 @@
                                 <input class="email-input" name="email" autocomplete="off" type="text" placeholder="이메일을 입력해주세요" />
                             </div>
                         </div>
+                        
+                        <div class="line line-2 flex">
+                            <label for="user-profileImg">▶ 프로필 이미지</label>
+                            <div class="img_input-box ">
+                                <input class="img-input mt-3" name="file__member__0__extra__profileImg__1" type="file" placeholder="프로필 이미지를 선택해주세요" />
+                            </div>
+                        </div>
+                        
 					</div>
 					
                     <button class="j-btn" type="submit" value="회원가입">회원가입</button>

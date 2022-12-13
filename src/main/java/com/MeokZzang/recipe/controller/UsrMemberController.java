@@ -1,11 +1,16 @@
 package com.MeokZzang.recipe.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
+import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.MemberService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Member;
@@ -18,6 +23,8 @@ public class UsrMemberController {
 	@Autowired
 	private MemberService memberService;
 	@Autowired
+	private GenFileService genFileService;
+	@Autowired
 	private Rq rq;
 
 	// join
@@ -29,7 +36,7 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doJoin")
 	@ResponseBody
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
-			String email, @RequestParam(defaultValue = "/") String afterLoginUri) {
+			String email, @RequestParam(defaultValue = "/") String afterLoginUri, MultipartRequest multipartRequest) {
 
 		if (Ut.empty(loginId)) {
 			return rq.jsHistoryBack("F-1", "!! 아이디를 입력해주세요 !!");
@@ -55,13 +62,25 @@ public class UsrMemberController {
 		if (joinRd.isFail()) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
-
-		Member member = memberService.getMemberById(joinRd.getData1());
+		
+		int newMemberId = (int)joinRd.getBody().get("id");
+		
+//		Member member = memberService.getMemberById(joinRd.getData1());
 
 		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
 
-//		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요", afterJoinUri);
-		return rq.jsReplace(Ut.f("%s님 !! 회원가입이 완료되었습니다~ 로그인 후 이용해주세요 :)", member.getName()), afterJoinUri);
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, newMemberId);
+			}
+		}
+
+		return rq.jsReplace("회원가입이 완료되었습니다. 로그인 후 이용해주세요", afterJoinUri);
+//		return rq.jsReplace(Ut.f("%s님 !! 회원가입이 완료되었습니다~ 로그인 후 이용해주세요 :)", member.getName()), afterJoinUri);
 	}
 
 	// id 중복검사
@@ -129,16 +148,15 @@ public class UsrMemberController {
 		}
 
 		rq.login(member);
-		
+
 		String infoMsg = Ut.f("%s님 환영합니다", member.getNickname());
-		
+
 		boolean isUsingTempPw = memberService.isUsingTempPw(member.getId());
-		
-		if(isUsingTempPw) {
+
+		if (isUsingTempPw) {
 			infoMsg = "!! 임시 비밀번호는 보안에 취약합니다. 변경 해 주세요 !!";
 			afterLoginUri = "/usr/member/myPage";
 		}
-		
 
 		return Ut.jsReplace(infoMsg, afterLoginUri);
 	}
@@ -232,7 +250,7 @@ public class UsrMemberController {
 
 			replaceUri += "?memberModifyAuthKey=" + memberModifyAuthKey;
 		}
-		
+
 		// memberDeleteAuthKey
 		if (replaceUri.equals("../member/deleteMyInfo")) {
 			String memberDeleteAuthKey = memberService.genMemberDeleteAuthKey(rq.getLoginedMemberId());
@@ -297,7 +315,7 @@ public class UsrMemberController {
 		return Ut.jsReplace(modifyMyInfoRd.getMsg(), "/");
 
 	}
-	
+
 	// 회원 탈퇴
 	@RequestMapping("/usr/member/deleteMyInfo")
 	public String deleteMyInfo(String memberDeleteAuthKey) {
@@ -315,7 +333,7 @@ public class UsrMemberController {
 
 		return "usr/member/deleteMyInfo";
 	}
-	
+
 	@RequestMapping("/usr/member/doDeleteMyInfo")
 	@ResponseBody
 	public String doDeleteMyInfo(String memberDeleteAuthKey) {
@@ -338,7 +356,7 @@ public class UsrMemberController {
 
 		// 로그아웃
 		rq.logout();
-		
+
 		return Ut.jsReplace("회원탈퇴가 완료되었습니다.", "/");
 
 	}

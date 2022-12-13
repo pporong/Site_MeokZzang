@@ -1,6 +1,10 @@
 server :
   port : 8081
 spring:
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
   mail:
     host: smtp.gmail.com
     port: 587
@@ -26,6 +30,7 @@ spring:
 mybatis:
   type-aliases-package: com.MeokZzang.recipe.vo
 custom:
+  genFileDirPath: E:\workspace_gbr\sts-4.15.3.RELEASE-workspace\MeokZzang\MeokZzang_ImgFile
   siteName: MEOK ZZANG PASSWORD
   siteMainUri: http://localhost:8081
   emailFrom: no-reply@localhost

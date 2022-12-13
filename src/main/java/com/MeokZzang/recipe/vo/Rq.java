@@ -181,7 +181,7 @@ public class Rq {
 		case "/usr/member/join":
 		case "/usr/member/findLoginId":
 		case "/usr/member/findLoginPw":
-			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
 		return getEncodedCurrentUri();
 	}
@@ -208,7 +208,7 @@ public class Rq {
 		// 로그아웃 후 다시 돌아가면 안되는 URL
 		switch (requestUri) {
 		case "/adm/member/list":
-			return Ut.getUriEncoded(Ut.getAttr(paramMap, "afterLoginUri", ""));
+			return Ut.getUriEncoded(Ut.getStrAttr(paramMap, "afterLoginUri", ""));
 		}
 		return getEncodedCurrentUri();
 	}
@@ -227,8 +227,15 @@ public class Rq {
 		return loginedMember.isAdmin();
 	}
 
-	// 삭제 금지
-	public void initOnBeforeActionInterceptor() {
+	public String getProfileImgUri(int membeId) {
+		return "/sb_am_img/member/" + membeId + "/extra/profileImg/1";
+	}
 
+	public String getProfileFallbackImgUri() {
+		return "https://via.placeholder.com/150/?text=*^_^*";
+	}
+
+	public String getProfileFallbackImgOnErrorHtml() {
+		return "this.src = '" + getProfileFallbackImgUri() + "'";
 	}
 }

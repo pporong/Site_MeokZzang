@@ -311,7 +311,7 @@ $(document).on('click', '#replyId', function(){
             <div class="writeWrap mt-5 overflow-x-auto">
                 <div class="replyWrite text-indigo-700">댓글 작성</div>
                 <c:if test="${rq.logined }">
-                    <form class="table-box-type-1 overflow-x-auto" method="POST" action="../reply/doWrite"
+                    <form class="table-box-type-1 overflow-x-auto" method="POST" enctype="multipart/form-data" action="../reply/doWrite"
                         onsubmit="ReplyWrite__submitForm(this); return false;">
                         <input type="hidden" name="relTypeCode" value="reply" />
                         <input type="hidden" name="relId" value="${article.id }" />
