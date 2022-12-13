@@ -752,45 +752,48 @@ body {
 }
 .article_detail_section >.article_wrap >.article_header >.articleTitle >.boardName {
   color : #304899;
-  font-size: 15px;
+  font-size: 18px;
 }
 .article_detail_section >.article_wrap >.article_header >.articleTitle >.titleName {
   font-weight: bold;
-  font-size: 25px;
+  font-size: 30px;
   margin-top: 7px;
   margin-bottom: 7px;
 } 
 
 .article_detail_section >.article_wrap >.article_header >.writerInfo >.profile_img {
-  background-color: orange;
+  /* background-color: orange; */
   margin-right: 10px;
-  width: 36px;
-  height: 36px;
+  width: 50px;
+  height: 50px;
   margin-top: 7px;
 }
 /* 프로필 이미지 영역 */
 .article_detail_section >.article_wrap >.article_header >.writerInfo >.profile_img >img {
-  background-color: yellow;
+  /* background-color: yellow; */
   margin-right: 10px;
-  width: 36px;
-  height: 36px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   vertical-align: top;
 }
+.article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea {
+	margin-top : 12px;
+}
 .article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea >.profileInfo >.profileNick {
-  font-size: 15px;
+  font-size: 18px;
   font-weight: bold;
 }
 .article_detail_section >.article_wrap >.article_header >.writerInfo >.profileArea >.articleInfo {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 13px;
   color: #979797;
 }
 .article_detail_section >.article_wrap >.article_header >.articleTool {
-  font-size: 12px;
+  font-size: 15px;
   line-height: 13px;
   color: #525050;
-  padding-top: 24px;
+  padding-top: 40px;
 } 
 .article_detail_section >.article_wrap >.article_header >.articleTool >.likeNum >.like {
   margin-right: 10px;
@@ -799,7 +802,7 @@ body {
   min-height: 300px;
 }
 .article_detail_section >.article_wrap >.reactionBox {
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
   margin-top: 30px;
 }

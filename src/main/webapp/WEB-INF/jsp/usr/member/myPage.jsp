@@ -39,6 +39,11 @@
                         <th class="fc_blue">▶ 이메일</th>
                         <td>${rq.loginedMember.email }</td>
                     </tr>
+                    <tr>
+                        <th class="fc_blue">▶ 프로필 사진</th>
+                        <td><img class="" src="${rq.getProfileImgUri(rq.loginedMember.id)}" 
+                        onerror="${rq.profileFallbackImgOnErrorHtml}" style=" border-radius: 50%;" alt="프로필 사진" /></td>
+                    </tr>
                 </tbody>
             </table>
             <div class="btn-box">

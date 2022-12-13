@@ -228,14 +228,19 @@ public class Rq {
 	}
 
 	public String getProfileImgUri(int membeId) {
-		return "/sb_am_img/member/" + membeId + "/extra/profileImg/1";
+		
+		return "/common/genFile/file/member/" + membeId + "/extra/profileImg/1";
 	}
 
+	// 이미지 없을 시 리턴값
 	public String getProfileFallbackImgUri() {
-		return "https://via.placeholder.com/150/?text=*^_^*";
+		
+		return "https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png";
 	}
 
 	public String getProfileFallbackImgOnErrorHtml() {
+		
 		return "this.src = '" + getProfileFallbackImgUri() + "'";
 	}
+
 }

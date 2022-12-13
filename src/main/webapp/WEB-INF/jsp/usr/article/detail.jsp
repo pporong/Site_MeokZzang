@@ -107,9 +107,9 @@ $(document).on('click', '#replyId', function(){
                 </div>
             </div>
             <div class="writerInfo row cell">
-                <a class="profile_img cell" href="#">
-                    <img src="" alt="">
-                </a>
+                <div class="profile_img cell" href="#">
+                    <img src="${rq.getProfileImgUri(article.memberId)}"  onerror="${rq.profileFallbackImgOnErrorHtml}" alt="프로필 이미지">
+                </div>
 
                 <div class="profileArea cell">
                     <div class="profileInfo">
@@ -128,14 +128,8 @@ $(document).on('click', '#replyId', function(){
 
             <div class="articleTool">
                 <div class="likeNum row">
-                    <span class="hate cell-r">
-                        싫어요
-                        <div class="badge badge-sm">${article.badReactionPoint}</div>
-                    </span>
-                    <span class="like cell-r">
-                        좋아요
-                        <div class="badge badge-secondary badge-sm">${article.goodReactionPoint}</div>
-                    </span>
+                    <span class="hate cell-r"> 싫어요 <div class="badge badge-sm"> ${article.badReactionPoint} </div></span>
+                    <span class="like cell-r"> 좋아요 <div class="badge badge-secondary badge-sm"> ${article.goodReactionPoint} </div></span>
                 </div>
             </div>
         </div>
@@ -153,12 +147,11 @@ $(document).on('click', '#replyId', function(){
             <c:if test="${actorCanMakeReaction }">
                 <div class="reactionBtns flex justify-center">
                     <!-- 추천 버튼 -->
-                    <a id=""
-                        href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                        class="btn_like"> 👍 좋아요 </a>
+                    <a id="" href="/usr/reactionPoint/doGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                        class="btn_like btn_s" style="margin-right: 20px;"> 👍 좋아요 </a>
                     <a id=""
                         href="/usr/reactionPoint/doBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                        class="btn_hate"> 👎 싫어요 </a>
+                        class="btn_hate btn_s"> 👎 싫어요 </a>
                 </div>
             </c:if>
 
@@ -166,11 +159,10 @@ $(document).on('click', '#replyId', function(){
             <c:if test="${actorCanDelGoodRp }">
                 <div class="reactionBtns flex justify-center">
                     <!-- 추천 버튼 -->
-                    <a id=""
-                        href="/usr/reactionPoint/doDeleteGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                        class="btn gap-2 btn-sm mx-2 btn_like btn-warning"> 👍 좋아요 </a>
+                    <a id="" href="/usr/reactionPoint/doDeleteGoodReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
+                        class="btn_s has-fail" style="margin-right: 20px;"> 👍 좋아요 </a>
                     <a onclick="alert(this.title); return false;" title="싫어요를 누르고 싶다면 좋아요를 취소 해 주세요!" id="" href="#"
-                        class="btn gap-2 btn-sm btn-hate btn-outline"> 👎 싫어요 </a>
+                        class="btn_s"> 👎 싫어요 </a>
                 </div>
             </c:if>
 
@@ -178,10 +170,10 @@ $(document).on('click', '#replyId', function(){
             <c:if test="${actorCanDelBadRp }">
                 <div class="reactionBtns flex justify-center">
                     <!-- 추천 버튼 -->
-                    <a onclick="alert(this.title); return false;" title="좋아요를 누르고 싶다면 싫어요를 취소 해 주세요!" id="" href="#"
-                        class="btn gap-2 btn-sm mx-2 btn_like btn-outline"> 👍 좋아요 </a>
+                    <a onclick="alert(this.title); return false;" title="좋아요를 누르고 싶다면 싫어요를 취소 해 주세요!" id="" href="#" style="margin-right: 20px;"
+                        class="btn_s"> 👍 좋아요 </a>
                     <a href="/usr/reactionPoint/doDeleteBadReaction?relTypeCode=article&relId=${param.id}&replaceUri=${rq.encodedCurrentUri}"
-                        class="btn gap-2 btn-sm btn-hate btn-warning"> 👎 싫어요 </a>
+                        class="btn_s has-fail"> 👎 싫어요 </a>
                 </div>
             </c:if>
         </div>

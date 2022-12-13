@@ -238,7 +238,7 @@
                         <div class="line line-2 flex">
                             <label for="user-profileImg">▶ 프로필 이미지</label>
                             <div class="img_input-box ">
-                                <input class="img-input mt-3" name="file__member__0__extra__profileImg__1" type="file" placeholder="프로필 이미지를 선택해주세요" />
+                                <input class="img-input mt-3 fc_redH" accept="image/*" name="file__member__0__extra__profileImg__1" type="file" />
                             </div>
                         </div>
                         

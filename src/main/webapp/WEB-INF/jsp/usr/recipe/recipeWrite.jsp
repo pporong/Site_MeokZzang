@@ -84,7 +84,7 @@ function characterCheck(obj) {
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
 				
 				<!-- 완성 사진 등록 -->
-				<input type="file" id="input-mainRecipe" style="padding-top: 8px; cursor: pointer;" accept="image/gif, image/jpeg, image/png"
+				<input type="file" id="input-mainRecipe" style="padding-top: 8px; cursor: pointer;" accept="image/*" 
 						name="file__recipe__0__extra__mainRecipeImg__1" class="titleImgChoice fc_redH" />
 			</div>
 
@@ -211,7 +211,7 @@ function characterCheck(obj) {
 					<label for="input-recipeOrder__1">
 						<i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i>
 					</label>
-					<input type="file" id="input-recipeOrder__1" accept="image/gif, image/jpeg, image/png" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox"/>
+					<input type="file" id="input-recipeOrder__1" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox"/>
 				</div>
 				
 				<!-- 사진 미리보기 -->
