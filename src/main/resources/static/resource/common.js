@@ -11,10 +11,10 @@ $(document).ready(function () {
     });
     // 배너 슬라이드 버튼
     $('.banner-visual>.section01>.banner-slider-wrap >.prev-btn').click(function(){
-        $('.main-slider').slick('slickPrev')
+        $('.banner-slider').slick('slickPrev')
     });
     $('.banner-visual>.section01>.banner-slider-wrap >.next-btn').click(function(){
-        $('.main-slider').slick('slickNext')
+        $('.banner-slider').slick('slickNext')
     });
 
 });

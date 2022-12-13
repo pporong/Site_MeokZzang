@@ -3,78 +3,7 @@
 <c:set var="pageTitle" value="레시피 작성" />
 <%@ include file="../common/head.jspf"%>
 <%@ include file="../common/toastUiLib.jspf"%>
-
-<script>
-
-/* 입력데이터 유효성검사 스크립트 시작 */
-
-
-/* 재료 양념 입력칸 추가 및 삭제 스크립트 */
-
-const addStuffBox = () => {
-	const stuffBox = document.getElementById("stuffBox");
-	const newStuffP = document.createElement('p');
-	newStuffP.innerHTML = "<input name='stuffValue' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
-		+ "<button style='margin-left: 10px;' onclick='removeStuffBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
-		stuffBox.appendChild(newStuffP);
-}
-const removeStuffBox = (obj) => {
-	document.getElementById('stuffBox').removeChild(obj.parentNode);
-}
-
-const addSauceBox = () => {
-	const sauceBox = document.getElementById("sauceBox");
-	const newSauceP = document.createElement('p');
-	newSauceP.innerHTML = "<input name='sauceValue' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
-		+ "<button style='margin-left: 10px;' onclick='removeSauceBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
-	sauceBox.appendChild(newSauceP);
-}
-
-const removeSauceBox = (obj) => {
-	document.getElementById('sauceBox').removeChild(obj.parentNode);
-}
-
-/* 조리과정 내용작성 박스 추가 및 삭제 스크립트 */
-
-var orderNum = 1;
-var lastOrderNum = 1;
-
-const add_orderBox = () => {
-
-	const orderBox = document.getElementById("order");
-	const newOrderP = document.createElement('p');
-
-	newOrderP.innerHTML = "<div id='order' class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
-	    + "<div class='flex justify-center rounded-xl my-auto'>"
-        + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
-        + "<input type='file' id='input-recipeOrder__" + "' accept='image/gif, image/jpeg, image/png'"
-		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div>"
-   		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
-		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
-   		+ "<div class='flex justify-center bg-gray-100 rounded-md' style='margin-top: 26px;'>"
-        + "<textarea name='recipeMsgBody' class='w-full h-full text-lg p-3 border border-gray-300 rounded-lg' style='height: 220px;' rows='5' "
-		+ " onkeyup='characterCheck(this);' onkeydown='characterCheck(this);' required placeholder='조리 과정을 입력해주세요.'></textarea>"
-        + "<div onclick='remove_orderBox(this);' class='btn btn-sm btn-outline fc_redH'>"
-        + "<span>삭제</span></div></div> </div> </div>";
-
-	orderBox.appendChild(newOrderP);
-};
-
-const remove_orderBox = (obj) => {
-	document.getElementById("order").removeChild(obj.parentNode.parentNode.parentNode.parentNode);
-}
-
-// 특수문자 입력 방지 스크립트
-function characterCheck(obj) {
-	// 방지할 특수문자 구분자로 사용되는 문자 '@' 제외
-	var regExp = /@/gi;
-	if (regExp.test(obj.value)) {
-		alert("해당 특수문자는 입력하실수 없습니다.");
-		obj.value = obj.value.substring(0, obj.value.length - 1); // 입력한 특수문자 한자리 지움
-	};
-};
-</script>
-
+<script src="/resource/api_js.js" defer="defer"></script>
 
 <section class="writeRecipeSection con">
 	<form class=" py-4 " action="../recipe/doWriteRecipe" method="POST" onsubmit="RecipeWrite_submitForm(this); return false;" name="do-write-recipe-form">
