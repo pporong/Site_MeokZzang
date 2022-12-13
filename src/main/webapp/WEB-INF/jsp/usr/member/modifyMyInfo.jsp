@@ -4,6 +4,7 @@
 <%@ include file="../common/head.jspf"%>
 
 <script>
+
 	let MemberModify__submitDone = false;
 	function MemberModify__submit(form) {
 		
@@ -49,10 +50,33 @@
 			return;
 		}
 		 
+		// 프로필 이미지 용량 제한
+		const maxSizeMb = 10;
+		const maxSize = maxSizeMb * 1204 * 1204;
+		
+		const profileImgFileInput = form["file__member__0__extra__profileImg__1"];
+		
+		if( profileImgFileInput.value ) {
+			if ( profileImgFileInput.files[0].size > maxSize ) {
+				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+				profileImgFileInput.focus();
+				
+				return;
+			}
+		}
+		
+		if ( form.newLoginPw.value.lenth > 0 ) {
+			form.loginPw.value = sha256(form.newLoginPw.value);
+			form.newLoginPw.value = '';
+			form.loginPwConfirm.value = '';
+		}
+		
 		MemberModify__submitDone = true;
 		form.submit();
 	}
+	
 </script>
+
 
 <!-- 내 정보 수정 시작 -->
 <section class="modifyInfo_section text-xl con">
@@ -103,6 +127,14 @@
 					<tr>
 						<th class="text-green-600">▷ 이메일</th>
 						<td><input value="${rq.loginedMember.email }" class="w-96" name="email" type="text" placeholder="이메일을 입력해주세요" /></td>
+					</tr>
+					<tr>
+						<th class="text-green-600">▷ 프로필 이미지</th>
+						<td>
+							<img id="preview-profileImg" class="" src="${rq.getProfileImgUri(rq.loginedMember.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" 
+							style="width:200px; height: 200px; border-radius: 50%;" alt="프로필 사진" />
+							<input id="input-profileImg" class="img-input mt-3 fc_redH" accept="image/*" name="file__member__0__extra__profileImg__1" type="file" />
+						</td>
 					</tr>
 
 					<tr class="">

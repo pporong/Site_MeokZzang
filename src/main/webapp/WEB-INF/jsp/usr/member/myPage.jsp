@@ -3,6 +3,8 @@
 <c:set var="pageTitle" value="마이 페이지" />
 <%@ include file="../common/head.jspf"%>
 <%@ page import="com.MeokZzang.recipe.util.Ut" %>
+
+
    <section class="myPage_section con">
         <div class="info_wrap mx-auto px-3">
             <div class="title"> < 내 정보 상세보기 > </div>
