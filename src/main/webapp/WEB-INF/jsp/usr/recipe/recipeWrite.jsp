@@ -176,10 +176,7 @@ function characterCheck(obj) {
 				<input name="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px; margin-left: 64px;" placeholder="예) 당근 반개 "/>
 					<button onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
-			<!-- 추가 버튼 -->
-			<div class="mt-8">
-				<button type="button" onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
-			</div>
+
 		</div>
 
 		<div class="sauceBox cell" id="sauceBox" style="width: 45%;">
@@ -192,18 +189,23 @@ function characterCheck(obj) {
 				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" name="recipeStuff" placeholder="예) 후추 톡톡 "/>
 					<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
-		<!-- 추가 버튼 -->
-			<div class="mt-8">
-				<button type="button" onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH">추가</button>
-			</div>
 		</div>
 	</div>
+	
+		<!-- 재료 / 양념 추가 버튼 -->
+		<div class="addBtnBox" class="mt-8" style="position:relative;">
+			<!-- 추가 버튼 -->
+			<div class="" style="padding-bottom: 15px;">
+				<button type="button" onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; left : 25%;">추가</button>
+				<button type="button" onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; right : 25%;">추가</button>
+			</div>			
+		</div>
 
 	<!-- 조리 과정 -->
 	<div class="cookWrap mt-8 con" style="border-top: 1px solid #304899;">
-		<div id="order" class="flex">
+		<div id="order" class="">
 		<!-- 조리 과정 사진등록 -->
-			<div class="flex h-full bg-gray-100 rounded-lg " style="margin-top: 20px; height: 270px; width: 50%;">
+			<div class="flex h-full bg-gray-100 rounded-lg " style="margin-top: 20px; height: 270px; width: 100%;">
 				<div class="flex justify-center rounded-xl my-auto">
 					<label for="input-recipeOrder__1">
 						<i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i>
@@ -211,23 +213,23 @@ function characterCheck(obj) {
 					<input type="file" id="input-recipeOrder__1" accept="image/gif, image/jpeg, image/png" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox"/>
 				</div>
 				
-				<!-- 미리보기 -->
+				<!-- 사진 미리보기 -->
 				<img class=" rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/600/FFFFFF?text=..."/>
-			</div>
-							
-			<!-- 조리순서 내용작성 -->
-			<div class="recipeBodyMsgBox w-full ml-6 my-auto">
-				<div class="flex justify-center bg-gray-100 rounded-md " style="margin-top: 26px;">
-					<textarea name="recipeMsgBody" class="w-full h-full text-lg p-3 border border-gray-300 rounded-lg"
-					 style="height: 220px;" rows="5" onkeyup="characterCheck(this);" onkeydown="characterCheck(this);" 
-					 required placeholder="조리 과정을 입력해주세요."></textarea>
+					
+				<!-- 조리순서 내용작성 -->
+				<div class="recipeBodyMsgBox w-full ml-6 my-auto">
+					<div class="flex justify-center bg-gray-100 rounded-md " style="margin-top: 26px;">
+						<textarea name="recipeMsgBody" class="w-full h-full text-lg p-3 border border-gray-300 rounded-lg"
+						 style="height: 220px;" rows="5" onkeyup="characterCheck(this);" onkeydown="characterCheck(this);" 
+						 required placeholder="조리 과정을 입력해주세요."></textarea>
+					</div>
 				</div>
 			</div>
 		</div>
 
 	</div>
 				
-		<!-- 추가 버튼 -->
+		<!-- 조리과정 추가 버튼 -->
 		<div class=" flex justify-center mt-3" style="border-bottom: 1px solid #304899; padding-bottom: 15px;">
 			<div onclick="add_orderBox();" class="flex justify-center items-center">
 				<button type="button" class="btn btn-sm btn-outline fc_blueH">추가</button>

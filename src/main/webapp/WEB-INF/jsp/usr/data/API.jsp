@@ -118,6 +118,7 @@
 		
 		for(i in data.msgBody){
 			
+			// data 관리자 test 숨기기
 			if(data.msgBody[i].foodSeq != 'FH0000934'){
 				
 				listTable += '<tr><td class="cursor-pointer">' + data.msgBody[i].name + '</td>'
