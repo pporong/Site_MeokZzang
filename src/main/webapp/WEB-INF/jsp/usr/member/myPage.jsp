@@ -44,7 +44,7 @@
                     <tr>
                         <th class="fc_blue">▶ 프로필 사진</th>
                         <td><img class="" src="${rq.getProfileImgUri(rq.loginedMember.id)}" 
-                        onerror="${rq.profileFallbackImgOnErrorHtml}" style=" border-radius: 50%;" alt="프로필 사진" /></td>
+                        onerror="${rq.profileFallbackImgOnErrorHtml}" style=" border-radius: 50%; width: 200px; height: 200px;" alt="프로필 사진" /></td>
                     </tr>
                 </tbody>
             </table>

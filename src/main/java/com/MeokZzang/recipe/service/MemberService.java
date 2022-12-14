@@ -45,7 +45,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
 		
-		loginPw = Ut.sha256(loginPw);
+		// loginPw = Ut.sha256(loginPw); // 이중 함호화 방지로 인한 제거
 		
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
@@ -73,7 +73,7 @@ public class MemberService {
 
 	public ResultData modifyMyInfo(int actorId, String loginPw, String nickname, String cellphoneNum, String email) {
 		
-		loginPw = Ut.sha256(loginPw);
+		// loginPw = Ut.sha256(loginPw); // 이중 함호화 방지로 인한 제거
 		
 		memberRepository.modifyMyInfo(actorId, loginPw, nickname, cellphoneNum, email);
 		

@@ -9,10 +9,11 @@
 	function MemberModify__submit(form) {
 		
 		if (MemberModify__submitDone) {
+			alert('처리중...');
 			return;
 		}
 		
-		form.loginPw.value = form.loginPw.value.trim();
+		form.newLoginPw.value = form.newLoginPw.value.trim();
 		if (form.loginPwConfirm.value.length > 0) {
 			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 			
@@ -22,9 +23,9 @@
 				return;
 			}
 			
-			if (form.loginPw.value != form.loginPwConfirm.value) {
-				alert('비밀번호가 일치하지 않습니다');
-				form.loginPw.focus();
+			if (form.newLoginPw.value != form.loginPwConfirm.value) {
+				alert('비밀번호 확인이 일치하지 않습니다');
+				form.loginPwConfirm.focus();
 				return;
 			}
 		}
@@ -50,6 +51,12 @@
 			return;
 		}
 		 
+		const deleteProfileImgFileInput = form["deleteFile__member__0__extra__profileImg__1"];
+		
+		if ( deleteProfileImgFileInput.checked ) {
+			form["file__member__0__extra__profileImg__1"].vlaue = '';
+		}
+		
 		// 프로필 이미지 용량 제한
 		const maxSizeMb = 10;
 		const maxSize = maxSizeMb * 1204 * 1204;
@@ -65,11 +72,13 @@
 			}
 		}
 		
-		if ( form.newLoginPw.value.lenth > 0 ) {
+		if ( form.newLoginPw.value.length > 0 ) {
 			form.loginPw.value = sha256(form.newLoginPw.value);
 			form.newLoginPw.value = '';
 			form.loginPwConfirm.value = '';
 		}
+		console.log("newLoginPw" + newLoginPw);
+		console.log("loginPw" + loginPw);
 		
 		MemberModify__submitDone = true;
 		form.submit();
@@ -86,6 +95,7 @@
 	<div class="container mx-auto px-3">
 		<form class="modifyMyInfo_form" method="POST" enctype="multipart/form-data" action="../member/doModifyMyInfo" onsubmit="MemberModify__submit(this); return false;">
 		<input type="hidden" name="memberModifyAuthKey" value="${param.memberModifyAuthKey }" />
+		 <input type="hidden" name="loginPw">
 			 <table class="table table-compact w-full center-box">
 				<colgroup>
 					<col width="200" />
@@ -102,7 +112,7 @@
 					</tr>
 					<tr>
 						<th class="text-red-600">▷ 새 비밀번호 </th>
-						<td><input class="w-96" name="loginPw" type="password" placeholder="새로운 비밀번호를 입력해주세요" /></td>
+						<td><input class="w-96" name="newLoginPw" type="password" placeholder="새로운 비밀번호를 입력해주세요" /></td>
 					</tr>
 					<tr>
 						<th class="text-red-600">▷ 새 비밀번호 확인</th>
@@ -131,8 +141,20 @@
 					<tr>
 						<th class="text-green-600">▷ 프로필 이미지</th>
 						<td>
-							<img id="preview-profileImg" class="" src="${rq.getProfileImgUri(rq.loginedMember.id)}" onerror="${rq.profileFallbackImgOnErrorHtml}" 
+							<!-- 현재 프로필 이미지 노출 -->
+							<img id="preview-profileImg" class="" src="${rq.getProfileImgUri(rq.loginedMember.id)}" onerror="${rq.removeProfileImgIfNotExitOnErrorHtmlAttr}" 
 							style="width:200px; height: 200px; border-radius: 50%;" alt="프로필 사진" />
+							<!-- 이미지 삭제 -->
+							<div class="mt-2">
+                				<label class="cursor-pointer inline-flex">
+                  					<span class="label-text mr-2 mt-1">이미지 삭제</span>
+		                    		<div>
+		                      			<input type="checkbox" name="deleteFile__member__0__extra__profileImg__1" class="checkbox" value="Y" />
+		                    		</div>
+                 				 </label>
+                			</div>
+							
+							<!-- 이미지 파일 선택 -->
 							<input id="input-profileImg" class="img-input mt-3 fc_redH" accept="image/*" name="file__member__0__extra__profileImg__1" type="file" />
 						</td>
 					</tr>

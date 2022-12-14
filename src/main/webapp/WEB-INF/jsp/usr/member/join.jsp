@@ -4,6 +4,8 @@
 <%@ include file="../common/head.jspf"%>
 
 <script>
+	// 데이터 유효성 검사 스크립트
+
 	let MemberJoin__submitDone = false;
 	let validLoginId = "";
 	let validNickname ="";
@@ -18,7 +20,7 @@
 			return;
 		}
 		
-		form.loginPw.value = form.loginPw.value.trim();
+		form.loginPwInput.value = form.loginPwInput.value.trim();
 		if (form.loginPwConfirm.value.length > 0) {
 			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
 			
@@ -28,9 +30,9 @@
 				return;
 			}
 			
-			if (form.loginPw.value != form.loginPwConfirm.value) {
+			if (form.loginPwInput.value != form.loginPwConfirm.value) {
 				alert('비밀번호가 일치하지 않습니다');
-				form.loginPw.focus();
+				form.loginPwInput.focus();
 				return;
 			}
 		}
@@ -82,7 +84,7 @@
 		}
 		
 		// 프로필 이미지 용량 제한
-		const maxSizeMb = 0;
+		const maxSizeMb = 10;
 		const maxSize = maxSizeMb * 1204 * 1204;
 		
 		const profileImgFileInput = form["file__member__0__extra__profileImg__1"];
@@ -95,7 +97,11 @@
 				return;
 			}
 		}
-		 
+		
+		form.loginPw.value = sha256(form.loginPwInput.value);
+		form.loginPwInput.value = '';
+		form.loginPwConfirm.value = '';
+		
 		MemberJoin__submitDone = true;
 		form.submit();
 	}
@@ -185,7 +191,7 @@
 			}
 		}, 'json');
 	}
-	
+
 </script>
 
     <!-- 회원가입 시작 -->
@@ -194,6 +200,8 @@
             <div class="memberJoin_form">
                 <form class="members_form" method="POST" enctype="multipart/form-data" action="../member/doJoin"
                     onsubmit="MemberJoin__submit(this); return false;">
+                    <input type="hidden" name="afterJoinUri" value="${param.afterJoinUri}" />
+       				<input type="hidden" name="loginPw">
                     <div class="memberJoin-input">
                         <div class="line flex">
                             <label for="user-loginId">▶ 아이디</label>
@@ -207,7 +215,7 @@
                         <div class="line line-2 flex">
                             <label for="user-loginPw">▶ 비밀번호</label>
                             <div class="pw_input-box input-box">
-                                <input class="pw-input" name="loginPw" type="password" placeholder="비밀번호를 입력해주세요" />
+                                <input class="pw-input" name="loginPwInput" type="password" placeholder="비밀번호를 입력해주세요" />
                             </div>
                         </div>
 

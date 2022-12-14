@@ -2,6 +2,8 @@ package com.MeokZzang.recipe.controller;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,41 +40,27 @@ public class UsrMemberController {
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email, @RequestParam(defaultValue = "/") String afterLoginUri, MultipartRequest multipartRequest) {
 
-		if (Ut.empty(loginId)) {
-			return rq.jsHistoryBack("F-1", "!! 아이디를 입력해주세요 !!");
-		}
-		if (Ut.empty(loginPw)) {
-			return rq.jsHistoryBack("F-2", "!! 비밀번호를 입력해주세요 !!");
-		}
-		if (Ut.empty(name)) {
-			return rq.jsHistoryBack("F-3", "!! 이름을 입력해주세요 !!");
-		}
-		if (Ut.empty(nickname)) {
-			return rq.jsHistoryBack("F-4", "!! 닉네임을 입력해주세요 !!");
-		}
-		if (Ut.empty(cellphoneNum)) {
-			return rq.jsHistoryBack("F-5", "!! 전화번호를 입력해주세요 !!");
-		}
-		if (Ut.empty(email)) {
-			return rq.jsHistoryBack("F-6", "!! 이메일을 입력해주세요 !!");
-		}
-
+		System.err.println("loginPw : " +  loginPw);
+		
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
 		
-		int newMemberId = (int)joinRd.getBody().get("id");
+		int newMemberId = (int) joinRd.getBody().get("id");
 
 		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 
+		
 		for (String fileInputName : fileMap.keySet()) {
+			
 			MultipartFile multipartFile = fileMap.get(fileInputName);
 
 			if (multipartFile.isEmpty() == false) {
+				
 				genFileService.save(multipartFile, newMemberId);
 			}
 		}
@@ -126,21 +114,16 @@ public class UsrMemberController {
 	@ResponseBody
 	public String doLogin(String loginId, String loginPw, @RequestParam(defaultValue = "/") String afterLoginUri) {
 
-		if (Ut.empty(loginId)) {
-			return Ut.jsHistoryBack("아이디를 입력해주세요");
-		}
-
-		if (Ut.empty(loginPw)) {
-			return Ut.jsHistoryBack("비밀번호를 입력해주세요");
-		}
-
 		Member member = memberService.getMemberByLoginId(loginId);
+		
+		//
+		System.out.println("로그인 loginPw : " + loginPw);
 
 		if (member == null) {
 			return Ut.jsHistoryBack("일치하는 정보가 없습니다. 확인 후 다시 시도 해 주세요.");
 		}
 
-		if (member.getLoginPw().equals(Ut.sha256(loginPw)) == false) {
+		if (member.getLoginPw().equals(loginPw) == false) {
 			return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다");
 		}
 
@@ -233,11 +216,12 @@ public class UsrMemberController {
 	@RequestMapping("/usr/member/doCheckPw")
 	@ResponseBody
 	public String doCheckPw(String loginPw, String replaceUri) {
+		
 		if (Ut.empty(loginPw)) {
 			return rq.jsHistoryBack("!! 비밀번호를 입력 해 주세요. !!");
 		}
 
-		if (rq.getLoginedMember().getLoginPw().equals(Ut.sha256(loginPw)) == false) {
+		if (rq.getLoginedMember().getLoginPw().equals(loginPw) == false) {
 			return Ut.jsHistoryBack("!! 비밀번호가 일치하지 않습니다. !!");
 		}
 
@@ -278,39 +262,49 @@ public class UsrMemberController {
 
 	@RequestMapping("/usr/member/doModifyMyInfo")
 	@ResponseBody
-	public String doModifyMyInfo(String memberModifyAuthKey, String loginPw, String nickname, String cellphoneNum,
-			String email) {
+	public String doModifyMyInfo(HttpServletRequest req, String memberModifyAuthKey, String loginPw, String nickname, String cellphoneNum,
+			String email, MultipartRequest multipartRequest) {
 
 		if (Ut.empty(memberModifyAuthKey)) {
 			return rq.jsHistoryBack("!! 회원 수정 인증코드가 필요합니다. !!");
 		}
 
-		ResultData checkMemberModifyAuthKeyRd = memberService.checkMemberModifyAuthKey(rq.getLoginedMemberId(),
-				memberModifyAuthKey);
+		ResultData checkMemberModifyAuthKeyRd = memberService.checkMemberModifyAuthKey(rq.getLoginedMemberId(), memberModifyAuthKey);
 
 		if (checkMemberModifyAuthKeyRd.isFail()) {
 			return rq.jsHistoryBack(checkMemberModifyAuthKeyRd.getMsg());
 		}
 
+		System.err.println("memberModifyAuthKey : " + memberModifyAuthKey);
+		System.err.println("nickname : " + nickname);
+		System.err.println("cellphoneNum : " + cellphoneNum);
+		System.err.println("email : " + email);
+		System.err.println("loginPw : " + loginPw);
+		
 		if (Ut.empty(loginPw)) {
 			loginPw = null;
-			return rq.jsHistoryBack("비밀번호를 입력해주세요");
 		}
-		if (Ut.empty(nickname)) {
-			return rq.jsHistoryBack("닉네임을 입력해주세요");
+		
+		ResultData modifyMyInfoRd = memberService.modifyMyInfo(rq.getLoginedMemberId(), loginPw, nickname, cellphoneNum, email);
+
+		if (req.getParameter("deleteFile__member__0__extra__profileImg__1") != null ) {
+			
+			System.out.println("실행됨.");
+			
+			genFileService.deleteGenFiles("member", rq.getLoginedMemberId(), "extra", "profileImg", 1);
 		}
-		if (Ut.empty(cellphoneNum)) {
-			return rq.jsHistoryBack("전화번호를 입력해주세요");
-		}
-		if (Ut.empty(email)) {
-			return rq.jsHistoryBack("이메일을 입력해주세요");
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+
+		for (String fileInputName : fileMap.keySet()) {
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				genFileService.save(multipartFile, rq.getLoginedMemberId());
+			}
 		}
 
-		ResultData modifyMyInfoRd = memberService.modifyMyInfo(rq.getLoginedMemberId(), loginPw, nickname, cellphoneNum,
-				email);
-
-		return Ut.jsReplace(modifyMyInfoRd.getMsg(), "/");
-
+		return rq.jsReplace(modifyMyInfoRd.getMsg(), "/usr/member/myPage");
 	}
 
 	// 회원 탈퇴
