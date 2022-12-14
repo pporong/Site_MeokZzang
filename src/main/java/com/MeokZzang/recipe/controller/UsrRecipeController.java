@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.RecipeService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Recipe;
@@ -21,6 +23,8 @@ public class UsrRecipeController {
 	@Autowired
 	private RecipeService recipeService;
 	@Autowired
+	private GenFileService genFileService;
+	@Autowired
 	private Rq rq;
 	
 	// 레시피 등록
@@ -32,10 +36,8 @@ public class UsrRecipeController {
 	
 	@RequestMapping("/usr/recipe/doWriteRecipe")
 	@ResponseBody
-	public String doRecipeWrite(int recipeCategory, String recipeName, String recipeBody, String recipeMsgBody,
-			int writerId, int recipePerson, int recipeLevel, String recipeTitleImg, 
-			String recipeBodyImg, int recipeCook, String recipeStuff, String recipeSauce,
-			int recipeTime, String replaceUri) {
+	public String doRecipeWrite(int recipeCategory, String recipeName, String recipeBody, int recipePerson,
+			int recipeLevel, int recipeCook, int recipeTime, @RequestParam(defaultValue = "/") String replaceUri) {
 
 		// 데이터 유효성 검사
 		if (Ut.empty(recipeCategory)) {
@@ -49,16 +51,15 @@ public class UsrRecipeController {
 		}
 		
 		ResultData<Integer> writeRecipeRd = recipeService.writeRecipe(rq.getLoginedMemberId(), recipeCategory,
-				recipeName, recipeBody, recipeMsgBody, writerId, recipePerson, recipeLevel, recipeTitleImg,
-				recipeBodyImg, recipeCook, recipeStuff, recipeSauce, recipeTime);
+				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime);
 		
-		int recipiId = (int) writeRecipeRd.getData1();
+		int recipeId = (int) writeRecipeRd.getData1();
 		
 		if(Ut.empty(replaceUri)) {
-			replaceUri = Ut.f("../usr/recipe/recipeDetail?recipiId=%d", recipiId);
+			replaceUri = Ut.f("../usr/recipe/recipeDetail?recipeId=%d", recipeId);
 		}
-		
-		return rq.jsReplace(Ut.f("%d번 레시피 등록이 완료되었습니다. :)", recipiId), replaceUri);
+
+		return rq.jsReplace(Ut.f("%d번 레시피 등록이 완료되었습니다. :)", recipeId), replaceUri);
 	}
 	
 	

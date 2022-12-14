@@ -26,13 +26,16 @@ public class RecipeService {
 
 	public Recipe getRecipeDetail(int recipeId) {
 		
-		
 		return recipeRepository.getRecipeDetail(recipeId);
 	}
 
-	public ResultData<Integer> writeRecipe(int loginedMemberId, int recipeCategory, String recipeName,
-			String recipeBody, String recipeMsgBody, int writerId, int recipePerson, int recipeLevel, String recipeTitleImg,
-			String recipeBodyImg, int recipeCook, String recipeStuff, String recipeSauce, int recipeTime) {
+
+	// 레시피 작성
+	public ResultData<Integer> writeRecipe(int memberId, int recipeCategory, String recipeName,
+			String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime) {
+		
+		recipeRepository.writeRecipe(memberId, recipeCategory, 
+				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime);
 		
 		int recipeId = recipeRepository.getLastInsertId();
 		

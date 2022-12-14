@@ -7,7 +7,71 @@
 <script>
 
 /* 입력데이터 유효성검사 스크립트 시작 */
+let RecipeWrite_submitFormDone = false;
 
+function RecipeWrite_submitForm(form) {
+	
+	if (RecipeWrite_submitFormDone) {
+		alert('처리중...');
+		return;
+	}
+
+	form.recipeName.value = form.recipeName.value.trim();
+	if (form.recipeName.value.length == 0) {
+		alert('제목을 입력 해주세요.');
+		form.recipeName.focus();
+		return;
+	}
+
+	form.recipeBody.value = form.recipeBody.value.trim();
+	if (form.recipeBody.value.length == 0) {
+		alert('요리소개를 입력 해주세요.');
+		form.recipeBody.focus();
+		return;
+	}
+	
+	if (form.recipeCategory == 0) {
+		alert('카테고리를 선택 해주세요.');
+		form.recipeCategory.focus();
+		return;
+	}
+
+	if (form.recipePerson.value == 0) {
+		alert('인원을 선택 해주세요.');
+		form.recipePerson.focus();
+		return;
+	}
+
+	if (form.recipeTime.value == 0) {
+		alert('소요시간을 선택 해주세요.');
+		form.recipeTime.focus();
+		return;
+	}
+
+	if (form.recipeLevel.value == 0) {
+		alert('난이도를 선택 해주세요.');
+		form.recipeLevel.focus();
+		return;
+	}
+	
+	// 대표사진 용량 제한
+	const maxSizeMb = 10;
+	const maxSize = maxSizeMb * 1204 * 1204;
+
+	const mainRecipeImgFileInput = form["file__recipe__0__extra__mainRecipeImg__1"];
+
+	if (mainRecipeImgFileInput.value) {
+		if (mainRecipeImgFileInput.files[0].size > maxSize) {
+			alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
+			mainRecipeImgFileInput.focus();
+
+			return;
+		}
+	}
+
+	RecipeWrite_submitFormDone = true;
+	form.submit();
+};
 
 /* 재료 양념 입력칸 추가 및 삭제 스크립트 */
 const addStuffBox = () => {
@@ -42,7 +106,7 @@ const add_orderBox = () => {
 	newOrderP.innerHTML = "<div id='order' class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
 	    + "<div class='flex justify-center rounded-xl my-auto'>"
         + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
-        + "<input type='file' id='input-recipeOrder__" + "' accept='image/gif, image/jpeg, image/png'"
+        + "<input type='file' id='input-recipeOrder__" + "' accept='image/*'"
 		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div>"
    		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
 		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
@@ -68,6 +132,29 @@ function characterCheck(obj) {
 	};
 };
 
+//대표사진 미리보기 스크립트 시작
+function readMainRecipeImage(input) {
+	// 인풋 태그에 파일이 있는 경우
+	if (input.files && input.files[0]) {
+
+		// FileReader 인스턴스 생성
+		const reader = new FileReader();
+		// 이미지가 로드가 된 경우
+		reader.onload = e => {
+			const previewImage = document.getElementById("preview-mainRecipe");
+			previewImage.src = e.target.result;
+		}
+		// reader가 이미지 읽도록 하기
+		reader.readAsDataURL(input.files[0]);
+	}
+};
+
+// input file에 change 이벤트 부여
+const inputMainRecipeImage = document.getElementById("input-mainRecipe");
+
+inputMainRecipeImage.addEventListener("change", e => {
+	readMainRecipeImage(e.target);
+});
 
 </script>
 
@@ -79,7 +166,7 @@ function characterCheck(obj) {
 		<div class="titleImgBox" style="width: 450px; height: 300px;">
 			<div class="mt-8" style="width: 100%; height: 300px; border: 1px solid grey;">
 				<!-- 이미지 미리보기 -->
-				<img name="recipeTitleImg" style="width: 100%; height: 100%; background-color: #ddd;" src="" alt="" />
+				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%; background-color: #ddd;" src="" alt="" />
 				
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
 				
@@ -113,8 +200,8 @@ function characterCheck(obj) {
 	<!-- 레시피 선택내용(카테고리 / 인원 / 소요시간 / 난이도 / 조리방법) -->
 	<div class="recipeBodyWrap flex justify-center mt-8" style="border-bottom: 1px solid #304899; padding-bottom: 15px; padding-top: 40px;">
 
-		<select name="recipeCategory" class="mx-8 text-center">
-			<option disabled selected>카테고리</option>
+		<select name="recipeCategory" class="mx-8 text-center" data-value="${recipe.recipeCategory}">
+			<option disabled selected selected="${recipe.recipeCook}">카테고리</option>
 			<option value="1">한식</option>
 			<option value="2">양식</option>
 			<option value="3">중식</option>
@@ -122,8 +209,8 @@ function characterCheck(obj) {
 			<option value="0">기타</option>
 		</select>
 	
-		<select name="recipeCook" class="mx-8 text-center">
-			<option disabled selected>조리 방법</option>
+		<select name="recipeCook" class="mx-8 text-center" data-value="${recipe.recipeCook}">
+			<option disabled selected selected="${recipe.recipeCook}">조리 방법</option>
 			<option value="1">볶음</option>
 			<option value="2">끓이기</option>
 			<option value="3">부침</option>
@@ -139,16 +226,16 @@ function characterCheck(obj) {
 			<option value="0">기타</option>
 		</select>
 	
-		<select name="recipePerson" class="mx-8 text-center">
-			<option disabled selected>인원 선택</option>
+		<select name="recipePerson" class="mx-8 text-center" data-value="${recipe.recipePerson}">
+			<option disabled selected selected="${recipe.recipePerson}">인원 선택</option>
 			<option value="1">1인분</option>
 			<option value="2">2인분</option>
 			<option value="3">3인분</option>
 			<option value="0">기타</option>
 		</select>
 	
-		<select name="recipeTime" class="mx-8 text-center">
-			<option disabled selected>소요 시간</option>
+		<select name="recipeTime" class="mx-8 text-center" data-value="${recipe.recipeTime}">
+			<option disabled selected selected="${recipe.recipeTime}">소요 시간</option>
 			<option value="1">10분 이내</option>
 			<option value="2">20분 이내</option>
 			<option value="3">30분 이내</option>
@@ -156,8 +243,8 @@ function characterCheck(obj) {
 			<option value="0">기타</option>
 		</select>
 	
-		<select name="recipeLevel" class="mx-8 text-center">
-			<option disabled selected>난이도</option>
+		<select name="recipeLevel" class="mx-8 text-center" data-value="${param.recipeLevel}">
+			<option disabled selected selected="${param.recipeLevel}">난이도</option>
 			<option value="1">초급</option>
 			<option value="2">중급</option>
 			<option value="3">고급</option>
@@ -175,7 +262,7 @@ function characterCheck(obj) {
 			<!-- 삭제 버튼 -->
 			<p>
 				<input name="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px; margin-left: 64px;" placeholder="예) 당근 반개 "/>
-					<button onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
+					<button type="button" onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 
 		</div>
@@ -187,7 +274,7 @@ function characterCheck(obj) {
 				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 참기름 한바퀴 "/>
 		<!-- 삭제 버튼 -->
 			<p>
-				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" name="recipeStuff" placeholder="예) 후추 톡톡 "/>
+				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" placeholder="예) 후추 톡톡 "/>
 					<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 		</div>
@@ -215,7 +302,7 @@ function characterCheck(obj) {
 				</div>
 				
 				<!-- 사진 미리보기 -->
-				<img class=" rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/600/FFFFFF?text=..."/>
+				<img id="preview-recipeOrder__1" class=" rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/900/FFFFFF?text=..."/>
 					
 				<!-- 조리순서 내용작성 -->
 				<div class="recipeBodyMsgBox w-full ml-6 my-auto">

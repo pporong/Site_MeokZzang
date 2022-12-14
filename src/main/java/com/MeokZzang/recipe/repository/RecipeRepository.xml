@@ -4,7 +4,7 @@
 <mapper namespace="com.MeokZzang.recipe.repository.RecipeRepository">
 
 	<select id="getRecipeList" resultType="Recipe">
-		SELECT Re.recipeId, Re.recipeName, Re.writerId, Re.recipeRegDate, 
+		SELECT Re.recipeId, Re.recipeName, Re.memberId, Re.recipeRegDate, 
 		Re.recipeTitleImg, Re.recipeHitCount, M.name AS extra__WriterName
 		FROM recipe AS Re
 		LEFT JOIN `member` AS M
@@ -24,5 +24,18 @@
 		SELECT LAST_INSERT_ID()
 	</select>
 	
+	<insert id="writeRecipe">
+		INSERT INTO recipe
+		SET recipeRegDate = NOW(),
+			recipeUpdateDate = NOW(),
+			memberId = #{memberId},
+			`recipeCategory` = #{recipeCategory},
+			`recipeName` = #{recipeName},
+			`recipeBody` = #{recipeBody},
+			`recipePerson` = #{recipePerson},
+			`recipeLevel` = #{recipeLevel},
+			`recipeCook` = #{recipeCook},
+			`recipeTime` = #{recipeTime}
+	</insert>
 	
 </mapper>
