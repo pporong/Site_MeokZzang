@@ -1,6 +1,7 @@
 package com.MeokZzang.recipe.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.RecipeService;
@@ -27,7 +30,7 @@ public class UsrRecipeController {
 	@Autowired
 	private Rq rq;
 	
-	// 레시피 등록
+	// 레시피 작성
 	@RequestMapping("/usr/recipe/writeRecipe")
 	public String viewRecipeWrite() {
 
@@ -38,7 +41,7 @@ public class UsrRecipeController {
 	@ResponseBody
 	public String doRecipeWrite(@RequestParam(defaultValue = "99") int recipeCategory, String recipeName, String recipeBody, @RequestParam(defaultValue = "99") int recipePerson,
 			 @RequestParam(defaultValue = "99") int recipeLevel, @RequestParam(defaultValue = "99") int recipeCook, @RequestParam(defaultValue = "99") int recipeTime,
-			 String recipeStuff, String recipeSauce, String recipeMsgBody, @RequestParam(defaultValue = "/") String replaceUri) {
+			 String recipeStuff, String recipeSauce, String recipeMsgBody, @RequestParam(defaultValue = "/") String replaceUri, MultipartRequest multipartRequest) {
 
 		// 데이터 유효성 검사
 		if (Ut.empty(recipeCategory)) {
@@ -59,6 +62,18 @@ public class UsrRecipeController {
 		if(Ut.empty(replaceUri)) {
 			replaceUri = Ut.f("../usr/recipe/recipeDetail?recipeId=%d", recipeId);
 		}
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		
+		for (String fileInputName : fileMap.keySet()) {
+			
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				
+				genFileService.save(multipartFile, recipeId);
+			}
+		}
 
 		return rq.jsReplace(Ut.f("%d번 레시피 등록이 완료되었습니다. :)", recipeId), replaceUri);
 	}
@@ -66,11 +81,28 @@ public class UsrRecipeController {
 	
 	// 레시피 목록
 	@RequestMapping("/usr/recipe/recipeList")
-	public String viewRecipeList(Model model) {
+	public String viewRecipeList(Model model, @RequestParam(defaultValue = "0") int recipeCategory, @RequestParam(defaultValue = "recipeName") String searchKeywordTypeCode,
+			@RequestParam(defaultValue = "") String searchKeyword,
+			@RequestParam(defaultValue = "1") int page) {
 		
-		List<Recipe> recipies = recipeService.getRecipeList();
+		int recipiesCount = recipeService.getRecipiesCount(recipeCategory, searchKeywordTypeCode, searchKeyword);
+		
+		int itemsInAPage = 10;
+		
+		// 한 페이지당 글 intemInAPage 갯수
+		int pagesCount = (int) Math.ceil((double) recipiesCount / itemsInAPage);
+		
+		List<Recipe> recipies = recipeService.getRecipeList(rq.getLoginedMemberId(), recipeCategory, page, itemsInAPage, searchKeywordTypeCode, searchKeyword);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("pagesCount", pagesCount);
+
+		model.addAttribute("recipeCategory", recipeCategory);
+		model.addAttribute("searchKeyword", searchKeyword);
+		model.addAttribute("recipiesCount", recipiesCount);
 		
 		model.addAttribute("recipies", recipies);
+		
 		return "usr/recipe/recipeList";
 	}
 	

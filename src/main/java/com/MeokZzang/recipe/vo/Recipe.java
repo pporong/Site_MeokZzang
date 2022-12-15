@@ -19,10 +19,8 @@ public class Recipe {
 	private int recipeLevel;	// 난이도
 	private int recipeTime;	// 소요 시간
 	private int recipeCook;	// 조리 방법
-	private String recipeTitleImg; // 완성 사진
 	private String recipeStuff;	// 재료
 	private String recipeSauce;	// 양념
-	private String recipeBodyImg;	// 레시피 과정 사진
 	private String recipeMsgBody; // 레시피 과정 설명
 	private int recipeHitCount;	// 조회수
 	private int recipePoint;	// 추천수

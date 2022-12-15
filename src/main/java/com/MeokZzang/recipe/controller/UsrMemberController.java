@@ -53,7 +53,6 @@ public class UsrMemberController {
 		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
 
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-
 		
 		for (String fileInputName : fileMap.keySet()) {
 			

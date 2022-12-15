@@ -227,25 +227,51 @@ public class Rq {
 		return loginedMember.isAdmin();
 	}
 
+	// 프로필 이미지 가져오기
 	public String getProfileImgUri(int membeId) {
-		
+
 		return "/common/genFile/file/member/" + membeId + "/extra/profileImg/1";
 	}
 
 	// 이미지 없을 시 리턴값
 	public String getProfileFallbackImgUri() {
-		
+
 		return "https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png";
 	}
 
 	public String getProfileFallbackImgOnErrorHtml() {
-		
+
 		return "this.src = '" + getProfileFallbackImgUri() + "'";
 	}
-	
-	// 
+
 	public String getRemoveProfileImgIfNotExitOnErrorHtmlAttr() {
 		return "$(this).remove()";
+	}
+
+	// 레시피 대표이미지 가져오기 -> 얘는 삭제 안 되고 수정만 가능
+	public String getMainRecipeImgUri(int recipeId) {
+		return "/common/genFile/file/recipe/" + recipeId + "/extra/mainRecipeImg/1";
+	}
+
+	public String getMainRecipeFallbackImgUri() {
+		return "https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png";
+	}
+
+	public String getMainRecipeFallbackImgOnErrorHtml() {
+		return "this.src = '" + getMainRecipeFallbackImgUri() + "'";
+	}
+
+	// 레시피 조리순서이미지 가져오기
+	public String getRecipeOrderImgUri(int recipeId, int fileNoCount) {
+		return "/common/genFile/file/order/" + recipeId + "/extra/recipeOrderImg/" + fileNoCount;
+	}
+
+	public String getOrderFallbackImgUri() {
+		return "https://via.placeholder.com/300/?text=...";
+	}
+
+	public String getOrderFallbackImgOnErrorHtml() {
+		return "this.src = '" + getOrderFallbackImgUri() + "'";
 	}
 
 }

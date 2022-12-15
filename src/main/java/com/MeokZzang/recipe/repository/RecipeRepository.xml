@@ -3,21 +3,47 @@
 
 <mapper namespace="com.MeokZzang.recipe.repository.RecipeRepository">
 
-	<select id="getRecipeList" resultType="Recipe">
-		SELECT Re.recipeId, Re.recipeName, Re.memberId, Re.recipeRegDate, 
-		Re.recipeTitleImg, Re.recipeHitCount, M.name AS extra__WriterName
-		FROM recipe AS Re
+<!-- 	<select id="getRecipeList" resultType="Recipe">
+		SELECT RE.recipeId, RE.recipeName, RE.memberId, RE.recipeRegDate, 
+		RE.recipeTitleImg, RE.recipeHitCount, M.name AS extra__WriterName
+		FROM recipe AS RE
 		LEFT JOIN `member` AS M
-		ON Re.recipeId = M.id WHERE 1
-		ORDER BY Re.recipeId DESC
+		ON RE.recipeId = M.id WHERE 1
+		ORDER BY RE.recipeId DESC
+	</select>
+ -->	
+	<select id="getRecipeList" resultType="Recipe">
+		SELECT RE.*, M.name AS extra__writerName
+		FROM recipe AS RE
+		LEFT JOIN `member` AS M
+		ON RE.recipeId = M.id WHERE 1
+		
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'recipeName'">
+					OR RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode == 'recipeStuff'">
+					OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					OR ( 
+						RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+						OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+				</otherwise>
+			</choose>
+		</if>
+		ORDER BY RE.recipeId DESC
+		<if test="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
 	</select>
 
 	<select id="getRecipeDetail" resultType="Recipe">
-		SELECT Re.* from recipe AS Re
+		SELECT RE.* from recipe AS RE
 		LEFT JOIN `member` AS M
-		ON Re.recipeId = M.id 
-		WHERE 1 AND Re.recipeId = #{recipeId}
-		ORDER BY Re.recipeId DESC
+		ON RE.recipeId = M.id 
+		WHERE 1 AND RE.recipeId = #{recipeId}
+		ORDER BY RE.recipeId DESC
 	</select>
 
 	<select id="getLastInsertId" resultType="int">
@@ -40,5 +66,28 @@
 			`recipeSauce` = #{recipeSauce},
 			`recipeMsgBody` = #{recipeMsgBody}
 	</insert>
+	
+	<select id="getRecipiesCount" resultType="int">
+		SELECT COUNT(*) AS cnt
+		FROM recipe AS RE
+		WHERE 1
+		<if test="recipeCategory != 0"> OR RE.recipeCategory = #{recipeCategory} </if>
+		<if test="searchKeyword != ''">
+			<choose>
+				<when test="searchKeywordTypeCode == 'recipeName'">
+					OR RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<when test="searchKeywordTypeCode == 'recipeStuff'">
+					OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+				</when>
+				<otherwise>
+					OR ( 
+						RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+						OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+						)
+				</otherwise>
+			</choose>
+		</if>
+	</select>
 	
 </mapper>

@@ -64,7 +64,7 @@
                 <a href="/usr/article/list?boardId=1" class=""><span>공지사항</span></a>
             </div>
             <div class="menu ">
-                <a href="/usr/recipe/recipeList" class=""><span>레시피 게시판</span></a>
+                <a href="/usr/recipe/recipeList?recipeCategory=0" class=""><span>레시피 게시판</span></a>
             </div>
             <div class="menu ">
                 <a href="/usr/article/list?boardId=2" class=""><span>자유 게시판</span></a>
