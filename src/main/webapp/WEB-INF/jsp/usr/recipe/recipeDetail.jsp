@@ -30,14 +30,18 @@
                     <h3 class="">${recipe.recipeName}</h3>
                 </div>
                 <div class="titleName">
-                    <h3 class="">${stuff}</h3>
+                    <h3 class="">${recipe.recipeStuff}</h3>
+                </div>
+                
+                <div class="titleName">
+                    <h3 class="">${recipe.recipeSauce}</h3>
                 </div>
                 
 
             </div>
             <div class="recipeInfo row">
                     <div class="cell">
-                    	<c:forEach var="body" items="${bodyMsg }">
+                    	<c:forEach var="body" items="${recipe.recipeMsgBody }">
                     		<div style="border: 1px solid green; margin: 20px;" class="">${body} </div>
                     	</c:forEach>
                     </div>

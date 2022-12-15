@@ -16,7 +16,7 @@
 		SELECT Re.* from recipe AS Re
 		LEFT JOIN `member` AS M
 		ON Re.recipeId = M.id 
-		WHERE 1 AND Re.recipeId = 3
+		WHERE 1 AND Re.recipeId = #{recipeId}
 		ORDER BY Re.recipeId DESC
 	</select>
 
@@ -35,7 +35,10 @@
 			`recipePerson` = #{recipePerson},
 			`recipeLevel` = #{recipeLevel},
 			`recipeCook` = #{recipeCook},
-			`recipeTime` = #{recipeTime}
+			`recipeTime` = #{recipeTime},
+			`recipeStuff` = #{recipeStuff},
+			`recipeSauce` = #{recipeSauce},
+			`recipeMsgBody` = #{recipeMsgBody}
 	</insert>
 	
 </mapper>

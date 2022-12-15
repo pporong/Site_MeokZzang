@@ -5,9 +5,9 @@
 <%@ include file="../common/toastUiLib.jspf"%>
 
 <script>
-
 /* 입력데이터 유효성검사 스크립트 시작 */
 let RecipeWrite_submitFormDone = false;
+
 
 function RecipeWrite_submitForm(form) {
 	
@@ -30,29 +30,47 @@ function RecipeWrite_submitForm(form) {
 		return;
 	}
 	
-	if (form.recipeCategory == 0) {
+	if (form.recipeCategory.value == 99) {
 		alert('카테고리를 선택 해주세요.');
 		form.recipeCategory.focus();
 		return;
 	}
 
-	if (form.recipePerson.value == 0) {
+	if (form.recipeCook.value == 99) {
+		alert('조리방법을 선택 해주세요.');
+		form.recipeCook.focus();
+		return;
+	}
+	
+	if (form.recipePerson.value == 99) {
 		alert('인원을 선택 해주세요.');
 		form.recipePerson.focus();
 		return;
 	}
 
-	if (form.recipeTime.value == 0) {
+	if (form.recipeTime.value == 99) {
 		alert('소요시간을 선택 해주세요.');
 		form.recipeTime.focus();
 		return;
 	}
 
-	if (form.recipeLevel.value == 0) {
+	if (form.recipeLevel.value == 99) {
 		alert('난이도를 선택 해주세요.');
 		form.recipeLevel.focus();
+
 		return;
 	}
+	
+	// 값 확인
+	console.log('recipeName : ',form.recipeName.value)
+	console.log('recipeLevel : ',form.recipeLevel.value)
+	console.log('recipePerson : ',form.recipePerson.value)
+	console.log('recipeCategory : ',form.recipeCategory.value)
+	console.log('recipeBody : ',form.recipeBody.value)
+ 	console.log('recipeStuff : ', form.recipeStuff.value)
+	console.log('recipeSauce : ',form.recipeSauce.value)
+	console.log('recipeMsgBody : ',form.recipeMsgBody.value)
+		
 	
 	// 대표사진 용량 제한
 	const maxSizeMb = 10;
@@ -69,15 +87,18 @@ function RecipeWrite_submitForm(form) {
 		}
 	}
 
+	
 	RecipeWrite_submitFormDone = true;
 	form.submit();
+
 };
+
 
 /* 재료 양념 입력칸 추가 및 삭제 스크립트 */
 const addStuffBox = () => {
 	const stuffBox = document.getElementById("stuffBox");
 	const newStuffP = document.createElement('p');
-	newStuffP.innerHTML = "<input id='stuffValue' name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
+	newStuffP.innerHTML = "<input name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeStuffBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 		stuffBox.appendChild(newStuffP);
 }
@@ -87,7 +108,7 @@ const removeStuffBox = (obj) => {
 const addSauceBox = () => {
 	const sauceBox = document.getElementById("sauceBox");
 	const newSauceP = document.createElement('p');
-	newSauceP.innerHTML = "<input id='sauceValue' name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
+	newSauceP.innerHTML = "<input name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeSauceBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 	sauceBox.appendChild(newSauceP);
 }
@@ -103,7 +124,7 @@ var lastOrderNum = 1;
 const add_orderBox = () => {
 	const orderBox = document.getElementById("order");
 	const newOrderP = document.createElement('p');
-	newOrderP.innerHTML = "<div id='order' class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
+	newOrderP.innerHTML = "<div class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
 	    + "<div class='flex justify-center rounded-xl my-auto'>"
         + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
         + "<input type='file' id='input-recipeOrder__" + "' accept='image/*'"
@@ -112,7 +133,7 @@ const add_orderBox = () => {
 		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
    		+ "<div class='flex justify-center bg-gray-100 rounded-md' style='margin-top: 26px;'>"
         + "<textarea name='recipeMsgBody' class='w-full h-full text-lg p-3 border border-gray-300 rounded-lg' style='height: 220px;' rows='5' "
-		+ " onkeyup='characterCheck(this);' onkeydown='characterCheck(this);' placeholder='조리 과정을 입력해주세요.'></textarea>"
+		+ "placeholder='조리 과정을 입력해주세요.'></textarea>"
         + "<div onclick='remove_orderBox(this);' class='btn btn-sm btn-outline fc_redH'>"
         + "<span>삭제</span></div></div> </div> </div>";
 	orderBox.appendChild(newOrderP);
@@ -120,17 +141,6 @@ const add_orderBox = () => {
 const remove_orderBox = (obj) => {
 	document.getElementById("order").removeChild(obj.parentNode.parentNode.parentNode.parentNode);
 }
-
-
-// 특수문자 입력 방지 스크립트
-function characterCheck(obj) {
-	// 방지할 특수문자 구분자로 사용되는 문자 '@' 제외
-	var regExp = /@/gi;
-	if (regExp.test(obj.value)) {
-		alert("해당 특수문자는 입력하실수 없습니다.");
-		obj.value = obj.value.substring(0, obj.value.length - 1); // 입력한 특수문자 한자리 지움
-	};
-};
 
 </script>
 
@@ -154,8 +164,8 @@ $(document).ready(function () {
 </script>
 
 <section class="writeRecipeSection con">
-	<form class=" py-4 " action="../recipe/doWriteRecipe" method="POST" enctype="multipart/form-data" onsubmit="RecipeWrite_submitForm(this); return false;" name="do-write-recipe-form">
-	<input type="hidden" value="" />
+	<form id="form" class=" py-4 " action="../recipe/doWriteRecipe" method="POST" enctype="multipart/form-data" onsubmit="RecipeWrite_submitForm(this) return false;" name="do-write-recipe-form">
+	<input type="hidden" value="${replaceUri }" />
 	<!-- 레시피 완성 사진 등록 + 레시피 기본 정보 -->
 	<div class="recipe_title flex justify-center">
 		<div class="titleImgBox" style="width: 450px; height: 300px;">
@@ -199,16 +209,16 @@ $(document).ready(function () {
 	<div class="recipeBodyWrap flex justify-center mt-8" style="border-bottom: 1px solid #304899; padding-bottom: 15px; padding-top: 40px;">
 
 		<select name="recipeCategory" class="mx-8 text-center" data-value="${param.recipeCategory}">
-			<option disabled value="0" selected="${param.recipeCategory}">카테고리</option>
+			<option disabled value="99" selected="${param.recipeCategory}">카테고리</option>
 			<option value="1">한식</option>
 			<option value="2">양식</option>
 			<option value="3">중식</option>
 			<option value="4">일식</option>
-			<option value="0">기타</option>
+			<option value="5">기타</option>
 		</select>
 	
-		<select name="recipeCook" class="mx-8 text-center" data-value="${recipe.recipeCook}">
-			<option disabled value="0" selected="${recipe.recipeCook}">조리 방법</option>
+		<select name="recipeCook" class="mx-8 text-center" data-value="${param.recipeCook}">
+			<option disabled value="99" selected="${param.recipeCook}">조리 방법</option>
 			<option value="1">볶음</option>
 			<option value="2">끓이기</option>
 			<option value="3">부침</option>
@@ -221,28 +231,28 @@ $(document).ready(function () {
 			<option value="10">삶기</option>
 			<option value="11">굽기</option>
 			<option value="12">데치기</option>
-			<option value="0">기타</option>
+			<option value="13">기타</option>
 		</select>
 	
-		<select name="recipePerson" class="mx-8 text-center" data-value="${recipe.recipePerson}">
-			<option disabled value="0" selected="${recipe.recipePerson}">인원 선택</option>
+		<select name="recipePerson" class="mx-8 text-center" data-value="${param.recipePerson}">
+			<option disabled value="99" selected="${param.recipePerson}">인원 선택</option>
 			<option value="1">1인분</option>
 			<option value="2">2인분</option>
 			<option value="3">3인분</option>
-			<option value="0">기타</option>
+			<option value="4">기타</option>
 		</select>
 	
-		<select name="recipeTime" class="mx-8 text-center" data-value="${recipe.recipeTime}">
-			<option disabled value="0" selected="${recipe.recipeTime}">소요 시간</option>
+		<select name="recipeTime" class="mx-8 text-center" data-value="${param.recipeTime}">
+			<option disabled value="99" selected="${param.recipeTime}">소요 시간</option>
 			<option value="1">10분 이내</option>
 			<option value="2">20분 이내</option>
 			<option value="3">30분 이내</option>
 			<option value="4">1시간 이내</option>
-			<option value="0">기타</option>
+			<option value="5">기타</option>
 		</select>
 	
 		<select name="recipeLevel" class="mx-8 text-center" data-value="${recipe.recipeLevel}">
-			<option disabled value="1" selected="${recipe.recipeLevel}">난이도</option>
+			<option disabled value="99" selected="${recipe.recipeLevel}">난이도</option>
 			<option value="1">초급</option>
 			<option value="2">중급</option>
 			<option value="3">고급</option>
@@ -253,27 +263,21 @@ $(document).ready(function () {
 	<!-- 재료 / 양념 입력 -->
 	<div class="recipeBox row mt-10" style="padding-bottom: 15px; margin-left: 100px; text-align: center;">
 		<div class="stuffBox cell" id="stuffBox" style="width: 45%;">
-			<span class="fc_blue font-bold">재 료</span> <br />
-				<input id="stuffValue" name="recipeStuff" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" required placeholder="예) 양파 2/1개"/>
-				<input id="stuffValue" name="recipeStuff" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 감자 1개 "/>
-				<input id="stuffValue" name="recipeStuff" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 돼지고기 200g "/>
+			<span class="fc_blue font-bold">재 료</span> <br />			
 			<!-- 삭제 버튼 -->
 			<p>
-				<input id="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px; margin-left: 64px;" placeholder="예) 당근 반개 "/>
-					<button type="button" onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
+				<input name="recipeStuff" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" required placeholder="예) 양파 2/1개" />
+				<button type="button" onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 
 		</div>
 
 		<div class="sauceBox cell" id="sauceBox" style="width: 45%;">
 			<span class="fc_blue font-bold">양 념</span>	<br />
-				<input id="sauceValue" name="recipeSauce" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 고추장 한스푼 "/>
-				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 고춧가루 한스푼 "/>
-				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 참기름 한바퀴 "/>
 		<!-- 삭제 버튼 -->
 			<p>
-				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" placeholder="예) 후추 톡톡 "/>
-					<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
+				<input name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 참기름 한바퀴 "/>
+				<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 		</div>
 	</div>
@@ -306,8 +310,7 @@ $(document).ready(function () {
 				<div class="recipeBodyMsgBox w-full ml-6 my-auto">
 					<div class="flex justify-center bg-gray-100 rounded-md " style="margin-top: 26px;">
 						<textarea name="recipeMsgBody" class="w-full h-full text-lg p-3 border border-gray-300 rounded-lg"
-						 style="height: 220px;" rows="5" onkeyup="characterCheck(this);" onkeydown="characterCheck(this);" 
-						 required placeholder="조리 과정을 입력해주세요."></textarea>
+						 style="height: 220px;" rows="5" required placeholder="조리 과정을 입력해주세요."></textarea>
 					</div>
 				</div>
 			</div>
@@ -332,7 +335,7 @@ $(document).ready(function () {
 		</div>
 
 		<div class="btn_box mt-8 flex justify-center">
-			<button class="btn btn-sm fc_redH" type="submit" value="등록">등록</button>
+			<button id="writeSubmitBtn" class="btn btn-sm fc_redH" type="submit" value="등록">등록</button>
 		</div>
 		
 	</form>

@@ -16,6 +16,6 @@ public interface RecipeRepository {
 	public int getLastInsertId();
 
 	public void writeRecipe(int memberId, int recipeCategory, String recipeName, String recipeBody, int recipePerson,
-			int recipeLevel, int recipeCook, int recipeTime);
+			int recipeLevel, int recipeCook, int recipeTime, String recipeStuff, String recipeSauce, String recipeMsgBody);
 
 }

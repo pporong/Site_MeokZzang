@@ -36,12 +36,13 @@ public class UsrRecipeController {
 	
 	@RequestMapping("/usr/recipe/doWriteRecipe")
 	@ResponseBody
-	public String doRecipeWrite(@RequestParam(defaultValue = "0") int recipeCategory, String recipeName, String recipeBody, int recipePerson,
-			int recipeLevel, int recipeCook, int recipeTime, @RequestParam(defaultValue = "/") String replaceUri) {
+	public String doRecipeWrite(@RequestParam(defaultValue = "99") int recipeCategory, String recipeName, String recipeBody, @RequestParam(defaultValue = "99") int recipePerson,
+			 @RequestParam(defaultValue = "99") int recipeLevel, @RequestParam(defaultValue = "99") int recipeCook, @RequestParam(defaultValue = "99") int recipeTime,
+			 String recipeStuff, String recipeSauce, String recipeMsgBody, @RequestParam(defaultValue = "/") String replaceUri) {
 
 		// 데이터 유효성 검사
 		if (Ut.empty(recipeCategory)) {
-			return rq.jsHistoryBack("카테고리를 입력해주세요");
+			return rq.jsHistoryBack("카테고리를 선택해주세요");
 		}
 		if (Ut.empty(recipeName)) {
 			return rq.jsHistoryBack("레시피 이름을 입력해주세요");
@@ -51,7 +52,7 @@ public class UsrRecipeController {
 		}
 		
 		ResultData<Integer> writeRecipeRd = recipeService.writeRecipe(rq.getLoginedMemberId(), recipeCategory,
-				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime);
+				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime, recipeStuff, recipeSauce, recipeMsgBody);
 		
 		int recipeId = (int) writeRecipeRd.getData1();
 		
@@ -76,16 +77,14 @@ public class UsrRecipeController {
 	// 레시피 상세보기
 	@RequestMapping("/usr/recipe/recipeDetail")
 	public String viewRecipeDetail(Model model, int recipeId) {
+		System.err.println(recipeId);
 		
 		Recipe recipe = recipeService.getRecipeDetail(recipeId);
 		
-		String stuff = recipe.getRecipeStuff().substring(0, recipe.getRecipeStuff().length() - 1 );
-		 
 		String [] bodyMsg = recipe.getRecipeMsgBody().split(",");
 		
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("bodyMsg", bodyMsg);
-		model.addAttribute("stuff", stuff);
 		
 		return "usr/recipe/recipeDetail";
 	}
