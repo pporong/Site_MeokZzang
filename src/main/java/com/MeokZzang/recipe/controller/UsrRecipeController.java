@@ -36,7 +36,7 @@ public class UsrRecipeController {
 	
 	@RequestMapping("/usr/recipe/doWriteRecipe")
 	@ResponseBody
-	public String doRecipeWrite(int recipeCategory, String recipeName, String recipeBody, int recipePerson,
+	public String doRecipeWrite(@RequestParam(defaultValue = "0") int recipeCategory, String recipeName, String recipeBody, int recipePerson,
 			int recipeLevel, int recipeCook, int recipeTime, @RequestParam(defaultValue = "/") String replaceUri) {
 
 		// 데이터 유효성 검사

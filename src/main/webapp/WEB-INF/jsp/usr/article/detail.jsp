@@ -107,7 +107,7 @@ $(document).on('click', '#replyId', function(){
                 </div>
             </div>
             <div class="writerInfo row cell">
-                <div class="profile_img cell" href="#">
+                <div class="profile_img cell">
                     <img src="${rq.getProfileImgUri(article.memberId)}"  onerror="${rq.profileFallbackImgOnErrorHtml}" alt="프로필 이미지">
                 </div>
 

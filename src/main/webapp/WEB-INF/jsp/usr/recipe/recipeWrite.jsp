@@ -77,7 +77,7 @@ function RecipeWrite_submitForm(form) {
 const addStuffBox = () => {
 	const stuffBox = document.getElementById("stuffBox");
 	const newStuffP = document.createElement('p');
-	newStuffP.innerHTML = "<input name='stuffValue' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
+	newStuffP.innerHTML = "<input id='stuffValue' name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeStuffBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 		stuffBox.appendChild(newStuffP);
 }
@@ -87,7 +87,7 @@ const removeStuffBox = (obj) => {
 const addSauceBox = () => {
 	const sauceBox = document.getElementById("sauceBox");
 	const newSauceP = document.createElement('p');
-	newSauceP.innerHTML = "<input name='sauceValue' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
+	newSauceP.innerHTML = "<input id='sauceValue' name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeSauceBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 	sauceBox.appendChild(newSauceP);
 }
@@ -132,30 +132,25 @@ function characterCheck(obj) {
 	};
 };
 
+</script>
+
+<script>
 //대표사진 미리보기 스크립트 시작
-function readMainRecipeImage(input) {
-	// 인풋 태그에 파일이 있는 경우
-	if (input.files && input.files[0]) {
+$(document).ready(function () {
+	
+	const fileDOM = document.querySelector('#input-mainRecipe');
+	const previewMainRefipeImg = document.querySelectorAll('#preview-mainRecipe');
 
-		// FileReader 인스턴스 생성
-		const reader = new FileReader();
-		// 이미지가 로드가 된 경우
-		reader.onload = e => {
-			const previewImage = document.getElementById("preview-mainRecipe");
-			previewImage.src = e.target.result;
-		}
-		// reader가 이미지 읽도록 하기
-		reader.readAsDataURL(input.files[0]);
-	}
-};
+	// input file에 change 이벤트 부여
+	fileDOM.addEventListener('change', () => {
+	  const reader = new FileReader();
+	  reader.onload = ({ target }) => {
+		  previewMainRefipeImg[0].src = target.result;
+	  };
+	  reader.readAsDataURL(fileDOM.files[0]);
+	});
 
-// input file에 change 이벤트 부여
-const inputMainRecipeImage = document.getElementById("input-mainRecipe");
-
-inputMainRecipeImage.addEventListener("change", e => {
-	readMainRecipeImage(e.target);
 });
-
 </script>
 
 <section class="writeRecipeSection con">
@@ -166,13 +161,16 @@ inputMainRecipeImage.addEventListener("change", e => {
 		<div class="titleImgBox" style="width: 450px; height: 300px;">
 			<div class="mt-8" style="width: 100%; height: 300px; border: 1px solid grey;">
 				<!-- 이미지 미리보기 -->
-				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%; background-color: #ddd;" src="" alt="" />
+				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%; background-color: #ddd;" 
+				src="https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png" alt="요리 완성 사진" />
 				
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
 				
+				<label for="file">
 				<!-- 완성 사진 등록 -->
 				<input type="file" id="input-mainRecipe" style="padding-top: 8px; cursor: pointer;" accept="image/*" 
 						name="file__recipe__0__extra__mainRecipeImg__1" class="titleImgChoice fc_redH" />
+				</label>
 			</div>
 
 		</div>
@@ -200,8 +198,8 @@ inputMainRecipeImage.addEventListener("change", e => {
 	<!-- 레시피 선택내용(카테고리 / 인원 / 소요시간 / 난이도 / 조리방법) -->
 	<div class="recipeBodyWrap flex justify-center mt-8" style="border-bottom: 1px solid #304899; padding-bottom: 15px; padding-top: 40px;">
 
-		<select name="recipeCategory" class="mx-8 text-center" data-value="${recipe.recipeCategory}">
-			<option disabled selected selected="${recipe.recipeCook}">카테고리</option>
+		<select name="recipeCategory" class="mx-8 text-center" data-value="${param.recipeCategory}">
+			<option disabled value="0" selected="${param.recipeCategory}">카테고리</option>
 			<option value="1">한식</option>
 			<option value="2">양식</option>
 			<option value="3">중식</option>
@@ -210,7 +208,7 @@ inputMainRecipeImage.addEventListener("change", e => {
 		</select>
 	
 		<select name="recipeCook" class="mx-8 text-center" data-value="${recipe.recipeCook}">
-			<option disabled selected selected="${recipe.recipeCook}">조리 방법</option>
+			<option disabled value="0" selected="${recipe.recipeCook}">조리 방법</option>
 			<option value="1">볶음</option>
 			<option value="2">끓이기</option>
 			<option value="3">부침</option>
@@ -227,7 +225,7 @@ inputMainRecipeImage.addEventListener("change", e => {
 		</select>
 	
 		<select name="recipePerson" class="mx-8 text-center" data-value="${recipe.recipePerson}">
-			<option disabled selected selected="${recipe.recipePerson}">인원 선택</option>
+			<option disabled value="0" selected="${recipe.recipePerson}">인원 선택</option>
 			<option value="1">1인분</option>
 			<option value="2">2인분</option>
 			<option value="3">3인분</option>
@@ -235,7 +233,7 @@ inputMainRecipeImage.addEventListener("change", e => {
 		</select>
 	
 		<select name="recipeTime" class="mx-8 text-center" data-value="${recipe.recipeTime}">
-			<option disabled selected selected="${recipe.recipeTime}">소요 시간</option>
+			<option disabled value="0" selected="${recipe.recipeTime}">소요 시간</option>
 			<option value="1">10분 이내</option>
 			<option value="2">20분 이내</option>
 			<option value="3">30분 이내</option>
@@ -243,8 +241,8 @@ inputMainRecipeImage.addEventListener("change", e => {
 			<option value="0">기타</option>
 		</select>
 	
-		<select name="recipeLevel" class="mx-8 text-center" data-value="${param.recipeLevel}">
-			<option disabled selected selected="${param.recipeLevel}">난이도</option>
+		<select name="recipeLevel" class="mx-8 text-center" data-value="${recipe.recipeLevel}">
+			<option disabled value="1" selected="${recipe.recipeLevel}">난이도</option>
 			<option value="1">초급</option>
 			<option value="2">중급</option>
 			<option value="3">고급</option>
@@ -256,12 +254,12 @@ inputMainRecipeImage.addEventListener("change", e => {
 	<div class="recipeBox row mt-10" style="padding-bottom: 15px; margin-left: 100px; text-align: center;">
 		<div class="stuffBox cell" id="stuffBox" style="width: 45%;">
 			<span class="fc_blue font-bold">재 료</span> <br />
-				<input name="stuffValue" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" required placeholder="예) 양파 2/1개"/>
-				<input name="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 감자 1개 "/>
-				<input name="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 돼지고기 200g "/>
+				<input id="stuffValue" name="recipeStuff" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" required placeholder="예) 양파 2/1개"/>
+				<input id="stuffValue" name="recipeStuff" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 감자 1개 "/>
+				<input id="stuffValue" name="recipeStuff" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" placeholder="예) 돼지고기 200g "/>
 			<!-- 삭제 버튼 -->
 			<p>
-				<input name="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px; margin-left: 64px;" placeholder="예) 당근 반개 "/>
+				<input id="stuffValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px; margin-left: 64px;" placeholder="예) 당근 반개 "/>
 					<button type="button" onclick="removeStuffBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 
@@ -269,12 +267,12 @@ inputMainRecipeImage.addEventListener("change", e => {
 
 		<div class="sauceBox cell" id="sauceBox" style="width: 45%;">
 			<span class="fc_blue font-bold">양 념</span>	<br />
-				<input name="sauceValue" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 고추장 한스푼 "/>
-				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 고춧가루 한스푼 "/>
-				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 참기름 한바퀴 "/>
+				<input id="sauceValue" name="recipeSauce" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 고추장 한스푼 "/>
+				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 고춧가루 한스푼 "/>
+				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" placeholder="예) 참기름 한바퀴 "/>
 		<!-- 삭제 버튼 -->
 			<p>
-				<input name="sauceValue" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" placeholder="예) 후추 톡톡 "/>
+				<input id="sauceValue" name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px; margin-left: 64px;" placeholder="예) 후추 톡톡 "/>
 					<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 		</div>
