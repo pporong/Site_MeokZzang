@@ -98,7 +98,7 @@ function RecipeWrite_submitForm(form) {
 const addStuffBox = () => {
 	const stuffBox = document.getElementById("stuffBox");
 	const newStuffP = document.createElement('p');
-	newStuffP.innerHTML = "<input name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px; margin-left: 64px;' placeholder='예) 당근 반개 '/>"
+	newStuffP.innerHTML = "<input name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px;' placeholder='예) 당근 반개 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeStuffBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 		stuffBox.appendChild(newStuffP);
 }
@@ -108,7 +108,7 @@ const removeStuffBox = (obj) => {
 const addSauceBox = () => {
 	const sauceBox = document.getElementById("sauceBox");
 	const newSauceP = document.createElement('p');
-	newSauceP.innerHTML = "<input name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px; margin-left: 64px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
+	newSauceP.innerHTML = "<input name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeSauceBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 	sauceBox.appendChild(newSauceP);
 }
@@ -126,9 +126,9 @@ const add_orderBox = () => {
 	const newOrderP = document.createElement('p');
 	newOrderP.innerHTML = "<div class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
 	    + "<div class='flex justify-center rounded-xl my-auto'>"
-        + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i></label>"
+        + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i>"
         + "<input type='file' id='input-recipeOrder__" + "' accept='image/*'"
-		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div>"
+		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div></label>"
    		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
 		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
    		+ "<div class='flex justify-center bg-gray-100 rounded-md' style='margin-top: 26px;'>"
@@ -145,20 +145,50 @@ const remove_orderBox = (obj) => {
 </script>
 
 <script>
-//대표사진 미리보기 스크립트 시작
+// 이미지 미리보기
 $(document).ready(function () {
 	
-	const fileDOM = document.querySelector('#input-mainRecipe');
+	//대표사진 미리보기 스크립트
+	const inputMainRecipeImg = document.querySelector('#input-mainRecipe');
 	const previewMainRefipeImg = document.querySelectorAll('#preview-mainRecipe');
 
 	// input file에 change 이벤트 부여
-	fileDOM.addEventListener('change', () => {
+	inputMainRecipeImg.addEventListener('change', () => {
 	  const reader = new FileReader();
 	  reader.onload = ({ target }) => {
 		  previewMainRefipeImg[0].src = target.result;
 	  };
-	  reader.readAsDataURL(fileDOM.files[0]);
+	  reader.readAsDataURL(inputMainRecipeImg.files[0]);
 	});
+	
+	// 조리과정 미리보기 스크립트
+	function readRecipeOrderImage(order) {
+
+		// 조리순서 번호 가져오기
+		var inputNameStr = order.name;
+		var inputNum = inputNameStr.substring(39);
+
+		// 인풋 태그에 파일이 있는 경우
+		if (order.files && order.files[0]) {
+			// FileReader 인스턴스 생성
+			const reader = new FileReader();
+			// 이미지가 로드가 된 경우
+			reader.onload = e => {
+				const previewImage = document.getElementById("preview-recipeOrder__" + inputNum);
+				previewImage.src = e.target.result;
+			}
+			// reader가 이미지 읽도록 하기
+			reader.readAsDataURL(order.files[0]);
+		};
+	};
+
+	// input file에 change 이벤트 부여
+	$(function() {
+		$(document).on("change", ".recipeOrderBox", function() {
+			readRecipeOrderImage(this);
+		});
+	});
+	
 
 });
 </script>
@@ -177,9 +207,9 @@ $(document).ready(function () {
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
 				
 				<label for="file">
-				<!-- 완성 사진 등록 -->
-				<input type="file" id="input-mainRecipe" style="padding-top: 8px; cursor: pointer;" accept="image/*" 
-						name="file__recipe__0__extra__mainRecipeImg__1" class="titleImgChoice fc_redH" />
+					<!-- 완성 사진 등록 -->
+					<input type="file" id="input-mainRecipe" style="padding-top: 8px; cursor: pointer;" accept="image/*" 
+							name="file__recipe__0__extra__mainRecipeImg__1" class="titleImgChoice fc_redH" />
 				</label>
 			</div>
 
@@ -189,8 +219,7 @@ $(document).ready(function () {
 		<div class="recipeInfoWrap mx-10">
 			<div class="titleBox mt-8 " style="width: 680px;">
 				<div class="recipeTitle fc_blue font-bold">▶ 레시피 제목</div>
-					<input name="recipeName" class="w-full input input-bordered" style="width: 100%; height: 60px; padding: 20px;"
-												type="text" placeholder="제목을 입력 해 주세요"/>
+				<input name="recipeName" class="w-full input input-bordered" style="width: 100%; height: 60px; padding: 20px;" type="text" placeholder="제목을 입력 해 주세요"/>
 			</div>
 
 			<div class="cookerBox mt-8">
@@ -263,7 +292,8 @@ $(document).ready(function () {
 	<!-- 재료 / 양념 입력 -->
 	<div class="recipeBox row mt-10" style="padding-bottom: 15px; margin-left: 100px; text-align: center;">
 		<div class="stuffBox cell" id="stuffBox" style="width: 45%;">
-			<span class="fc_blue font-bold">재 료</span> <br />			
+			<span class="fc_blue font-bold" style="font-size: x-large;">재 료</span> <br />	
+			<span class="fc_red mt-2">** 재료마다 입력칸을 하나씩 추가 해 주세요! **</span>		
 			<!-- 삭제 버튼 -->
 			<p>
 				<input name="recipeStuff" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #ddf; padding: 20px;" required placeholder="예) 양파 2/1개" />
@@ -273,10 +303,11 @@ $(document).ready(function () {
 		</div>
 
 		<div class="sauceBox cell" id="sauceBox" style="width: 45%;">
-			<span class="fc_blue font-bold">양 념</span>	<br />
+			<span class="fc_blue font-bold" style="font-size: x-large;">양 념</span>	<br />
+			<span class="fc_red mt-2">** 양념마다 입력칸을 하나씩 추가 해 주세요! **</span>		
 		<!-- 삭제 버튼 -->
 			<p>
-				<input name="recipeSauce" class="mt-8" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 참기름 한바퀴 "/>
+				<input name="recipeSauce" class="mt-4" type="text" style="width: 400px; height: 50px; border: 2px solid #dfd; padding: 20px;" required placeholder="예) 참기름 한바퀴 "/>
 				<button type="button" onclick="removeSauceBox(this);" class="btn btn-sm btn-outline fc_redH">삭제</button>
 			</p>
 		</div>
@@ -286,8 +317,8 @@ $(document).ready(function () {
 		<div class="addBtnBox" class="mt-8" style="position:relative;">
 			<!-- 추가 버튼 -->
 			<div class="" style="padding-bottom: 15px;">
-				<button type="button" onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; left : 25%;">추가</button>
-				<button type="button" onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; right : 25%;">추가</button>
+				<button type="button" onclick="addStuffBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; left : 24%;">추가</button>
+				<button type="button" onclick="addSauceBox();" class="btn btn-sm btn-outline fc_blueH" style="position: absolute; right : 30%;">추가</button>
 			</div>			
 		</div>
 
@@ -299,13 +330,12 @@ $(document).ready(function () {
 				<div class="flex justify-center rounded-xl my-auto">
 					<label for="input-recipeOrder__1">
 						<i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i>
+						<input type="file" id="input-recipeOrder__1" multiple="multiple" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox" oninput="" />
 					</label>
-					<input type="file" id="input-recipeOrder__1" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox"/>
 				</div>
 				
 				<!-- 사진 미리보기 -->
-				<img id="preview-recipeOrder__1" class=" rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/900/FFFFFF?text=..."/>
-					
+				<img id="preview-recipeOrder__1" class="multiple-container rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/900/FFFFFF?text=..."/>
 				<!-- 조리순서 내용작성 -->
 				<div class="recipeBodyMsgBox w-full ml-6 my-auto">
 					<div class="flex justify-center bg-gray-100 rounded-md " style="margin-top: 26px;">
