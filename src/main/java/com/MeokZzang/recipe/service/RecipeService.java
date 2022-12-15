@@ -19,7 +19,7 @@ public class RecipeService {
 		this.recipeRepository = recipeRepository;
 	}
 
-	public List<Recipe> getRecipeList(int recipeCategory ,int actorId, int page, int itemsInAPage, String searchKeywordTypeCode, String searchKeyword) {
+	public List<Recipe> getRecipeList(int actorId, int recipeCategory , int page, int itemsInAPage, String searchKeywordTypeCode, String searchKeyword) {
 		
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;

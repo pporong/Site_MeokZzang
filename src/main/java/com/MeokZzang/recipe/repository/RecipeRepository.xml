@@ -17,17 +17,17 @@
 		FROM recipe AS RE
 		LEFT JOIN `member` AS M
 		ON RE.recipeId = M.id WHERE 1
-		
+		<if test="recipeCategory != 0"> AND RE.recipeCategory = #{recipeCategory} </if>
 		<if test="searchKeyword != ''">
 			<choose>
 				<when test="searchKeywordTypeCode == 'recipeName'">
-					OR RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+					AND RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<when test="searchKeywordTypeCode == 'recipeStuff'">
-					OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+					AND RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<otherwise>
-					OR ( 
+					AND ( 
 						RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
 						OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
 						)
@@ -71,17 +71,17 @@
 		SELECT COUNT(*) AS cnt
 		FROM recipe AS RE
 		WHERE 1
-		<if test="recipeCategory != 0"> OR RE.recipeCategory = #{recipeCategory} </if>
+		<if test="recipeCategory != 0"> AND RE.recipeCategory = #{recipeCategory} </if>
 		<if test="searchKeyword != ''">
 			<choose>
 				<when test="searchKeywordTypeCode == 'recipeName'">
-					OR RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
+					AND RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<when test="searchKeywordTypeCode == 'recipeStuff'">
-					OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
+					AND RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
 				</when>
 				<otherwise>
-					OR ( 
+					AND ( 
 						RE.recipeName LIKE CONCAT('%', #{searchKeyword}, '%')
 						OR RE.recipeStuff LIKE CONCAT('%', #{searchKeyword}, '%')
 						)

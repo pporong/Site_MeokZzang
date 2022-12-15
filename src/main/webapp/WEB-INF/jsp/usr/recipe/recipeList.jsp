@@ -28,11 +28,11 @@
 <section class="mt-8 text-xl con">
 	<div class="container mx-auto px-3">
 		<div class="list_nav flex justify-between mt-4 my-2">
+		
 		<!-- 검색 박스 -->
 		<div> 레시피 갯수 : <span class="badge"> ${recipiesCount } 개</span></div>
 			<div class="search-box">
-				<form method="post" enctype="multipart/form-data" name="search" action="../recipe/recipeList?recipeCategory?=${recipeCategory }
-					&searchKeywordTypeCode=${searchKeywordTypeCode}&searchKeyword=${searchKeyword}">
+				<form name="search">
 					<table class="pull-right">
 						<tr>
 							<td>
