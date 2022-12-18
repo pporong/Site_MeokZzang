@@ -38,12 +38,12 @@
 		<if test="limitTake != -1"> LIMIT #{limitStart}, #{limitTake} </if>
 	</select>
 
-	<select id="getRecipeDetail" resultType="Recipe">
-		SELECT RE.* from recipe AS RE
+	<select id="getForPrintRecipe" resultType="Recipe">
+		SELECT RE.*,  M.nickname AS extra__writerName
+		FROM recipe AS RE
 		LEFT JOIN `member` AS M
 		ON RE.memberId = M.id
 		WHERE 1 AND RE.recipeId = #{recipeId}
-		ORDER BY RE.recipeId DESC
 	</select>
 
 	<select id="getLastInsertId" resultType="int">

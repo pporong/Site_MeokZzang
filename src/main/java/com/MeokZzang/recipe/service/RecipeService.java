@@ -71,9 +71,9 @@ public class RecipeService {
 		return ResultData.from("S-1", "삭제 가능");
 	}
 
-	public Recipe getRecipeDetail(int recipeId) {
+	public Recipe getForPrintRecipe(int recipeId) {
 		
-		return recipeRepository.getRecipeDetail(recipeId);
+		return recipeRepository.getForPrintRecipe(recipeId);
 	}
 
 

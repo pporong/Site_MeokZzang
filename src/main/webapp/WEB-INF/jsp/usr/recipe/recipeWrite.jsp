@@ -215,7 +215,7 @@ $(document).ready(function () {
 			</select>
 		
 			<select name="recipeCook" class="mx-8 text-center" required data-value="${recipe.recipeCook}">
-				<option value="0">조리 방법</option>
+				<option value="">조리 방법</option>
 				<option value="1">볶음</option>
 				<option value="2">끓이기</option>
 				<option value="3">부침</option>
@@ -301,7 +301,6 @@ $(document).ready(function () {
 					<label for="input-recipeOrder__1">
 						<!-- 사진 미리보기 -->
 						<img id="preview-recipeOrder__1" class="multiple-container rounded-md" style="margin: 12px; width: 500px; height: 300px;" name="recipeBodyImg" src="https://via.placeholder.com/600/FFFFFF?text=..."/>
-						<!-- <i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i> -->
 						<input type="file" id="input-recipeOrder__1" multiple="multiple" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class=" recipeOrderBox" />
 					</label>
 				</div>

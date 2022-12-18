@@ -11,7 +11,7 @@ public interface RecipeRepository {
 
 	public List<Recipe> getRecipeList(int recipeCategory, String searchKeywordTypeCode, String searchKeyword, int limitStart, int limitTake);
 
-	public Recipe getRecipeDetail(int recipeId);
+	public Recipe getForPrintRecipe(int recipeId);
 
 	public int getLastInsertId();
 

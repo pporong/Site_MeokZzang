@@ -106,7 +106,7 @@ public class UsrRecipeController {
 	public String viewRecipeDetail(Model model, int recipeId) {
 		System.err.println(recipeId);
 		
-		Recipe recipe = recipeService.getRecipeDetail(recipeId);
+		Recipe recipe = recipeService.getForPrintRecipe(recipeId);
 		
 		String [] bodyMsg = recipe.getRecipeMsgBody().split(",");
 		
