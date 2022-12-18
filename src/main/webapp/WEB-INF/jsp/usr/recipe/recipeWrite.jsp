@@ -259,7 +259,6 @@ $(document).ready(function () {
 		</div>
 	</div>
 
-
 	<!-- 재료 / 양념 입력 -->
 	<div class="recipeBox row mt-10" style="padding-bottom: 15px; margin-left: 100px; text-align: center;">
 		<div class="stuffBox cell" id="stuffBox" style="width: 45%;">
@@ -326,9 +325,7 @@ $(document).ready(function () {
 				<button type="button" class="btn btn-sm btn-outline fc_blueH">추가</button>
 			</div>
 		</div>
-		
-	<!-- 조리과정 데이터 -->
-		<input type="hidden" name="orderBody" />
+
 		<!-- 조리과정 등록 영역 끝 -->
 
 		<!-- 토스트 에디터 적용 -->
