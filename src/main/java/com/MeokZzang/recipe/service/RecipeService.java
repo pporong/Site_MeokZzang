@@ -133,6 +133,7 @@ public class RecipeService {
 		return recipeRepository.getRecipeHitCount(recipeId);
 	}
 
+	// 스크랩 
 	public ResultData increaseScrapPoint(int relId) {
 		
 		int affectedRowsCount = recipeRepository.increaseScrapPoint(relId);
@@ -141,10 +142,11 @@ public class RecipeService {
 			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
 		}
 
-		return ResultData.from("S-1", "좋아요 증가", "affectedRowsCount", affectedRowsCount);
+		return ResultData.from("S-1", "스크랩 하기", "affectedRowsCount", affectedRowsCount);
 		
 	}
 
+	// 스크랩 취소
 	public ResultData decreaseScrapPoint(int relId) {
 		
 		int affectedRowsCount = recipeRepository.decreaseScrapPoint(relId);
@@ -153,7 +155,7 @@ public class RecipeService {
 			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
 		}
 
-		return ResultData.from("S-2", "좋아요 취소", "affectedRowsCount", affectedRowsCount);
+		return ResultData.from("S-2", "스크랩 취소", "affectedRowsCount", affectedRowsCount);
 		
 	}
 

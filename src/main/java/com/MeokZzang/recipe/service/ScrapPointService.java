@@ -15,6 +15,7 @@ public class ScrapPointService {
 	private RecipeService recipeService;
 
 	public ResultData actorCanMakeScrap(int actorId, String relTypeCode, int relId) {
+		
 		if (actorId == 0) {
 			return ResultData.from("F-1", "로그인 후 이용해주세요");
 		}

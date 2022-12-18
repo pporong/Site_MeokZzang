@@ -23,10 +23,10 @@ public interface ReplyRepository {
 
 	public void modifyReply(int id, String body);
 
-	public int increaseGoodReplyRp(int relId);
-
-	public int decreaseGoodReplyRp(int relId);
-
 	public Article getReply(int id);
+
+	public int increaseReplyPoint(int relId);
+
+	public int decreaseReplyPoint(int relId);
 
 }

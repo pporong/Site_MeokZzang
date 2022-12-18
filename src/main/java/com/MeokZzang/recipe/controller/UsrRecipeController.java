@@ -128,6 +128,7 @@ public class UsrRecipeController {
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "reply", recipeId);
 		model.addAttribute("replies", replies);
 
+		// 스크랩
 		ResultData actorCanMakeScrapRd = scrapPointService.actorCanMakeScrap(rq.getLoginedMemberId(), "recipe", recipeId);
 		
 		model.addAttribute("actorCanMakeScrapRd", actorCanMakeScrapRd);

@@ -269,7 +269,7 @@
 		</c:if>
 			<!-- 스크랩 취소 ! -->
             <c:if test="${actorAddScrapPoint }">
-                <div class="reactionBtns flex justify-center">
+                <div class="scrapBtns flex justify-center">
                     <!-- 추천 버튼 -->
                     <a id="" href="/usr/scrapPoint/doDeleteScrap?relTypeCode=recipe&relId=${param.recipeId}&replaceUri=${rq.encodedCurrentUri}"
                         class="fc_blueH has-fail" style="margin-right: 20px;"> ♥ 스크랩 취소 </a>

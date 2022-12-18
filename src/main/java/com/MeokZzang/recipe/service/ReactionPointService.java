@@ -20,9 +20,10 @@ public class ReactionPointService {
 		if (actorId == 0) {
 			return ResultData.from("F-1", "로그인 후 이용해주세요");
 		}
-		int sumReactionPointByMemberId =  reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode, relId);
+		int sumReactionPointByMemberId = reactionPointRepository.getSumReactionPointByMemberId(actorId, relTypeCode,
+				relId);
 
-		if(sumReactionPointByMemberId != 0) {
+		if (sumReactionPointByMemberId != 0) {
 			return ResultData.from("F-2", "추천기능 사용 불가!", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 		}
 
@@ -35,92 +36,53 @@ public class ReactionPointService {
 		reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);
 
 		switch (relTypeCode) {
-		case "article" :
-				articleService.increaseGoodRp(relId);
+		case "article":
+			articleService.increaseGoodRp(relId);
 		}
 		return ResultData.from("S-1", "좋아요 !");
-		
+
 	}
+
 	// DelGood 게시물
 	public ResultData deleteGoodRp(int actorId, String relTypeCode, int relId) {
-		
+
 		reactionPointRepository.delGoodReactionPoint(actorId, relTypeCode, relId);
 
 		switch (relTypeCode) {
-		case "article" :
-				articleService.decreaseGoodRp(relId);
+		case "article":
+			articleService.decreaseGoodRp(relId);
 		}
 		return ResultData.from("S-2", "좋아요 취소 !");
 	}
-	
-	//
-	public ResultData actorCanMakeReactionReply(int actorId, String relTypeCode, int relId) {
-		
-		if (actorId == 0) {
-			return ResultData.from("F-1", "로그인 후 이용해주세요");
-		}
-		int sumReactionPointByMemberIdforReply =  reactionPointRepository.getSumReactionPointByMemberIdforReply(actorId, relTypeCode, relId);
 
-		if(sumReactionPointByMemberIdforReply != 0) {
-			return ResultData.from("F-3", "추천기능 사용 불가!", "sumReactionPointByMemberIdforReply", sumReactionPointByMemberIdforReply);
-		}
-
-		return ResultData.from("S-1", "추천기능 사용 가능!", "sumReactionPointByMemberIdforReply", sumReactionPointByMemberIdforReply);
-	}
-
-	// AddGood : 댓글
-	public ResultData addGoodRpReply(int actorId, String relTypeCode, int relId) {
-
-		reactionPointRepository.addGoodReactionPointReply(actorId, relTypeCode, relId);
-
-		switch (relTypeCode) {
-		case "reply" :
-				replyService.increaseGoodReplyRp(relId);
-				break;
-		}
-		return ResultData.from("S-1", "이 댓글 좋아요 !");
-		
-	}
-	// DelGood 댓글
-	public ResultData deleteGoodRpReply(int actorId, String relTypeCode, int relId) {
-		
-		reactionPointRepository.delGoodReactionPointReply(actorId, relTypeCode, relId);
-
-		switch (relTypeCode) {
-		case "reply" :
-				replyService.decreaseGoodReplyRp(relId);
-				break;
-		}
-		return ResultData.from("S-2", "이 댓글 좋아요 취소 !");
-	}
-	
 	// AddBad : 게시물
 	public ResultData addBadRp(int actorId, String relTypeCode, int relId) {
-		
+
 		reactionPointRepository.addBadReactionPoint(actorId, relTypeCode, relId);
 
 		switch (relTypeCode) {
-		case "article" :
-				articleService.increaseBadRp(relId);
-				break;
+		case "article":
+			articleService.increaseBadRp(relId);
+			break;
 		}
 		return ResultData.from("S-3", "싫어요 완료~");
 	}
+
 	// DelBad : 게시물
 	public ResultData deleteBadRp(int actorId, String relTypeCode, int relId) {
 
 		reactionPointRepository.delBadReactionPoint(actorId, relTypeCode, relId);
 
 		switch (relTypeCode) {
-		case "article" :
-				articleService.decreaseBadRp(relId);
-				break;
+		case "article":
+			articleService.decreaseBadRp(relId);
+			break;
 		}
 		return ResultData.from("S-4", "싫어요 취소 완료~");
 
 	}
 
-	// 멤버별 게시물 추천 상황 
+	// 멤버별 게시물 추천 상황
 	public ResultData getRpInfoByMemberId(int actorId, String relTypeCode, int relId) {
 
 		reactionPointRepository.getRpInfoByMemberId(actorId, relTypeCode, relId);
@@ -129,9 +91,7 @@ public class ReactionPointService {
 	}
 
 	public void getBadRpCount(int relId) {
-		
+
 	}
-
-
 
 }

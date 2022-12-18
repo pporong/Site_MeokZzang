@@ -79,8 +79,6 @@ public class UsrReactionPointController {
 		return rq.jsReplace(deleteBadRpRd.getMsg(), replaceUri);
 	}
 	
-	
-	
 	// 댓글
 	// doLike
 	@RequestMapping("/usr/reactionPoint/doGoodReactionReply")

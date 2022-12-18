@@ -274,20 +274,18 @@ $(document).on('click', '#replyId', function(){
 
                                 <td>
                                     <!-- 댓글 추천 기능 사용 가능? -->
-                                    <c:if test="${actorCanMakeReactionReply }">
+                                    <c:if test="${actorCanMakeReplyLike }">
                                         <div class="btns my-3 flex justify-center">
                                             <!-- 댓추 -->
-                                            <a id=""
-                                                href="/usr/reactionPoint/doGoodReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
+                                            <a href="/usr/replyPoint/doPlusReplyPoint?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                                                 class="btn gap-2 btn-sm mx-2 btn-like btn-outline"> 🤍 </a>
                                         </div>
                                     </c:if>
                                     <!-- 댓추 취소 -->
-                                    <c:if test="${actorCanDelGoodRpReply }">
+                                    <c:if test="${actorAddReplyPoint }">
                                         <div class="btns my-3 flex justify-center">
                                             <!-- 추천 버튼 -->
-                                            <a id=""
-                                                href="/usr/reactionPoint/doDeleteGoodReactionReply?relTypeCode=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
+                                            <a href="/usr/replyPoint/doDeleteReplyPoint?relTypeCode?=reply&relId=${reply.id}&replaceUri=${rq.encodedCurrentUri}"
                                                 class="btn gap-2 btn-sm mx-2 btn-like btn-warning"> 💙 </a>
                                         </div>
                                     </c:if>

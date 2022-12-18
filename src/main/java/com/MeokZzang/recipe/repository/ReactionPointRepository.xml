@@ -49,7 +49,7 @@
 	
 	<!-- 댓글 추천/추천취소 -->
 	<select id="getSumReactionPointByMemberIdforReply" resultType="int">
-		SELECT IFNULL(SUM(RP.point),0) AS '댓글 추천 여부'
+		SELECT IFNULL(SUM(RP.point),0) AS '댓글 추천 가능 여부'
 		FROM reactionPoint AS RP
 		WHERE RP.relTypeCode = 'reply'
 		AND RP.relId = #{relId}

@@ -3,15 +3,6 @@
 
 <mapper namespace="com.MeokZzang.recipe.repository.RecipeRepository">
 
-<!-- 	<select id="getRecipeList" resultType="Recipe">
-		SELECT RE.recipeId, RE.recipeName, RE.memberId, RE.recipeRegDate, 
-		RE.recipeTitleImg, RE.recipeHitCount, M.name AS extra__WriterName
-		FROM recipe AS RE
-		LEFT JOIN `member` AS M
-		ON RE.recipeId = M.id WHERE 1
-		ORDER BY RE.recipeId DESC
-	</select>
- -->	
 	<select id="getRecipeList" resultType="Recipe">
 		SELECT RE.*, M.nickname AS extra__writerName
 		FROM recipe AS RE
@@ -134,4 +125,5 @@
 		SET recipePoint = recipePoint - 1
 		WHERE recipeId = #{relId}
 	</update>
+	
 </mapper>

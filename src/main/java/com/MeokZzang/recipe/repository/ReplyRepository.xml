@@ -46,20 +46,21 @@
 		WHERE id = #{id}
 	</update>
 	
-	<update id="increaseGoodReplyRp">
+	<select id="getReply" resultType="Reply">
+		SELECT * FROM Reply WHERE id = #{id}
+	</select>
+	
+	<update id="increaseReplyPoint">
 		UPDATE reply
 		SET goodReactionPoint = goodReactionPoint + 1
 		WHERE id = #{relId}
 	</update>
 	
-	<update id="decreaseGoodReplyRp">
+	<update id="decreaseReplyPoint">
 		UPDATE reply
 		SET goodReactionPoint = goodReactionPoint - 1
 		WHERE id = #{relId}
 	</update>
 	
-	<select id="getReply" resultType="Reply">
-		SELECT * FROM Reply WHERE id = #{id}
-	</select>
 	
 </mapper>

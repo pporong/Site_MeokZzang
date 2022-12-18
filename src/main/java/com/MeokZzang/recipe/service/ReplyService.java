@@ -108,35 +108,35 @@ public class ReplyService {
 
 		return reply;
 	}
-	
-	//
-	// 댓글 추천기능
-	// + good
-	public ResultData increaseGoodReplyRp(int relId) {
-		int affectedRowsCount = replyRepository.increaseGoodReplyRp(relId);
-
-		if (affectedRowsCount == 0) {
-			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
-		}
-
-		return ResultData.from("S-1", "좋아요 증가", "affectedRowsCount", affectedRowsCount);
-
-	}
-	
-	// - good
-	public ResultData decreaseGoodReplyRp(int relId) {
-		int affectedRowsCount = replyRepository.decreaseGoodReplyRp(relId);
-
-		if (affectedRowsCount == 0) {
-			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
-		}
-
-		return ResultData.from("S-2", "좋아요 취소", "affectedRowsCount", affectedRowsCount);
-		
-	}
 
 	public Article getReply(int id) {
 		return replyRepository.getReply(id);
 	}
+	
+	// 댓추
+	public ResultData increaseReplyPoint(int relId) {
+		
+		int affectedRowsCount = replyRepository.increaseReplyPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 댓글은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-2", "추천 하기", "affectedRowsCount", affectedRowsCount);
+	}
+
+	// 댓추 취소
+	public ResultData decreaseReplyPoint(int relId) {
+		
+		int affectedRowsCount = replyRepository.decreaseReplyPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 댓글은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-2", "추천 취소", "affectedRowsCount", affectedRowsCount);
+		
+	}
+
 
 }

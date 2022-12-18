@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.MeokZzang.recipe.service.ArticleService;
 import com.MeokZzang.recipe.service.BoardService;
 import com.MeokZzang.recipe.service.ReactionPointService;
+import com.MeokZzang.recipe.service.ReplyPointService;
 import com.MeokZzang.recipe.service.ReplyService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Article;
@@ -30,6 +31,8 @@ public class UsrArticleController {
 	private BoardService boardService;
 	@Autowired
 	private ReactionPointService reactionPointService;
+	@Autowired
+	private ReplyPointService replyPointService;
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
@@ -178,6 +181,7 @@ public class UsrArticleController {
 		
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "reply", id);
 		
+		// 게시물 좋아요, 싫어요
 		ResultData actorCanMakeReactionRd = reactionPointService.actorCanMakeReaction(rq.getLoginedMemberId(), "article", id);
 		
 		model.addAttribute("actorCanMakeReactionRd", actorCanMakeReactionRd);
@@ -194,20 +198,20 @@ public class UsrArticleController {
 			}
 		}
 		
-		ResultData actorCanMakeReactionReplyRd = reactionPointService.actorCanMakeReactionReply(rq.getLoginedMemberId(), "reply", id);
-		model.addAttribute("actorCanMakeReactionReplyRd", actorCanMakeReactionReplyRd);
-		model.addAttribute("actorCanMakeReactionReply", actorCanMakeReactionReplyRd.isSuccess());
+		// 댓글 추천
+		ResultData actorCanMakeReplyLikeRd = replyPointService.actorCanMakeReplyLike(rq.getLoginedMemberId(), "reply", id);
 		
-		System.err.println("sumReactionPointByMemberIdforReply ::" + actorCanMakeReactionReplyRd.getData1());
-		System.err.println("actorCanMakeReactionReplyRd.getResultCode() ::"+actorCanMakeReactionReplyRd.getResultCode());
+		model.addAttribute("actorCanMakeReplyLikeRd", actorCanMakeReplyLikeRd);
+		model.addAttribute("actorCanMakeReplyLike", actorCanMakeReplyLikeRd.isSuccess());
 		
-		if(actorCanMakeReactionReplyRd.getResultCode().equals("F-3")) {
-			int sumReactionPointByMemberIdforReply = (int) actorCanMakeReactionReplyRd.getData1();
-			
-			if(sumReactionPointByMemberIdforReply == 0) {
-				model.addAttribute("actorCanDelGoodRpReply", true);
+		if(actorCanMakeReplyLikeRd.getResultCode().equals("F-2")) {
+			int sumReplyPointByMemberId = (int) actorCanMakeReplyLikeRd.getData1();
+
+			if(sumReplyPointByMemberId > 0) {
+				model.addAttribute("actorAddReplyPoint", true);
 			}
 		}
+		
 		model.addAttribute("isLogined",rq.isLogined());
 		
 		return "usr/article/detail";
