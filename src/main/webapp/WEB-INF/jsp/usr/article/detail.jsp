@@ -9,8 +9,6 @@
 	const params = {};
 	params.id = parseInt('${param.id}');
 	
-	const paramsR = {};
-	paramsR.id = parseInt('${reply.id}')
 </script>
 
 <script>

@@ -88,6 +88,18 @@ UPDATE article
 SET memberId = 0
 WHERE memberId = 1;
 
+
+# memberId 추가
+UPDATE article
+SET memberId = 1
+WHERE memberId = 0;
+# boardId 추가
+UPDATE article
+SET boardId = 1
+WHERE boardId = 0;
+
+SELECT * FROM article ORDER BY id DESC;
+
 # 게시판 테이블 생성
 CREATE TABLE board (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -110,7 +122,19 @@ INSERT INTO board
 SET regDate = NOW(),
 updateDate = NOW(),
 `code` = 'free1',
-`name` = '자유';
+`name` = '자유 게시판';
+
+INSERT INTO board
+SET regDate = NOW(),
+updateDate = NOW(),
+`code` = 'community',
+`name` = '질문 게시판';
+
+-- INSERT INTO board
+-- SET regDate = NOW(),
+-- updateDate = NOW(),
+-- `code` = 'recipe',
+-- `name` = '레시피게시판';
 
 # 게시물 테이블에 boardId 칼럼 추가
 ALTER TABLE article ADD COLUMN boardId INT(10) UNSIGNED NOT NULL AFTER `memberId`;
@@ -139,15 +163,15 @@ SELECT * FROM `member`;
 SELECT * FROM article;
 SELECT * FROM board;
 
-# 게시물 테이블에 boardId 칼럼 추가
+# 게시물 테이블에 hitCount 칼럼 추가
 ALTER TABLE article ADD COLUMN hitCount INT(10) UNSIGNED NOT NULL DEFAULT 0;
 
-# reactionPoint 테이블
+# reactionPoint 테이블 생성
 CREATE TABLE reactionPoint (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
     updateDate DATETIME NOT NULL,
-    memberId INT(10) UNSIGNED NOT NULL,
+    memberId INT(10) NOT NULL,
     relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
 	relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터  번호',
     `point` SMALLINT(2) NOT NULL
@@ -236,7 +260,6 @@ insert into article
 select now(), now(), FLOOR(RAND() * 2) + 1, FLOOR(RAND() * 2) + 1, concat('제목_',rand()), CONCAT('내용_',RAND())
 from article;
 */
-
 /*
 --> getArticles
 select A.*, 
@@ -254,7 +277,6 @@ ON RP.relTypeCode = 'article'
 and A.id = RP.relId
 group by A.id
 */
-
 /*
 --> getArticle
 SELECT A.*, M.nickname AS extra__writerName,
@@ -270,7 +292,6 @@ and A.id = RP.relId
 WHERE A.id =1
 GROUP BY A.id
 */
-
 /*
 select ifnull(sum(RP.point),0) as s
 from reactionPoint AS RP
@@ -278,7 +299,6 @@ where RP.relTypeCode = 'article'
 AND RP.relId = 2
 and RP.memberId = 2
 */
-
 /*
 --> 각 게시물 별, 좋아요, 싫어요 총합
 select RP.relTypeCode, RP.relId,
@@ -295,20 +315,6 @@ GROUP BY RP.relTypeCode, RP.relId
 
 SELECT * FROM article;
 
-# 기존 게시물의 goodReactionPoint,badReactionPoint 필드의 값 채워주기
-UPDATE article AS A
-INNER JOIN (
-	SELECT RP.relTypeCode, RP.relId,
-	SUM(IF(RP.point > 0, RP.point, 0)) AS goodReactionPoint,
-	SUM(IF(RP.point < 0, RP.point * -1, 0)) AS badReactionPoint
-	FROM reactionPoint AS RP
-	GROUP BY RP.relTypeCode, RP.relId
-) AS RP_SUM
-ON A.id = RP_SUM.relId
-SET A.goodReactionPoint = RP_SUM.goodReactionPoint,
-A.badReactionPoint = RP_SUM.badReactionPoint;
-
-
 # 댓글 table 생성
 CREATE TABLE reply (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -320,15 +326,45 @@ CREATE TABLE reply (
     `body` TEXT NOT NULL
 );
 
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 7,
+`body` = '댓글 1';
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 1,
+relTypeCode = 'article',
+relId = 7,
+`body` = '댓글 2';
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 2,
+relTypeCode = 'article',
+relId = 7,
+`body` = '댓글 3';
+
+INSERT INTO reply
+SET regDate = NOW(),
+updateDate = NOW(),
+memberId = 3,
+relTypeCode = 'article',
+relId = 4,
+`body` = '댓글 4';
 
 # reply 테이블에 goodReactionPoint 칼럼 추가
-ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE reply ADD COLUMN goodReactionPoint INT(10) NOT NULL DEFAULT 0;
 # reply 테이블에 badReactionPoint 칼럼 추가
-ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) UNSIGNED NOT NULL DEFAULT 0;
+ALTER TABLE reply ADD COLUMN badReactionPoint INT(10) NOT NULL DEFAULT 0;
 
 # reply 테이블에 index 걸기
 ALTER TABLE `MZ_Recipe`.`reply` ADD INDEX (`relTypeCode` , `relId`); 
-
 
 # 부가정보테이블
 CREATE TABLE attr (
@@ -363,20 +399,6 @@ SET loginPw = SHA2(loginPw, 256);
 
 #######################################################
 
-SELECT * FROM attr;
-
-SELECT * FROM reply;
-
-SELECT * FROM reactionPoint;
-
-DESC article;
-
-SELECT * FROM article;
-
-SELECT * FROM `member`;
-
-SELECT LAST_INSERT_ID();
-
 -- explain SELECT R.*, M.nickname AS extra__writerName
 -- FROM reply AS R
 -- LEFT JOIN `member` AS M
@@ -397,8 +419,190 @@ SELECT SHA2('Hello',256)
 -- -----------------------------------`MZ_Recipe`----------------
 SELECT * FROM article ORDER BY id DESC;
 SELECT * FROM board;
-SELECT * FROM `member`;
+SELECT * FROM `member` ORDER BY id DESC;
 SELECT * FROM reactionPoint;
+SELECT * FROM reply;
 
 SELECT * FROM attr;
+
+SELECT * FROM recipe ORDER BY recipeId DESC;
+
+SELECT * FROM genFile;
 -- --------------------------------------------------------------
+DROP TABLE recipe
+
+# recipe 테이블 생성
+CREATE TABLE recipe (
+    recipeId INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT '레시피 id',
+    recipeRegDate DATETIME NOT NULL COMMENT '작성날짜',
+    recipeUpdateDate  DATETIME NOT NULL COMMENT '수정날짜',
+    memberId INT(20) NOT NULL COMMENT '작성자 id',
+    recipeName VARCHAR(50) NOT NULL COMMENT '레시피 이름',
+    recipeBody VARCHAR(50) NOT NULL COMMENT '레시피 간단 설명',
+    recipeCategory INT(10) NOT NULL COMMENT '카테고리(1 :한식, 2 :양식, 3 :중식, 0:기타)',
+    recipePerson INT(10) NOT NULL COMMENT '몇인분(1: 1인분, 2: 2인분, 3: 4인분, 0 :기타)',
+    recipeLevel INT(10) NOT NULL COMMENT '난이도(1 초급, 2 중급, 3 고급)',
+    recipeTime INT(10) NOT NULL COMMENT '소요시간(10분/20분/30분/한시간/기타)',
+    recipeCook INT(10) NOT NULL COMMENT '레시피 조리 방법(볶음, 끓이기, 부침.. etc)',
+    recipeStuff TEXT NOT NULL COMMENT '레시피 재료',
+    recipeSauce TEXT NOT NULL COMMENT '레시피 양념',
+    recipeMsgBody TEXT NOT NULL COMMENT '레시피 만드는 과정 설명',
+    recipeHitCount INT(10) NOT NULL DEFAULT 0 COMMENT '조회수',
+    recipePoint INT(10) NOT NULL DEFAULT 0 COMMENT '추천수',
+    recipeDelStatus CHAR(1) NOT NULL DEFAULT 'N' COMMENT '삭제여부 (N=삭제 전, Y=삭제 후)',
+    recepeDelDate  DATETIME COMMENT '삭제날짜'
+);
+
+
+# 레시피 테스트 데이터 생성 (5개)
+INSERT INTO recipe
+SET recipeRegDate =NOW(),
+    recipeUpdateDate =NOW(), 
+    memberId = 3,
+    recipeName = '레시피 1',
+    recipeBody = '레시피 간단 설명 1',
+    recipeCategory = 2,
+    recipePerson = 1,
+    recipeLevel = 1,
+    recipeTime =2,
+    recipeCook = 2,
+    recipeStuff = '재료 1, 재료 2, 재료 3,',
+    recipeSauce = '양념 1, 양념 2, 양념 3,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeHitCount = 15,
+    recipePoint = 0,
+    recipeDelStatus= 'N' ;
+    
+INSERT INTO recipe
+SET recipeRegDate =NOW(),
+    recipeUpdateDate =NOW(), 
+    memberId = 3,
+    recipeName = '레시피 2',
+    recipeBody = '레시피 간단 설명 2',
+    recipeCategory = 3,
+    recipePerson = 2,
+    recipeLevel = 3,
+    recipeTime = 1,
+    recipeCook = 4,
+    recipeStuff = '재료 1, 재료 2, 재료 3,',
+    recipeSauce = '양념 1, 양념 2, 양념 3,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeHitCount = 3,
+    recipePoint = 0,
+    recipeDelStatus= 'N' ;
+    
+INSERT INTO recipe
+SET recipeRegDate =NOW(),
+    recipeUpdateDate =NOW(), 
+    memberId = 1,
+    recipeName = '레시피 3',
+    recipeBody = '레시피 간단 설명 3',
+    recipeCategory = 1,
+    recipePerson = 3,
+    recipeLevel = 3,
+    recipeTime = 4,
+    recipeCook = 5,
+    recipeStuff = '재료 1, 재료 2, 재료 3,',
+    recipeSauce = '양념 1, 양념 2, 양념 3,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeHitCount = 15,
+    recipePoint = 0,
+    recipeDelStatus= 'N' ;
+    
+INSERT INTO recipe
+SET recipeRegDate =NOW(),
+    recipeUpdateDate =NOW(), 
+    memberId = 1,
+    recipeName = '레시피 4',
+    recipeBody = '레시피 간단 설명 4',
+    recipeCategory = 0,
+    recipePerson = 3,
+    recipeLevel = 3,
+    recipeTime = 3,
+    recipeCook = 3,
+    recipeStuff = '재료 1, 재료 2, 재료 3,',
+    recipeSauce = '양념 1, 양념 2, 양념 3,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeHitCount = 0,
+    recipePoint = 0,
+    recipeDelStatus= 'N' ;
+    
+INSERT INTO recipe
+SET recipeRegDate =NOW(),
+    recipeUpdateDate =NOW(), 
+    memberId = 2,
+    recipeName = '레시피 5',
+    recipeBody = '레시피 간단 설명 5',
+    recipeCategory = 2,
+    recipePerson = 1,
+    recipeLevel = 1,
+    recipeTime =2,
+    recipeCook = 2,
+    recipeStuff = '재료 1, 재료 2, 재료 3,',
+    recipeSauce = '양념 1, 양념 2, 양념 3,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeHitCount = 5,
+    recipePoint = 3,
+    recipeDelStatus= 'N' ;
+    
+----
+
+-- -----------------------------------`MZ_Recipe`----------------
+SELECT * FROM article ORDER BY id DESC;
+SELECT * FROM board;
+SELECT * FROM `member` ORDER BY id DESC;
+SELECT * FROM reactionPoint;
+SELECT * FROM reply;
+SELECT * FROM scrapPoint;
+SELECT * FROM replyPoint;
+
+SELECT * FROM attr;
+
+SELECT * FROM recipe;
+
+SELECT * FROM genFile;
+-- --------------------------------------------------------------
+		
+# 이미지 파일 table 생성
+CREATE TABLE genFile (
+  id INT(10) UNSIGNED NOT NULL AUTO_INCREMENT, # 번호
+  regDate DATETIME DEFAULT NULL, # 작성날짜
+  updateDate DATETIME DEFAULT NULL, # 갱신날짜
+  delDate DATETIME DEFAULT NULL, # 삭제날짜
+  delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0, # 삭제상태(0:미삭제,1:삭제)
+  relTypeCode CHAR(50) NOT NULL, # 관련 데이터 타입(article, member)
+  relId INT(10) UNSIGNED NOT NULL, # 관련 데이터 번호
+  originFileName VARCHAR(100) NOT NULL, # 업로드 당시의 파일이름
+  fileExt CHAR(10) NOT NULL, # 확장자
+  typeCode CHAR(20) NOT NULL, # 종류코드 (common)
+  type2Code CHAR(20) NOT NULL, # 종류2코드 (attatchment)
+  fileSize INT(10) UNSIGNED NOT NULL, # 파일의 사이즈
+  fileExtTypeCode CHAR(10) NOT NULL, # 파일규격코드(img, video)
+  fileExtType2Code CHAR(10) NOT NULL, # 파일규격2코드(jpg, mp4)
+  fileNo SMALLINT(2) UNSIGNED NOT NULL, # 파일번호 (1)
+  fileDir CHAR(20) NOT NULL, # 파일이 저장되는 폴더명
+  PRIMARY KEY (id),
+  KEY relId (relTypeCode,relId,typeCode,type2Code,fileNo)
+);    
+
+# 스크랩 포인트 테이블 생성
+CREATE TABLE scrapPoint (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터  번호',
+    `point` SMALLINT(2) NOT NULL
+);
+
+# 댓글 추천  테이블 생성
+CREATE TABLE replyPoint (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    memberId INT(10) NOT NULL,
+    relTypeCode CHAR(50) NOT NULL COMMENT '관련 데이터 타입 코드',
+	relId INT(10) UNSIGNED NOT NULL COMMENT '관련 데이터  번호',
+    `point` SMALLINT(2) NOT NULL
+);

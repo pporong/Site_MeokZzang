@@ -36,7 +36,6 @@ $(document).on('click', '#pagination > button', function(){
 		var firstNum = lastNum - (pageCount -1);
 		var totalPage = $('#totalPage').val();
 
-		// switch 문으로 
 		if($(this).val() != 99 && $(this).val() != 0){
 			pageNum = $(this).val()
 			$('#pagination').html('');
