@@ -178,12 +178,13 @@
 			</div>
 		</div>
 		
+		<!-- 수정 삭제 버튼 -->
 		<div class="btns flex justify-end mt-4" style="font-size : 16px; text-align:right;">
 			<c:if test="${recipe.extra__actorCanModify }">
-              	<a class="mx-4 mBtn badge badge-outline badge-sm" href="../recipe/modify?id=${recipe.recipeId }">수정</a>
+              	<a class="mx-4 mBtn badge badge-outline badge-sm fc_redH" href="../recipe/modify?recipeId=${recipe.recipeId }">수정</a>
             </c:if>
             <c:if test="${recipe.extra__actorCanDelete }">
-				<a class="dBtn badge badge-outline badge-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+				<a class="dBtn badge badge-outline badge-sm fc_redH" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 	            	href="../recipe/doDelete?recipeId=${recipe.recipeId }">삭제</a>
             </c:if>
 		</div>
@@ -245,7 +246,7 @@
 					<div class="flex justify-center rounded-xl my-auto text-center"> 
 						<!-- 조리과정 이미지 -->
 						<img class="rounded-md" style="margin: 12px; width: 500px; height: 300px;" name="recipeBodyImg"
-						 src="${rq.getRecipeOrderImgUri(recipe.recipeId, status.count)}"/>
+						 src="${rq.getRecipeOrderImgUri(recipe.recipeId, status.count)}"  onerror="${rq.orderFallbackImgOnErrorHtml}"/>
 					</div>
 					
 					<div class="recipeBodyMsgBox ml-6 " style="width: 800px; text-align: justify;">
@@ -263,8 +264,8 @@
 	</div>
 				
 	<!-- 뒤로가기 버튼 -->
-	<div class="btns my-4 flex justify-end mt-8">
-		<button class=" fc_blueH" type="button" style="padding-right: 50px;" onclick="history.back();">뒤로가기</button>
+	<div class="btns my-4 flex justify-end mt-8" style=" border-top: 1px solid #304899; ">
+		<button class=" fc_blueH" type="button" style="padding-right: 50px; margin-top : 15px;" onclick="history.back();">뒤로가기</button>
 	</div>
 
 </section>

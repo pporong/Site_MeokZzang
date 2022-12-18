@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.RecipeService;
 import com.MeokZzang.recipe.util.Ut;
-import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Recipe;
 import com.MeokZzang.recipe.vo.ResultData;
 import com.MeokZzang.recipe.vo.Rq;
@@ -110,9 +109,13 @@ public class UsrRecipeController {
 		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
 		
 		String [] bodyMsg = recipe.getRecipeMsgBody().split(",");
+		String [] stuff = recipe.getRecipeStuff().split(",");
+		String [] sauce = recipe.getRecipeSauce().split(",");
 		
 		model.addAttribute("recipe", recipe);
 		model.addAttribute("bodyMsg", bodyMsg);
+		model.addAttribute("stuff", stuff);
+		model.addAttribute("sauce", sauce);
 		
 		return "usr/recipe/recipeDetail";
 	}
@@ -136,6 +139,80 @@ public class UsrRecipeController {
 		recipeService.deleteRecipe(recipeId);
 
 		return rq.jsReplace(Ut.f("%d번 레시피를 삭제했습니다", recipeId), "../recipe/recipeList");
+	}
+	
+	
+	// 레시피 modify
+	@RequestMapping("/usr/recipe/modify")
+	public String viewModify(Model model, int recipeId) {
+
+		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
+
+		if (recipe == null) {
+			return rq.jsHistoryBack(Ut.f("%d번 레시피는 존재하지 않습니다", recipeId));
+		}
+
+		ResultData actorCanModifyRd = recipeService.actorCanModify(rq.getLoginedMemberId(), recipe);
+
+		if (actorCanModifyRd.isFail()) {
+			return rq.jsHistoryBackOnView(actorCanModifyRd.getMsg());
+		}
+
+		model.addAttribute("recipe", recipe);
+
+		return "usr/recipe/recipeModify";
+	}
+	
+	@RequestMapping("/usr/recipe/doModify")
+	@ResponseBody
+	public String doModify(Model model, int recipeId, int recipeCategory, String recipeName, String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime,
+			 String recipeStuff, String recipeSauce, String recipeMsgBody, String replaceUri, MultipartRequest multipartRequest) {
+
+		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
+
+		if (recipe == null) {
+			return rq.jsHistoryBack(Ut.f("%d번 레시피는 존재하지 않습니다", recipeId));
+		}
+		// 수정 권한 체크
+		if (recipe.getMemberId() != rq.getLoginedMemberId()) {
+			return rq.jsHistoryBack(Ut.f("%d번 레시피에 대한 수정 권한이 없습니다.", recipeId));
+		}
+
+		ResultData actorCanModifyRd = recipeService.actorCanModify(rq.getLoginedMemberId(), recipe);
+
+		if (actorCanModifyRd.isFail()) {
+			return rq.jsHistoryBack(actorCanModifyRd.getMsg());
+		}
+		
+		recipeService.modifyRecipe(recipeId, recipeCategory, recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime,
+				 recipeStuff, recipeSauce, recipeMsgBody);
+		
+		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
+		
+		for (String fileInputName : fileMap.keySet()) {
+			
+			MultipartFile multipartFile = fileMap.get(fileInputName);
+
+			if (multipartFile.isEmpty() == false) {
+				
+				genFileService.save(multipartFile, recipeId);
+			}
+		}
+		
+		if(Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../recipe/recipeDetail?recipeId=%d", recipeId);
+		}
+		
+		String [] bodyMsg = recipe.getRecipeMsgBody().split(",");
+		String [] stuff = recipe.getRecipeStuff().split(",");
+		String [] sauce = recipe.getRecipeSauce().split(",");
+
+		model.addAttribute("recipe", recipe);
+		model.addAttribute("bodyMsg", bodyMsg);
+		model.addAttribute("stuff", stuff);
+		model.addAttribute("sauce", sauce);
+
+		return rq.jsReplace(Ut.f("%d번 레시피를 수정했습니다 :) ", recipeId), replaceUri);
 	}
 	
 	// 레시피 hitCount

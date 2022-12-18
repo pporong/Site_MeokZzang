@@ -323,7 +323,8 @@ $(document).ready(function () {
 				<button type="button" class="btn btn-sm btn-outline fc_blueH">추가</button>
 			</div>
 		</div>
-
+	
+		<input type="hidden" id="lastOrderNum" value="${ lastOrderNum }">
 		<!-- 조리과정 등록 영역 끝 -->
 
 		<!-- 토스트 에디터 적용 -->
@@ -337,8 +338,8 @@ $(document).ready(function () {
 		
 	</form>
 
-		<div class="btns my-4 ">
-				<button class=" fc_blueH" type="button" onclick="history.back();">뒤로가기</button>
+		<div class="btns my-4 flex justify-end">
+				<button class=" fc_blueH" type="button" style="margin-right: 35px;" onclick="history.back();">뒤로가기</button>
 		</div>
 		
 </section>

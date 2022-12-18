@@ -104,4 +104,23 @@
 		WHERE recipeId = #{recipeId}
 	</delete>
 	
+	<update id="modifyRecipe">
+		UPDATE recipe
+		<set>
+			<if test="recipeCategory != null and recipeCategory != ''">recipeCategory = #{recipeCategory},</if>
+			<if test="recipeName != null and recipeName != ''">recipeName = #{recipeName},</if>
+			<if test="recipeCategory != null and recipeCategory != ''">recipeCategory = #{recipeCategory},</if>
+			<if test="recipeBody != null and recipeBody != ''">recipeBody = #{recipeBody},</if>
+			<if test="recipePerson != null and recipePerson != ''">recipePerson = #{recipePerson},</if>
+			<if test="recipeLevel != null and recipeLevel != ''">recipeLevel = #{recipeLevel},</if>
+			<if test="recipeCook != null and recipeCook != ''">recipeCook = #{recipeCook},</if>
+			<if test="recipeTime != null and recipeTime != ''">recipeTime = #{recipeTime},</if>
+			<if test="recipeStuff != null and recipeStuff != ''">recipeStuff = #{recipeStuff},</if>
+			<if test="recipeSauce != null and recipeSauce != ''">recipeSauce = #{recipeSauce},</if>
+			<if test="recipeMsgBody != null and recipeMsgBody != ''">recipeMsgBody = #{recipeMsgBody},</if>
+			recipeUpdateDate = NOW()
+		</set>
+		WHERE recipeId = #{recipeId}
+	</update>
+	
 </mapper>

@@ -141,7 +141,7 @@ public class UsrArticleController {
 	
 	@RequestMapping("/usr/article/doModify")
 	@ResponseBody
-	public String doModify(int id, String title, String body) {
+	public String doModify(int id, String title, String body, String replaceUri) {
 
 		Article article = articleService.getForPrintArticle(rq.getLoginedMemberId(), id);
 
@@ -161,8 +161,11 @@ public class UsrArticleController {
 		
 		articleService.modifyArticle(id, title, body);
 
-		return rq.jsReplace(Ut.f("%d번 게시물을 수정했습니다", id), Ut.f("../article/detail?id=%d", id));
+		if (Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../article/detail?id=%d", id);
+		}
 
+		return rq.jsReplace(Ut.f("%d번  게시물을 수정했습니다 :)", id), replaceUri);
 	}
 
 	// detail

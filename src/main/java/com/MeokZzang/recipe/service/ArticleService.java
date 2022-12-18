@@ -65,10 +65,12 @@ public class ArticleService {
 		return ResultData.from("S-1", Ut.f("%d번 게시물이 생성되었습니다", id), "id", id);
 	}
 	
+	// 삭제
 	public void deleteArticle(int id) {
 		articleRepository.deleteArticle(id);
 	}
 
+	// 수정
 	public ResultData<Article> modifyArticle(int id, String title, String body) {
 		articleRepository.modifyArticle(id, title, body);
 		

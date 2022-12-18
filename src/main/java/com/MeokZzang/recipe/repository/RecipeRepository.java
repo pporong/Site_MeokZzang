@@ -26,4 +26,8 @@ public interface RecipeRepository {
 
 	public void deleteRecipe(int recipeId);
 
+	public void modifyRecipe(int recipeId, int recipeCategory, String recipeName, String recipeBody, int recipePerson,
+			int recipeLevel, int recipeCook, int recipeTime, String recipeStuff, String recipeSauce,
+			String recipeMsgBody);
+
 }
