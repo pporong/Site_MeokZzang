@@ -30,4 +30,8 @@ public interface RecipeRepository {
 			int recipeLevel, int recipeCook, int recipeTime, String recipeStuff, String recipeSauce,
 			String recipeMsgBody);
 
+	public int increaseScrapPoint(int relId);
+
+	public int decreaseScrapPoint(int relId);
+
 }

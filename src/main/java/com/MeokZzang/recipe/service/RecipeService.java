@@ -133,6 +133,30 @@ public class RecipeService {
 		return recipeRepository.getRecipeHitCount(recipeId);
 	}
 
+	public ResultData increaseScrapPoint(int relId) {
+		
+		int affectedRowsCount = recipeRepository.increaseScrapPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-1", "좋아요 증가", "affectedRowsCount", affectedRowsCount);
+		
+	}
+
+	public ResultData decreaseScrapPoint(int relId) {
+		
+		int affectedRowsCount = recipeRepository.decreaseScrapPoint(relId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-2", "좋아요 취소", "affectedRowsCount", affectedRowsCount);
+		
+	}
+
 
 
 

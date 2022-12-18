@@ -16,6 +16,7 @@ import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.ReactionPointService;
 import com.MeokZzang.recipe.service.RecipeService;
 import com.MeokZzang.recipe.service.ReplyService;
+import com.MeokZzang.recipe.service.ScrapPointService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Recipe;
 import com.MeokZzang.recipe.vo.Reply;
@@ -31,7 +32,7 @@ public class UsrRecipeController {
 	@Autowired
 	private GenFileService genFileService;
 	@Autowired
-	private ReactionPointService reactionPointService;
+	private ScrapPointService scrapPointService;
 	@Autowired
 	private ReplyService replyService;
 	@Autowired
@@ -111,7 +112,6 @@ public class UsrRecipeController {
 	// 레시피 상세보기
 	@RequestMapping("/usr/recipe/recipeDetail")
 	public String viewRecipeDetail(Model model, int recipeId) {
-		System.err.println(recipeId);
 		
 		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
 		
@@ -123,12 +123,26 @@ public class UsrRecipeController {
 		model.addAttribute("bodyMsg", bodyMsg);
 		model.addAttribute("stuff", stuff);
 		model.addAttribute("sauce", sauce);
-		
+
+		// 댓글
 		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "reply", recipeId);
-		
 		model.addAttribute("replies", replies);
+
+		ResultData actorCanMakeScrapRd = scrapPointService.actorCanMakeScrap(rq.getLoginedMemberId(), "recipe", recipeId);
+		
+		model.addAttribute("actorCanMakeScrapRd", actorCanMakeScrapRd);
+		model.addAttribute("actorCanMakeScrap", actorCanMakeScrapRd.isSuccess());
+		
+		if(actorCanMakeScrapRd.getResultCode().equals("F-2")) {
+			int sumScarapPointByMemberId = (int) actorCanMakeScrapRd.getData1();
+
+			if(sumScarapPointByMemberId > 0) {
+				model.addAttribute("actorAddScrapPoint", true);
+			}
+		}
 		
 		model.addAttribute("isLogined",rq.isLogined());
+		
 		return "usr/recipe/recipeDetail";
 	}
 	

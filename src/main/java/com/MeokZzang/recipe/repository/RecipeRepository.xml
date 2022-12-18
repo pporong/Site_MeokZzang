@@ -123,4 +123,15 @@
 		WHERE recipeId = #{recipeId}
 	</update>
 	
+	<update id="increaseScrapPoint">
+		UPDATE recipe
+		SET recipePoint = recipePoint + 1
+		WHERE recipeId = #{relId}
+	</update>
+	
+	<update id="decreaseScrapPoint">
+		UPDATE recipe
+		SET recipePoint = recipePoint - 1
+		WHERE recipeId = #{relId}
+	</update>
 </mapper>

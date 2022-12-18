@@ -44,7 +44,8 @@
 		<div class="table-box-type-1 overflow-x-auto">
 			<table class="table table-compact w-full">
 				<colgroup>
-					<col width="10%" />
+					<col width="5%" />
+					<col width="20%" />
 					<col width="20%" />
 					<col width="40%" />
 					<col width="10%" />
@@ -54,17 +55,19 @@
 				<thead>
 					<tr class="text-indigo-700">
 						<th>번호</th>
+						<th>레시피 이미지</th>
 						<th>날짜</th>
 						<th>제목</th>
 						<th>작성자</th>
 						<th>조회수</th>
-						<th>추천수</th>
+						<th>스크랩수</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="recipe" items="${recipies }">
 						<input type="hidden" value="${recipe.recipeId}"/>
 						<tr class="hover">
+							<td>${recipe.recipeId}</td>
 							<td>
 								<a class="hover:underline" href="../recipe/recipeDetail?recipeId=${recipe.recipeId }">
 									<img src="${rq.getMainRecipeImgUri(recipe.recipeId)}" alt="레시피 사진" />

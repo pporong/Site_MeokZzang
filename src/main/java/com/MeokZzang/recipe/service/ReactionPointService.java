@@ -55,7 +55,6 @@ public class ReactionPointService {
 	
 	//
 	public ResultData actorCanMakeReactionReply(int actorId, String relTypeCode, int relId) {
-		System.err.println("으라라라ㅏ랄"+actorId+"//"+ relTypeCode+"//"+ relId);
 		
 		if (actorId == 0) {
 			return ResultData.from("F-1", "로그인 후 이용해주세요");

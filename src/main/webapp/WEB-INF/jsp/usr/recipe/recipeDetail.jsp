@@ -258,6 +258,26 @@
 		</div>
 	</div>
 	
+	<!-- 스크랩 사용 가능? -->
+	<div class="scrapBox "  style="margin-top: 20px; font-size: 22px;">
+		<c:if test="${actorCanMakeScrap }">
+			<div class="scrapBtns flex justify-center">
+			<!-- 스크랩 버튼 -->
+				<a id="" href="/usr/scrapPoint/doScrap?relTypeCode=recipe&relId=${param.recipeId}&replaceUri=${rq.encodedCurrentUri}"
+					class="fc_redH btn_s" style="margin-right: 20px;"> ♥ 스크랩 하기 </a>
+			</div>
+		</c:if>
+			<!-- 스크랩 취소 ! -->
+            <c:if test="${actorAddScrapPoint }">
+                <div class="reactionBtns flex justify-center">
+                    <!-- 추천 버튼 -->
+                    <a id="" href="/usr/scrapPoint/doDeleteScrap?relTypeCode=recipe&relId=${param.recipeId}&replaceUri=${rq.encodedCurrentUri}"
+                        class="fc_blueH has-fail" style="margin-right: 20px;"> ♥ 스크랩 취소 </a>
+                </div>
+            </c:if>
+        </div>
+
+	
 <!-- 댓글 삭제 fun -->
 <script>
 	function ReplyList_deleteReply(btn) {
