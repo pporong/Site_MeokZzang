@@ -159,6 +159,14 @@ public class RecipeService {
 		
 	}
 
+	public List<Recipe> getForPrintNewRecipe() {
+		return recipeRepository.getForPrintNewRecipe();
+	}
+
+	public List<Recipe> getForPrintTopRecipe() {
+		return recipeRepository.getForPrintTopRecipe();
+	}
+
 
 
 

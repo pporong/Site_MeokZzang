@@ -8,6 +8,9 @@
 <script>
 	const params = {};
 	params.id = parseInt('${param.id}');
+	
+	const paramsR = {};
+	paramsR.id = parseInt('${reply.id}')
 </script>
 
 <script>
@@ -245,7 +248,7 @@ $(document).on('click', '#replyId', function(){
                             <th class="">추천수</th>
                             <th class="">수정</th>
                             <th class="">삭제</th>
-                            <th class="">추천</th>
+                            <th class="">비고</th>
 
                         </tr>
                     </thead>
@@ -271,7 +274,6 @@ $(document).on('click', '#replyId', function(){
                                             onclick="if(confirm('정말 삭제하시겠습니까?')) { ReplyList_deleteReply(this);} return false;">삭제</a>
                                     </c:if>
                                 </td>
-
                                 <td>
                                     <!-- 댓글 추천 기능 사용 가능? -->
                                     <c:if test="${actorCanMakeReplyLike }">
@@ -291,7 +293,7 @@ $(document).on('click', '#replyId', function(){
                                     </c:if>
                                 </td>
                             </tr>
-                        </c:forEach>
+						</c:forEach>
                     </tbody>
 
                 </table>

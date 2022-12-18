@@ -126,4 +126,22 @@
 		WHERE recipeId = #{relId}
 	</update>
 	
+	<select id="getForPrintNewRecipe" resultType="Recipe">
+		SELECT RE.*,  M.nickname AS extra__writerName
+		FROM recipe AS RE
+		LEFT JOIN `member` AS M
+		ON RE.memberId = M.id
+		WHERE 1 ORDER BY RE.recipeRegDate DESC
+		LIMIT 4
+	</select>
+	
+	<select id="getForPrintTopRecipe" resultType="Recipe">
+		SELECT RE.*,  M.nickname AS extra__writerName
+		FROM recipe AS RE
+		LEFT JOIN `member` AS M
+		ON RE.memberId = M.id
+		WHERE 1 ORDER BY RE.recipeHitCount AND Re.recipePoint DESC
+		LIMIT 4
+	</select>
+	
 </mapper>

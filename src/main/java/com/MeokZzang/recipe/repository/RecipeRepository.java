@@ -34,4 +34,8 @@ public interface RecipeRepository {
 
 	public int decreaseScrapPoint(int relId);
 
+	public List<Recipe> getForPrintNewRecipe();
+
+	public List<Recipe> getForPrintTopRecipe();
+
 }

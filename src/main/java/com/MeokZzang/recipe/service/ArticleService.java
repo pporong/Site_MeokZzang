@@ -176,4 +176,9 @@ public class ArticleService {
 		return articleRepository.getArticle(id);
 	}
 
+	public List<Article> getForPrintNotice() {
+		
+		return articleRepository.getForPrintNotice();
+	}
+
 }

@@ -38,5 +38,7 @@ public interface ArticleRepository {
 	public int decreaseBadRp(int relId);
 
 	public Article getArticle(int id);
+
+	public List<Article> getForPrintNotice();
 	
 }

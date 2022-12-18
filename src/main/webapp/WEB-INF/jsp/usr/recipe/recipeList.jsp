@@ -70,7 +70,7 @@
 							<td>${recipe.recipeId}</td>
 							<td>
 								<a class="hover:underline" href="../recipe/recipeDetail?recipeId=${recipe.recipeId }">
-									<img src="${rq.getMainRecipeImgUri(recipe.recipeId)}" alt="레시피 사진" />
+									<img src="${rq.getMainRecipeImgUri(recipe.recipeId)}" onerror="${rq.mainRecipeFallbackImgOnErrorHtml}" style="width:300px; height:235px;" alt="레시피 사진" />
 								</a>
 							</td>
 							<td>${recipe.forPrintType1RegDate}</td>

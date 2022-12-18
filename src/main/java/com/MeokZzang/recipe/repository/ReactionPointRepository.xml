@@ -47,33 +47,6 @@
 		AND `point` = - 1
 	</delete>
 	
-	<!-- 댓글 추천/추천취소 -->
-	<select id="getSumReactionPointByMemberIdforReply" resultType="int">
-		SELECT IFNULL(SUM(RP.point),0) AS '댓글 추천 가능 여부'
-		FROM reactionPoint AS RP
-		WHERE RP.relTypeCode = 'reply'
-		AND RP.relId = #{relId}
-		AND RP.memberId = #{actorId}
-	</select>
-	
-	<insert id="addGoodReactionPointReply">
-		INSERT INTO reactionPoint
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		relTypeCode = 'reply',
-		relId= #{relId},
-		memberId = #{actorId},
-		`point` = 1
-	</insert>
-	
-	<delete id="delGoodReactionPointReply">
-		DELETE FROM reactionPoint
-		WHERE memberId = #{actorId}
-		AND relTypeCode = 'reply'
-		AND relId = #{relId}
-		AND `point` = - 1
-	</delete>
-	
 	<!-- 멤버별 추천수 상황 -->
 	<select id="getRpInfoByMemberId">
 		SELECT RP.relTypeCode, RP.relId,

@@ -21,6 +21,4 @@ public interface ReactionPointRepository {
 
 	public void getRpInfoByMemberId(int actorId, String relTypeCode, int relId);
 
-	public int getSumReactionPointByMemberIdforReply(int actorId, String relTypeCode, int relId);
-
 }
