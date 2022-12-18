@@ -13,10 +13,10 @@
 	</select>
  -->	
 	<select id="getRecipeList" resultType="Recipe">
-		SELECT RE.*, M.name AS extra__writerName
+		SELECT RE.*, M.nickname AS extra__writerName
 		FROM recipe AS RE
 		LEFT JOIN `member` AS M
-		ON RE.recipeId = M.id WHERE 1
+		ON RE.memberId = M.id  WHERE 1
 		<if test="recipeCategory != 0"> AND RE.recipeCategory = #{recipeCategory} </if>
 		<if test="searchKeyword != ''">
 			<choose>
@@ -41,7 +41,7 @@
 	<select id="getRecipeDetail" resultType="Recipe">
 		SELECT RE.* from recipe AS RE
 		LEFT JOIN `member` AS M
-		ON RE.recipeId = M.id 
+		ON RE.memberId = M.id
 		WHERE 1 AND RE.recipeId = #{recipeId}
 		ORDER BY RE.recipeId DESC
 	</select>

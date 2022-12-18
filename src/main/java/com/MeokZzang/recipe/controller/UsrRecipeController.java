@@ -39,29 +39,20 @@ public class UsrRecipeController {
 	
 	@RequestMapping("/usr/recipe/doWriteRecipe")
 	@ResponseBody
-	public String doRecipeWrite(@RequestParam(defaultValue = "99") int recipeCategory, String recipeName, String recipeBody, @RequestParam(defaultValue = "99") int recipePerson,
-			 @RequestParam(defaultValue = "99") int recipeLevel, @RequestParam(defaultValue = "99") int recipeCook, @RequestParam(defaultValue = "99") int recipeTime,
-			 String recipeStuff, String recipeSauce, String recipeMsgBody, @RequestParam(defaultValue = "/") String replaceUri, MultipartRequest multipartRequest) {
-
-		// 데이터 유효성 검사
-		if (Ut.empty(recipeCategory)) {
-			return rq.jsHistoryBack("카테고리를 선택해주세요");
-		}
+	public String doRecipeWrite(int recipeCategory, String recipeName, String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime,
+			 String recipeStuff, String recipeSauce, String recipeMsgBody, String replaceUri, MultipartRequest multipartRequest) {
+		
 		if (Ut.empty(recipeName)) {
 			return rq.jsHistoryBack("레시피 이름을 입력해주세요");
 		}
 		if (Ut.empty(recipeBody)) {
-			return rq.jsHistoryBack("레시피 설명을 입력해주세요");
+			return rq.jsHistoryBack("레시피 소개를 입력해주세요");
 		}
 		
 		ResultData<Integer> writeRecipeRd = recipeService.writeRecipe(rq.getLoginedMemberId(), recipeCategory,
 				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime, recipeStuff, recipeSauce, recipeMsgBody);
 		
 		int recipeId = (int) writeRecipeRd.getData1();
-		
-		if(Ut.empty(replaceUri)) {
-			replaceUri = Ut.f("../usr/recipe/recipeDetail?recipeId=%d", recipeId);
-		}
 		
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
 		
@@ -75,7 +66,11 @@ public class UsrRecipeController {
 			}
 		}
 
-		return rq.jsReplace(Ut.f("%d번 레시피 등록이 완료되었습니다. :)", recipeId), replaceUri);
+		if(Ut.empty(replaceUri)) {
+			replaceUri = Ut.f("../recipe/recipeDetail?recipeId=%d", recipeId);
+		}
+		
+		return rq.jsReplace("레시피 등록이 완료되었습니다. :)",replaceUri);
 	}
 	
 	

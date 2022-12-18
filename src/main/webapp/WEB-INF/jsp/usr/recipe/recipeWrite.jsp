@@ -5,59 +5,14 @@
 <%@ include file="../common/toastUiLib.jspf"%>
 
 <script>
+
 /* 입력데이터 유효성검사 스크립트 시작 */
 let RecipeWrite_submitFormDone = false;
-
 
 function RecipeWrite_submitForm(form) {
 	
 	if (RecipeWrite_submitFormDone) {
 		alert('처리중...');
-		return;
-	}
-
-	form.recipeName.value = form.recipeName.value.trim();
-	if (form.recipeName.value.length == 0) {
-		alert('제목을 입력 해주세요.');
-		form.recipeName.focus();
-		return;
-	}
-
-	form.recipeBody.value = form.recipeBody.value.trim();
-	if (form.recipeBody.value.length == 0) {
-		alert('요리소개를 입력 해주세요.');
-		form.recipeBody.focus();
-		return;
-	}
-	
-	if (form.recipeCategory.value == 99) {
-		alert('카테고리를 선택 해주세요.');
-		form.recipeCategory.focus();
-		return;
-	}
-
-	if (form.recipeCook.value == 99) {
-		alert('조리방법을 선택 해주세요.');
-		form.recipeCook.focus();
-		return;
-	}
-	
-	if (form.recipePerson.value == 99) {
-		alert('인원을 선택 해주세요.');
-		form.recipePerson.focus();
-		return;
-	}
-
-	if (form.recipeTime.value == 99) {
-		alert('소요시간을 선택 해주세요.');
-		form.recipeTime.focus();
-		return;
-	}
-
-	if (form.recipeLevel.value == 99) {
-		alert('난이도를 선택 해주세요.');
-		form.recipeLevel.focus();
-
 		return;
 	}
 	
@@ -86,7 +41,6 @@ function RecipeWrite_submitForm(form) {
 			return;
 		}
 	}
-
 	
 	RecipeWrite_submitFormDone = true;
 	form.submit();
@@ -98,7 +52,7 @@ function RecipeWrite_submitForm(form) {
 const addStuffBox = () => {
 	const stuffBox = document.getElementById("stuffBox");
 	const newStuffP = document.createElement('p');
-	newStuffP.innerHTML = "<input name='recipeStuff' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px;' placeholder='예) 당근 반개 '/>"
+	newStuffP.innerHTML = "<input name='recipeStuff' class='mt-8' type='text' required style='width: 400px; height: 50px; border:2px solid #ddf; padding: 20px;' placeholder='예) 당근 반개 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeStuffBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 		stuffBox.appendChild(newStuffP);
 }
@@ -108,7 +62,7 @@ const removeStuffBox = (obj) => {
 const addSauceBox = () => {
 	const sauceBox = document.getElementById("sauceBox");
 	const newSauceP = document.createElement('p');
-	newSauceP.innerHTML = "<input name='recipeSauce' class='mt-8' type='text' style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
+	newSauceP.innerHTML = "<input name='recipeSauce' class='mt-8' type='text' required style='width: 400px; height: 50px; border:2px solid #dfd; padding: 20px;' name='recipeStuff' placeholder='예) 후추 톡톡 '/>"
 		+ "<button style='margin-left: 10px;' onclick='removeSauceBox(this);' class='btn btn-sm btn-outline fc_redH'> 삭제 </button>";
 	sauceBox.appendChild(newSauceP);
 }
@@ -121,20 +75,34 @@ const removeSauceBox = (obj) => {
 
 var orderNum = 1;
 var lastOrderNum = 1;
+
 const add_orderBox = () => {
+	
+	//  마지막 번호 가져오기
+	if (document.getElementById("lastOrderNum")) {
+		lastOrderNum = document.getElementById("lastOrderNum").value;
+		// 처음 한번만 orderNum를 lastOrderNum로 설정하기
+		if (lastOrderNum > orderNum) {
+			orderNum = lastOrderNum;
+		}
+	}
+	
+	++orderNum;
+	
 	const orderBox = document.getElementById("order");
 	const newOrderP = document.createElement('p');
-	newOrderP.innerHTML = "<div class='flex'> <div class='flex h-full bg-gray-100 rounded-lg ' style='margin-top: 20px; height: 270px; width:50%;'>" 
-	    + "<div class='flex justify-center rounded-xl my-auto'>"
-        + "<label for='input-recipeOrder__1'> " + " <i class='fa-solid fa-camera text-3xl fc_blue' style='padding :75px; cursor: pointer;'></i>"
-        + "<input type='file' id='input-recipeOrder__" + "' accept='image/*'"
-		+ " name='file__order__0__extra__recipeOrderImg__" + "' class='hidden recipeOrderBox' /></div></label>"
-   		+ "<img class='rounded-md' style='margin: 12px;' name='recipeBodyImg' id='preview-recipeOrder__" + "'src='https://via.placeholder.com/600/FFFFFF?text=...' /></div>"
-		+ "<div class='recipeBodyMsgBox w-full ml-6 my-auto'>"
-   		+ "<div class='flex justify-center bg-gray-100 rounded-md' style='margin-top: 26px;'>"
-        + "<textarea name='recipeMsgBody' class='w-full h-full text-lg p-3 border border-gray-300 rounded-lg' style='height: 220px;' rows='5' "
+	
+	newOrderP.innerHTML = "<div class='flex bg-gray-50 justify-center'> <div class='flex h-full bg-gray-50 rounded-lg justify-center'" 
+	    + "style='margin-top: 20px; height: 400px;'> <div class='flex justify-center rounded-xl my-auto text-center'>"
+        + "<label for='input-recipeOrder__'> " + orderNum + "<img class='rounded-md' style='margin: 12px; width: 500px; height: 300px;'"
+        + "name='recipeBodyImg' id='preview-recipeOrder__" + orderNum + "'src='https://via.placeholder.com/600/FFFFFF?text=...' />"
+        + "<input type='file' id='input-recipeOrder__" + orderNum + "' accept='image/*'  multiple='multiple'"
+		+ " name='file__order__0__extra__recipeOrderImg__" + orderNum + "' class=' recipeOrderBox' /></div></label></div>"
+		+ "<div class='recipeBodyMsgBox ml-6' style='width: 800px;'>"
+   		+ "<div class='flex justify-center bg-gray-50 rounded-md' style='margin-top: 68px;'>"
+        + "<textarea name='recipeMsgBody' class='w-full h-full text-lg p-3 border border-gray-300 rounded-lg' style='height: 300px;' rows='5' required  "
 		+ "placeholder='조리 과정을 입력해주세요.'></textarea>"
-        + "<div onclick='remove_orderBox(this);' class='btn btn-sm btn-outline fc_redH'>"
+        + "<div onclick='remove_orderBox(this);' style='margin-top: 265px; margin-left: 5px;' class='btn btn-sm btn-outline fc_redH'>"
         + "<span>삭제</span></div></div> </div> </div>";
 	orderBox.appendChild(newOrderP);
 };
@@ -188,7 +156,6 @@ $(document).ready(function () {
 			readRecipeOrderImage(this);
 		});
 	});
-	
 
 });
 </script>
@@ -198,10 +165,10 @@ $(document).ready(function () {
 	<input type="hidden" value="${replaceUri }" />
 	<!-- 레시피 완성 사진 등록 + 레시피 기본 정보 -->
 	<div class="recipe_title flex justify-center">
-		<div class="titleImgBox" style="width: 450px; height: 300px;">
-			<div class="mt-8" style="width: 100%; height: 300px; border: 1px solid grey;">
+		<div class="titleImgBox" style="width: 530px; height: 300px;">
+			<div class="mt-8" style="width: 100%; height: 335px; border: 1px solid grey;">
 				<!-- 이미지 미리보기 -->
-				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%; background-color: #ddd;" 
+				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%;" class="bg-gray-100" 
 				src="https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png" alt="요리 완성 사진" />
 				
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
@@ -235,59 +202,63 @@ $(document).ready(function () {
 
 
 	<!-- 레시피 선택내용(카테고리 / 인원 / 소요시간 / 난이도 / 조리방법) -->
-	<div class="recipeBodyWrap flex justify-center mt-8" style="border-bottom: 1px solid #304899; padding-bottom: 15px; padding-top: 40px;">
+	<div class="recipeSelectWrap" style="text-align:center; margin-top:100px;">
+		<div class="recipeBodyWrap flex justify-center mt-8" style="border-bottom: 1px solid #304899; padding-bottom: 15px;">
 
-		<select name="recipeCategory" class="mx-8 text-center" data-value="${param.recipeCategory}">
-			<option disabled value="99" selected="${param.recipeCategory}">카테고리</option>
-			<option value="1">한식</option>
-			<option value="2">양식</option>
-			<option value="3">중식</option>
-			<option value="4">일식</option>
-			<option value="5">기타</option>
-		</select>
-	
-		<select name="recipeCook" class="mx-8 text-center" data-value="${param.recipeCook}">
-			<option disabled value="99" selected="${param.recipeCook}">조리 방법</option>
-			<option value="1">볶음</option>
-			<option value="2">끓이기</option>
-			<option value="3">부침</option>
-			<option value="4">조림</option>
-			<option value="5">무침</option>
-			<option value="6">비빔</option>
-			<option value="7">찜</option>
-			<option value="8">절임</option>
-			<option value="9">튀김</option>
-			<option value="10">삶기</option>
-			<option value="11">굽기</option>
-			<option value="12">데치기</option>
-			<option value="13">기타</option>
-		</select>
-	
-		<select name="recipePerson" class="mx-8 text-center" data-value="${param.recipePerson}">
-			<option disabled value="99" selected="${param.recipePerson}">인원 선택</option>
-			<option value="1">1인분</option>
-			<option value="2">2인분</option>
-			<option value="3">3인분</option>
-			<option value="4">기타</option>
-		</select>
-	
-		<select name="recipeTime" class="mx-8 text-center" data-value="${param.recipeTime}">
-			<option disabled value="99" selected="${param.recipeTime}">소요 시간</option>
-			<option value="1">10분 이내</option>
-			<option value="2">20분 이내</option>
-			<option value="3">30분 이내</option>
-			<option value="4">1시간 이내</option>
-			<option value="5">기타</option>
-		</select>
-	
-		<select name="recipeLevel" class="mx-8 text-center" data-value="${recipe.recipeLevel}">
-			<option disabled value="99" selected="${recipe.recipeLevel}">난이도</option>
-			<option value="1">초급</option>
-			<option value="2">중급</option>
-			<option value="3">고급</option>
-		</select>
+			<select name="recipeCategory" class="mx-8 text-center" required data-value="${recipe.recipeCategory}">
+				<option value="">카테고리</option>
+				<option value="1">한식</option>
+				<option value="2">양식</option>
+				<option value="3">중식</option>
+				<option value="4">일식</option>
+				<option value="0">기타</option>
+			</select>
+		
+			<select name="recipeCook" class="mx-8 text-center" required data-value="${recipe.recipeCook}">
+				<option value="0">조리 방법</option>
+				<option value="1">볶음</option>
+				<option value="2">끓이기</option>
+				<option value="3">부침</option>
+				<option value="4">조림</option>
+				<option value="5">무침</option>
+				<option value="6">비빔</option>
+				<option value="7">찜</option>
+				<option value="8">절임</option>
+				<option value="9">튀김</option>
+				<option value="10">삶기</option>
+				<option value="11">굽기</option>
+				<option value="12">데치기</option>
+				<option value="0">기타</option>
+			</select>
+		
+			<select name="recipePerson" class="mx-8 text-center" required data-value="${recipe.recipePerson}">
+				<option value="">인원 선택</option>
+				<option value="1">1인분</option>
+				<option value="2">2인분</option>
+				<option value="3">3인분</option>
+				<option value="0">기타</option>
+			</select>
+		
+			<select name="recipeTime" class="mx-8 text-center" required data-value="${recipe.recipeTime}">
+				<option value="" >소요 시간</option>
+				<option value="1">10분 이내</option>
+				<option value="2">20분 이내</option>
+				<option value="3">30분 이내</option>
+				<option value="4">1시간 이내</option>
+				<option value="0">기타</option>
+			</select>
+		
+			<select name="recipeLevel" class="mx-8 text-center" required data-value="${recipe.recipeLevel}">
+				<option value="">난이도</option>
+				<option value="1">초급</option>
+				<option value="2">중급</option>
+				<option value="3">고급</option>
+				<option value="0">기타</option>
+			</select>
 
+		</div>
 	</div>
+
 
 	<!-- 재료 / 양념 입력 -->
 	<div class="recipeBox row mt-10" style="padding-bottom: 15px; margin-left: 100px; text-align: center;">
@@ -324,23 +295,24 @@ $(document).ready(function () {
 
 	<!-- 조리 과정 -->
 	<div class="cookWrap mt-8 con" style="border-top: 1px solid #304899;">
+	
 		<div id="order" class="">
 		<!-- 조리 과정 사진등록 -->
-			<div class="flex h-full bg-gray-100 rounded-lg " style="margin-top: 20px; height: 270px; width: 100%;">
-				<div class="flex justify-center rounded-xl my-auto">
+			<div class="flex h-full bg-gray-50 rounded-lg justify-center" style="margin-top: 20px; height: 400px; width: 100%;">
+				<div class="flex justify-center rounded-xl my-auto text-center"> 
 					<label for="input-recipeOrder__1">
-						<i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i>
-						<input type="file" id="input-recipeOrder__1" multiple="multiple" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class="hidden recipeOrderBox" oninput="" />
+						<!-- 사진 미리보기 -->
+						<img id="preview-recipeOrder__1" class="multiple-container rounded-md" style="margin: 12px; width: 500px; height: 300px;" name="recipeBodyImg" src="https://via.placeholder.com/600/FFFFFF?text=..."/>
+						<!-- <i class="fa-solid fa-camera text-3xl fc_blue" style="padding: 75px; cursor: pointer;"></i> -->
+						<input type="file" id="input-recipeOrder__1" multiple="multiple" accept="image/*" name="file__order__0__extra__recipeOrderImg__1" class=" recipeOrderBox" />
 					</label>
 				</div>
 				
-				<!-- 사진 미리보기 -->
-				<img id="preview-recipeOrder__1" class="multiple-container rounded-md" style="margin: 12px;" name="recipeBodyImg" src="https://via.placeholder.com/900/FFFFFF?text=..."/>
 				<!-- 조리순서 내용작성 -->
-				<div class="recipeBodyMsgBox w-full ml-6 my-auto">
-					<div class="flex justify-center bg-gray-100 rounded-md " style="margin-top: 26px;">
+				<div class="recipeBodyMsgBox ml-6 " style="width: 800px;">
+					<div class="flex justify-center bg-gray-50 rounded-md " style="margin-top: 36px;">
 						<textarea name="recipeMsgBody" class="w-full h-full text-lg p-3 border border-gray-300 rounded-lg"
-						 style="height: 220px;" rows="5" required placeholder="조리 과정을 입력해주세요."></textarea>
+						 style="height: 300px;" rows="5" required placeholder="조리 과정을 입력해주세요."></textarea>
 					</div>
 				</div>
 			</div>
