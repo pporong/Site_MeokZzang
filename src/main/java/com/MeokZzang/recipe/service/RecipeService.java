@@ -92,6 +92,23 @@ public class RecipeService {
 	public int getRecipiesCount(int recipeCategory, String searchKeywordTypeCode, String searchKeyword) {
 		return recipeRepository.getRecipiesCount(recipeCategory, searchKeywordTypeCode, searchKeyword);
 	}
+
+	
+	// hitCount	
+	public ResultData<Integer> increaseHitCount(int recipeId) {
+		
+		int affectedRowsCount = recipeRepository.increaseHitCount(recipeId);
+
+		if (affectedRowsCount == 0) {
+			return ResultData.from("F-1", "해당 게시물은 존재하지 않습니다.", "affectedRowsCount", affectedRowsCount);
+		}
+
+		return ResultData.from("S-1", "조회수 증가", "affectedRowsCount", affectedRowsCount);
+	}
+
+	public int getRecipeHitCount(int recipeId) {
+		return recipeRepository.getRecipeHitCount(recipeId);
+	}
 	
 
 }

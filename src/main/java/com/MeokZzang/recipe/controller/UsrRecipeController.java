@@ -116,4 +116,24 @@ public class UsrRecipeController {
 		return "usr/recipe/recipeDetail";
 	}
 	
+	
+	// 레시피 hitCount
+	@RequestMapping("/usr/recipe/doIncreaseHitCountRd")
+	@ResponseBody
+	public ResultData<Integer> doIncreaseHitCountRd(int recipeId) {
+		
+		ResultData<Integer> increaseHitCountRd = recipeService.increaseHitCount(recipeId);
+
+		if (increaseHitCountRd.isFail()) {
+			return increaseHitCountRd;
+		}
+
+		ResultData<Integer> rd = ResultData.newData(increaseHitCountRd, "hitCount", recipeService.getRecipeHitCount(recipeId));
+
+		rd.setData2("recipeId", recipeId);
+
+		return rd;
+	}
+	
+	
 }

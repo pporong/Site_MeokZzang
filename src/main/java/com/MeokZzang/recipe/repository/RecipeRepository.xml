@@ -90,4 +90,14 @@
 		</if>
 	</select>
 	
+	<update id="increaseHitCount">
+		UPDATE recipe SET recipeHitCount = recipeHitCount + 1
+		WHERE recipeId = #{recipeId}
+	</update>
+	
+	<select id="getRecipeHitCount" resultType="int">
+		SELECT recipeHitCount FROM recipe WHERE recipeId = #{recipeId}
+	</select>
+	
+	
 </mapper>

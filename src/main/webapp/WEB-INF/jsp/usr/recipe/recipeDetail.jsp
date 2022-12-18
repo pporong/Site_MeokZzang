@@ -3,6 +3,35 @@
 <c:set var="pageTitle" value="레시피 상세보기" />
 <%@ include file="../common/head.jspf"%>
 
+<!-- 조회수 function -->
+<script>
+	const params = {};
+	params.recipeId = parseInt('${param.recipeId}');
+</script>
+
+<script>
+	function RecipeDetail__increaseHitCount(){
+		const localStorageKey = 'recipe__' + params.recipeId + '__alreadyView';
+		
+		if (localStorage.getItem(localStorageKey)) {
+			return;
+		}
+		localStorage.setItem(localStorageKey, true);
+		
+		$.get('../recipe/doIncreaseHitCountRd?', {
+			recipeId : params.recipeId,
+			ajaxMode : 'Y'
+		}, function(data) {
+			$('.recipe-detail__hit-count').empty().html(data.data1);
+		}, 'json');
+	}
+	
+	$(function() {
+		RecipeDetail__increaseHitCount();
+	});
+	
+</script>
+
 <section class="recipeDetailSection text-xl con">
     <div class="recipe_wrap mx-auto">
         <div class="recipe_header">
@@ -55,7 +84,7 @@
                         <span class="date">
                             ${recipe.getForPrintType1RegDate() } /
                         </span>
-                        <span class="hitCount article-detail__hit-count">
+                        <span class="hitCount recipe-detail__hit-count">
                             조회 ${recipe.recipeHitCount }
                         </span>
                     </div>

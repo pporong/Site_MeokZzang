@@ -253,7 +253,6 @@ $(document).ready(function () {
 				<option value="1">초급</option>
 				<option value="2">중급</option>
 				<option value="3">고급</option>
-				<option value="0">기타</option>
 			</select>
 
 		</div>

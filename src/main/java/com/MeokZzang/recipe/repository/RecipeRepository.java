@@ -20,4 +20,8 @@ public interface RecipeRepository {
 
 	public int getRecipiesCount(int recipeCategory, String searchKeywordTypeCode, String searchKeyword);
 
+	public int increaseHitCount(int recipeId);
+
+	public int getRecipeHitCount(int recipeId);
+
 }
