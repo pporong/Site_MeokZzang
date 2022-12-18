@@ -99,5 +99,9 @@
 		SELECT recipeHitCount FROM recipe WHERE recipeId = #{recipeId}
 	</select>
 	
+	<delete id="deleteRecipe">
+		DELETE FROM recipe
+		WHERE recipeId = #{recipeId}
+	</delete>
 	
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import com.MeokZzang.recipe.service.GenFileService;
 import com.MeokZzang.recipe.service.RecipeService;
 import com.MeokZzang.recipe.util.Ut;
+import com.MeokZzang.recipe.vo.Article;
 import com.MeokZzang.recipe.vo.Recipe;
 import com.MeokZzang.recipe.vo.ResultData;
 import com.MeokZzang.recipe.vo.Rq;
@@ -106,7 +107,7 @@ public class UsrRecipeController {
 	public String viewRecipeDetail(Model model, int recipeId) {
 		System.err.println(recipeId);
 		
-		Recipe recipe = recipeService.getForPrintRecipe(recipeId);
+		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
 		
 		String [] bodyMsg = recipe.getRecipeMsgBody().split(",");
 		
@@ -116,6 +117,26 @@ public class UsrRecipeController {
 		return "usr/recipe/recipeDetail";
 	}
 	
+	
+	// 레시피 delete
+	@RequestMapping("/usr/recipe/doDelete")
+	@ResponseBody
+	public String doDelete(int recipeId) {
+
+		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
+
+		if (recipe == null) {
+			return rq.jsHistoryBack(Ut.f("%d번 레시피는 존재하지 않습니다", recipeId));
+		} 
+		// 삭제 권한 체크
+		if (recipe.getMemberId() != rq.getLoginedMemberId()) {
+			return rq.jsHistoryBack(Ut.f("%d번 레시피에 대한 삭제 권한이 없습니다.", recipeId));
+		}
+
+		recipeService.deleteRecipe(recipeId);
+
+		return rq.jsReplace(Ut.f("%d번 레시피를 삭제했습니다", recipeId), "../recipe/recipeList");
+	}
 	
 	// 레시피 hitCount
 	@RequestMapping("/usr/recipe/doIncreaseHitCountRd")

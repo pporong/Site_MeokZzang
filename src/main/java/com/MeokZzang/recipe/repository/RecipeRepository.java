@@ -24,4 +24,6 @@ public interface RecipeRepository {
 
 	public int getRecipeHitCount(int recipeId);
 
+	public void deleteRecipe(int recipeId);
+
 }

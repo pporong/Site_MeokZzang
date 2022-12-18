@@ -71,11 +71,20 @@ public class RecipeService {
 		return ResultData.from("S-1", "삭제 가능");
 	}
 
-	public Recipe getForPrintRecipe(int recipeId) {
+	public Recipe getForPrintRecipe(int actorId, int recipeId) {
 		
-		return recipeRepository.getForPrintRecipe(recipeId);
+		Recipe recipe = recipeRepository.getForPrintRecipe(recipeId);
+		
+		updateForPrintData(actorId, recipe);
+		
+		return recipe;
 	}
-
+	
+	// 삭제
+	public void deleteRecipe(int recipeId) {
+		recipeRepository.deleteRecipe(recipeId);
+	}
+	
 
 	// 레시피 작성
 	public ResultData<Integer> writeRecipe(int memberId, int recipeCategory, String recipeName,
@@ -109,6 +118,7 @@ public class RecipeService {
 	public int getRecipeHitCount(int recipeId) {
 		return recipeRepository.getRecipeHitCount(recipeId);
 	}
-	
+
+
 
 }

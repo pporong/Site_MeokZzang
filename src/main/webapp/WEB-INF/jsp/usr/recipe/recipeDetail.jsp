@@ -169,7 +169,7 @@
 
 		</div>
 		
-		<div class="flex justify-end" style="font-size : 16px; text-align:right;">
+		<div class="flex justify-end mt-4" style="font-size : 16px; text-align:right;">
 			<div class="recipeRegDate">
 				<span class="date"> 작성날짜 ${recipe.getForPrintType1RegDate()} / </span>
 			</div>
@@ -178,18 +178,15 @@
 			</div>
 		</div>
 		
-		
+		<div class="btns flex justify-end mt-4" style="font-size : 16px; text-align:right;">
 			<c:if test="${recipe.extra__actorCanModify }">
-				<div class="btns flex justify-end " style="font-size : 16px; text-align:right;">
-              		<a class="mx-4 mBtn badge badge-outline badge-sm" href="../recipe/modify?id=${recipe.recipeId }">수정</a>
-                </div>
+              	<a class="mx-4 mBtn badge badge-outline badge-sm" href="../recipe/modify?id=${recipe.recipeId }">수정</a>
             </c:if>
             <c:if test="${recipe.extra__actorCanDelete }">
-          		<div class="btns flex justify-end " style="font-size : 16px; text-align:right;">
-					<a class="dBtn badge badge-outline badge-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
-	                    href="../recipe/doDelete?recipeId=${recipe.recipeId }">삭제</a>
-				</div>
+				<a class="dBtn badge badge-outline badge-sm" onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
+	            	href="../recipe/doDelete?recipeId=${recipe.recipeId }">삭제</a>
             </c:if>
+		</div>
 
 		
 	</div>
