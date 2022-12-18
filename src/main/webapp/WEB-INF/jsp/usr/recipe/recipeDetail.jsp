@@ -238,7 +238,6 @@
 
 	<!-- 조리 과정 -->
 	<div class="cookWrap mt-8 con" style="border-top: 1px solid #304899;">
-
 		<div id="order" class="">
 			<c:forEach var="body" varStatus="status" items="${recipe.recipeMsgBody }" >
 				<div class="flex h-full bg-gray-50 rounded-lg justify-center" style="margin-top: 20px; height: 400px; width: 100%;">
@@ -256,12 +255,131 @@
 					</div>
 				</div>								
 			</c:forEach> 
-			
-			
-
 		</div>
-
 	</div>
+	
+<!-- 댓글 삭제 fun -->
+<script>
+	function ReplyList_deleteReply(btn) {
+	
+		const $clicked = $(btn);
+		const $target = $clicked.closest('[data-id]');
+		const id = $target.attr('data-id');
+		
+		$clicked.html('삭제중..')
+	
+			$.post(
+				'../reply/doDeleteAjax', {
+					id: id
+			},
+			function (data) {
+				if (data.success) {
+					$target.remove();
+			} else {
+				if (data.msg) {
+					alert(data.msg);
+				}
+				$clicked.text('삭제 실패');
+			}
+		},
+		'json'
+	);
+}
+</script>	
+	
+	<!-- 댓글 -->
+	<div class="replyBox mt-8">
+	<div class="replyTitle"> 댓글 목록 <span class="badge badge-outline badge-sm fc_blue">${replies.size() }</span></div>
+		<div class="overflow-x-auto">
+			<table class="table table-compact w-full">
+				<colgroup align="center">
+					<col width="5%" />
+					<col width="20%" />
+					<col width="5%" />
+					<col width="50%" />
+					<col width="5%" />
+					<col width="5%" />
+					<col width="5%" />
+					<col width="5%" />
+				</colgroup>
+			<thead>
+				<tr class="replyHead text-center">
+					<th>번호</th>
+					<th class="">날짜</th>
+					<th class="">작성자</th>
+					<th class="">내용</th>
+					<th class="">추천수</th>
+					<th class="">수정</th>
+					<th class="">삭제</th>
+					<th class="">비고</th>
+				</tr>
+			</thead>
+			
+			<!-- 댓글 목록 -->
+			<tbody>
+				<c:forEach var="reply" items="${replies }" varStatus="status">
+					<tr data-id="${reply.id }" class="hover text-center">
+						<td>${status.count}</td>
+						<td>${reply.getForPrintType1RegDate()}</td>
+						<td>${reply.extra__writerName}</td>
+						<td class="">${reply.getForPrintBody()}</td>
+						<td class="">${reply.goodReactionPoint }</td>
+						
+						<td>
+							<c:if test="${reply.extra__actorCanModify}">
+								<a class="btn-text-link" href="../reply/modify?id=${reply.id }&replaceUri=${rq.encodedCurrentUri}">수정</a>
+							</c:if>
+						</td>
+						<td>
+							<c:if test="${reply.extra__actorCanDelete}">
+								<a class="btn-text-link cursor-pointer" onclick="if(confirm('정말 삭제하시겠습니까?')) { ReplyList_deleteReply(this);} return false;">삭제</a>
+							</c:if>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+
+		</table>
+	</div>
+
+            <!-- 댓글 작성 -->
+            <div class="writeWrap mt-5 overflow-x-auto">
+                <div class="replyWrite text-indigo-700">댓글 작성</div>
+                <c:if test="${rq.logined }">
+                    <form class="table-box-type-1 overflow-x-auto" method="POST" enctype="multipart/form-data" action="../reply/doWrite"
+                        onsubmit="ReplyWrite__submitForm(this); return false;">
+                        <input type="hidden" name="relTypeCode" value="reply" />
+                        <input type="hidden" name="relId" value="${recipe.recipeId }" />
+                        <input type="hidden" name="replaceUri" value="${rq.currentUri }" />
+                        <table class="table table-zebra w-full text-sm">
+                            <colgroup>
+                                <col width="100" />
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th class="text-indigo-700">작성자</th>
+                                    <td>${rq.loginedMember.name }</td>
+                                </tr>
+                                <tr>
+                                    <th class="text-indigo-700">내용</th>
+                                    <td><textarea class="w-full input input-bordered" style="height: 100px;" name="body"
+                                            placeholder="댓글을 입력해주세요" rows="5" /></textarea></td>
+                                </tr>
+                                <tr>
+                                    <th class="text-indigo-700"></th>
+                                    <td class=""><button class="sBtn btn-sm" type="submit">등록</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </form>
+                </c:if>
+
+                <!-- 댓글 이용시 로그인여부 -->
+                <c:if test="${rq.notLogined }">
+                    <a class="fc_redH btn-sm btn-ghost" href="${rq.loginUri}">로그인</a> 후 이용해주세요
+                </c:if>
+            </div>
+		</div>
 				
 	<!-- 뒤로가기 버튼 -->
 	<div class="btns my-4 flex justify-end mt-8" style=" border-top: 1px solid #304899; ">

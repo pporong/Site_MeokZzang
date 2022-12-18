@@ -34,6 +34,7 @@ public class ReplyService {
 
 	// 댓글 list
 	public List<Reply> getForPrintReplies(Member actor, String relTypeCode, int relId) {
+		
 		List<Reply> replies = replyRepository.getForPrintReplies(relTypeCode, relId);
 
 		for (Reply reply : replies) {

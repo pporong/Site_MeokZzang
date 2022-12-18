@@ -13,9 +13,12 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
 
 import com.MeokZzang.recipe.service.GenFileService;
+import com.MeokZzang.recipe.service.ReactionPointService;
 import com.MeokZzang.recipe.service.RecipeService;
+import com.MeokZzang.recipe.service.ReplyService;
 import com.MeokZzang.recipe.util.Ut;
 import com.MeokZzang.recipe.vo.Recipe;
+import com.MeokZzang.recipe.vo.Reply;
 import com.MeokZzang.recipe.vo.ResultData;
 import com.MeokZzang.recipe.vo.Rq;
 
@@ -27,6 +30,10 @@ public class UsrRecipeController {
 	private RecipeService recipeService;
 	@Autowired
 	private GenFileService genFileService;
+	@Autowired
+	private ReactionPointService reactionPointService;
+	@Autowired
+	private ReplyService replyService;
 	@Autowired
 	private Rq rq;
 	
@@ -117,6 +124,11 @@ public class UsrRecipeController {
 		model.addAttribute("stuff", stuff);
 		model.addAttribute("sauce", sauce);
 		
+		List<Reply> replies = replyService.getForPrintReplies(rq.getLoginedMember(), "reply", recipeId);
+		
+		model.addAttribute("replies", replies);
+		
+		model.addAttribute("isLogined",rq.isLogined());
 		return "usr/recipe/recipeDetail";
 	}
 	

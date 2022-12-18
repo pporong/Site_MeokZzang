@@ -8,7 +8,7 @@
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		memberId = #{actorId},
-		relTypeCode = 'article',
+		relTypeCode = #{relTypeCode},
 		relId =  #{relId},
 		`body` = #{body}
 	</insert>

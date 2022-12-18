@@ -26,7 +26,7 @@
 	}
 </script>
 
-<section class="mt-8 text-xl">
+<section class=" text-xl con" style="margin-top : 20px;">
 	<div class="container mx-auto px-3">
 		<form class="table-box-type-1 overflow-x-auto" method="POST" action="../reply/doModify" onsubmit="ReplyModify__submit(this); return false;">
 			<input type="hidden" name="id" value="${reply.id }" />
@@ -37,18 +37,6 @@
 					</colgroup>
 	
 					<tbody>
-						<tr>
-							<th>게시물 번호</th>
-							<td>
-								<div class="badge">${reply.relId }</div>
-							</td>
-						</tr>
-						<tr>
-							<th>게시물 제목</th>
-							<td>
-								<div class="badge">${relDataTitle }</div>
-							</td>
-						</tr>
 						<tr>
 							<th class="text-indigo-700">작성날짜</th>
 							<td>${reply.regDate }</td>

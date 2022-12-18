@@ -46,6 +46,8 @@ public class UsrReplyController {
 			switch (relTypeCode) {
 			case "article":
 				replaceUri = Ut.f("../article/detail?id=%d", relId);
+			case "recipe":
+				replaceUri = Ut.f("../article/recipeDetail?recipeId=%d", relId);
 				break;
 			}
 		}
@@ -75,6 +77,8 @@ public class UsrReplyController {
 			switch (reply.getRelTypeCode()) {
 			case "article":
 				replaceUri = Ut.f("../article/detail?id=%d", reply.getRelId());
+			case "recipe":
+				replaceUri = Ut.f("../recipe/recipeDetail?recipeId=%d", reply.getRelId());
 				break;
 			}
 		}
@@ -155,6 +159,8 @@ public class UsrReplyController {
 			switch (reply.getRelTypeCode()) {
 			case "article":
 				replaceUri = Ut.f("../article/detail?id=%d", reply.getRelId());
+			case "recipe":
+				replaceUri = Ut.f("../recipe/recipeDetail?recipeId=%d", reply.getRelId());
 				break;
 			}
 		}

@@ -328,9 +328,7 @@ $(document).ready(function () {
 		</div>
 
 	</div>
-		
-	
-		
+			
 		<!-- 조리과정 추가 버튼 -->
 		<div class=" flex justify-center mt-3" style="border-bottom: 1px solid #304899; padding-bottom: 15px;">
 			<div onclick="add_orderBox();" class="flex justify-center items-center">
