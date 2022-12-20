@@ -40,30 +40,26 @@ public class UsrMemberController {
 	public String doJoin(String loginId, String loginPw, String name, String nickname, String cellphoneNum,
 			String email, @RequestParam(defaultValue = "/") String afterLoginUri, MultipartRequest multipartRequest) {
 
-		System.err.println("loginPw : " +  loginPw);
-		
 		ResultData<Integer> joinRd = memberService.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 
 		if (joinRd.isFail()) {
 			return rq.jsHistoryBack(joinRd.getResultCode(), joinRd.getMsg());
 		}
-		
+
 		int newMemberId = (int) joinRd.getBody().get("id");
 
-		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
-
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
-		
+
 		for (String fileInputName : fileMap.keySet()) {
-			
 			MultipartFile multipartFile = fileMap.get(fileInputName);
 
 			if (multipartFile.isEmpty() == false) {
-				
 				genFileService.save(multipartFile, newMemberId);
 			}
 		}
 
+		String afterJoinUri = "../member/login?afterLoginUri=" + Ut.getUriEncoded(afterLoginUri);
+		
 		return rq.jsReplace("회원가입이 완료되었습니다~ 로그인 후 이용해주세요 :)", afterJoinUri);
 	}
 
@@ -115,17 +111,19 @@ public class UsrMemberController {
 
 		Member member = memberService.getMemberByLoginId(loginId);
 		
-		//
-		System.out.println("로그인 loginPw : " + loginPw);
 
 		if (member == null) {
 			return Ut.jsHistoryBack("일치하는 정보가 없습니다. 확인 후 다시 시도 해 주세요.");
 		}
-
+		
 		if (member.getLoginPw().equals(loginPw) == false) {
+			System.err.println("로그인 loginPw : " + loginPw);
 			return Ut.jsHistoryBack("비밀번호가 일치하지 않습니다");
 		}
 
+		//
+		System.err.println(" loginPw : " + loginPw);
+		
 		rq.login(member);
 
 		String infoMsg = Ut.f("%s님 환영합니다", member.getNickname());

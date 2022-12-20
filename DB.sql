@@ -85,18 +85,8 @@ ALTER TABLE article ADD COLUMN memberId INT(10) UNSIGNED NOT NULL AFTER `updateD
 
 # memberId 추가
 UPDATE article
-SET memberId = 0
-WHERE memberId = 1;
-
-
-# memberId 추가
-UPDATE article
 SET memberId = 1
 WHERE memberId = 0;
-# boardId 추가
-UPDATE article
-SET boardId = 1
-WHERE boardId = 0;
 
 SELECT * FROM article ORDER BY id DESC;
 
@@ -429,7 +419,6 @@ SELECT * FROM recipe ORDER BY recipeId DESC;
 
 SELECT * FROM genFile;
 -- --------------------------------------------------------------
-DROP TABLE recipe
 
 # recipe 테이블 생성
 CREATE TABLE recipe (
@@ -486,7 +475,7 @@ SET recipeRegDate =NOW(),
     recipeCook = 4,
     recipeStuff = '재료 1, 재료 2, 재료 3,',
     recipeSauce = '양념 1, 양념 2, 양념 3,',
-    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4',
     recipeHitCount = 3,
     recipePoint = 0,
     recipeDelStatus= 'N' ;
@@ -504,7 +493,7 @@ SET recipeRegDate =NOW(),
     recipeCook = 5,
     recipeStuff = '재료 1, 재료 2, 재료 3,',
     recipeSauce = '양념 1, 양념 2, 양념 3,',
-    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4',
     recipeHitCount = 15,
     recipePoint = 0,
     recipeDelStatus= 'N' ;
@@ -522,7 +511,7 @@ SET recipeRegDate =NOW(),
     recipeCook = 3,
     recipeStuff = '재료 1, 재료 2, 재료 3,',
     recipeSauce = '양념 1, 양념 2, 양념 3,',
-    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4',
     recipeHitCount = 0,
     recipePoint = 0,
     recipeDelStatus= 'N' ;
@@ -540,14 +529,14 @@ SET recipeRegDate =NOW(),
     recipeCook = 2,
     recipeStuff = '재료 1, 재료 2, 재료 3,',
     recipeSauce = '양념 1, 양념 2, 양념 3,',
-    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4,',
+    recipeMsgBody = '레시피 내용1, 레시피 내용2, 레시피 내용3, 레시피 내용4',
     recipeHitCount = 5,
     recipePoint = 3,
     recipeDelStatus= 'N' ;
     
 ----
 
--- -----------------------------------`MZ_Recipe`----------------
+-- -----------------------------------`MZ_Recipe`--------------------------------
 SELECT * FROM article ORDER BY id DESC;
 SELECT * FROM board;
 SELECT * FROM `member` ORDER BY id DESC;
@@ -561,7 +550,7 @@ SELECT * FROM attr;
 SELECT * FROM recipe;
 
 SELECT * FROM genFile;
--- --------------------------------------------------------------
+-- ------------------------------------------------------------------------------
 		
 # 이미지 파일 table 생성
 CREATE TABLE genFile (

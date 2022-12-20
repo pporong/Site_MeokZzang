@@ -6,8 +6,7 @@
 	<insert id="join">
 		INSERT INTO `member`
 		SET regDate = NOW(),
-		updateDate =
-		NOW(),
+		updateDate = NOW(),
 		loginId = #{loginId},
 		loginPw = #{loginPw},
 		`name` = #{name},

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page import="com.MeokZzang.recipe.util.Ut"%>
 <c:set var="pageTitle" value="회원 가입" />
 <%@ include file="../common/head.jspf"%>
 
@@ -10,101 +11,97 @@
 	let validLoginId = "";
 	let validNickname ="";
 	
-	function MemberJoin__submit(form) {
-		
-		if (MemberJoin__submitDone) {
+	function submitJoinForm(form) {
+		if (submitJoinFormDone) {
 			alert('처리중입니다');
 			return;
 		}
-		if (MemberJoin__submitDone) {
-			return;
-		}
-		
-		form.loginPwInput.value = form.loginPwInput.value.trim();
-		if (form.loginPwConfirm.value.length > 0) {
-			form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
-			
-			if (form.loginPwConfirm.value.length == 0) {
-				alert('비밀번호 확인을 입력해주세요');
-				form.loginPwConfirm.focus();
-				return;
-			}
-			
-			if (form.loginPwInput.value != form.loginPwConfirm.value) {
-				alert('비밀번호가 일치하지 않습니다');
-				form.loginPwInput.focus();
-				return;
-			}
-		}
 		form.loginId.value = form.loginId.value.trim();
-		if (form.loginId.value.length == 0) {
+
+		if (form.loginId.value == 0) {
 			alert('아이디를 입력해주세요');
 			form.loginId.focus();
 			return;
 		}
+
 		if (form.loginId.value != validLoginId) {
-			alert('!! 사용할 수 없는 아이디입니다. !!');
+			alert('사용할 수 없는 아이디입니다!');
 			form.loginId.focus();
 			return;
 		}
-		
-		let validLoginId = "";
-		
+
 		form.loginPw.value = form.loginPw.value.trim();
-		if (form.loginPw.value.length == 0) {
+
+		if (form.loginPw.value == 0) {
 			alert('비밀번호를 입력해주세요');
 			form.loginPw.focus();
 			return;
 		}
+
+		form.loginPwConfirm.value = form.loginPwConfirm.value.trim();
+
+		if (form.loginPwConfirm.value == 0) {
+			alert('비밀번호 확인을 입력해주세요');
+			form.loginPwConfirm.focus();
+			return;
+		}
+
+		if (form.loginPwConfirm.value != form.loginPw.value) {
+			alert('비밀번호가 일치하지 않습니다');
+			form.loginPw.focus();
+			return;
+		}
+
 		form.name.value = form.name.value.trim();
-		if (form.name.value.length == 0) {
+
+		if (form.name.value == 0) {
 			alert('이름을 입력해주세요');
 			form.name.focus();
 			return;
 		}
+
 		form.nickname.value = form.nickname.value.trim();
-		if (form.nickname.value.length == 0) {
+
+		if (form.nickname.value == 0) {
 			alert('닉네임을 입력해주세요');
 			form.nickname.focus();
 			return;
 		}
-		
-		form.cellphoneNum.value = form.cellphoneNum.value.trim();
-		if (form.cellphoneNum.value.length == 0) {
-			alert('전화번호를 입력해주세요');
-			form.cellphoneNum.focus();
-			return;
-		}
-		
+
 		form.email.value = form.email.value.trim();
-		if (form.email.value.length == 0) {
+
+		if (form.email.value == 0) {
 			alert('이메일을 입력해주세요');
 			form.email.focus();
 			return;
 		}
-		
-		// 프로필 이미지 용량 제한
+
+		form.cellphoneNum.value = form.cellphoneNum.value.trim();
+
+		if (form.cellphoneNum.value == 0) {
+			alert('전화번호를 입력해주세요');
+			form.cellphoneNum.focus();
+			return;
+		}
+
 		const maxSizeMb = 10;
 		const maxSize = maxSizeMb * 1204 * 1204;
-		
+
 		const profileImgFileInput = form["file__member__0__extra__profileImg__1"];
-		
-		if( profileImgFileInput.value ) {
-			if ( profileImgFileInput.files[0].size > maxSize ) {
+
+		if (profileImgFileInput.value) {
+			if (profileImgFileInput.files[0].size > maxSize) {
 				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
 				profileImgFileInput.focus();
-				
+
 				return;
 			}
 		}
-		
-		form.loginPw.value = sha256(form.loginPwInput.value);
-		form.loginPwInput.value = '';
-		form.loginPwConfirm.value = '';
-		
-		MemberJoin__submitDone = true;
+
+		submitJoinFormDone = true;
 		form.submit();
 	}
+
 	
 	let callCount = 0;
 	// lodash debounced 활용하여 loginId 중복체크시 일정시간(1초) 뒤에 한번만 실행할 수 있도록
@@ -199,7 +196,7 @@
         <div class="form_wrap">
             <div class="memberJoin_form">
                 <form class="members_form" method="POST" enctype="multipart/form-data" action="../member/doJoin"
-                    onsubmit="MemberJoin__submit(this); return false;">
+                    onsubmit="submitJoinForm(this); return false;">
                     <input type="hidden" name="afterJoinUri" value="${param.afterJoinUri}" />
        				<input type="hidden" name="loginPw">
                     <div class="memberJoin-input">

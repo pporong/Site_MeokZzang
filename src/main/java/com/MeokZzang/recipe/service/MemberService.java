@@ -45,7 +45,7 @@ public class MemberService {
 			return ResultData.from("F-8", Ut.f("이미 사용중인 이름(%s)과 이메일(%s)입니다", name, email));
 		}
 		
-		// loginPw = Ut.sha256(loginPw); // 이중 함호화 방지로 인한 제거
+		loginPw = Ut.sha256(loginPw);
 		
 		memberRepository.join(loginId, loginPw, name, nickname, cellphoneNum, email);
 		
