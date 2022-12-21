@@ -107,10 +107,12 @@ public class RecipeService {
 	
 	// 레시피 작성
 	public ResultData<Integer> writeRecipe(int memberId, int recipeCategory, String recipeName,
-			String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime, String recipeStuff, String recipeSauce, String recipeMsgBody) {
+			String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime,
+			String recipeStuff, String recipeSauce, String recipeMsgBody) {
 		
 		recipeRepository.writeRecipe(memberId, recipeCategory, 
-				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime, recipeStuff, recipeSauce, recipeMsgBody);
+				recipeName, recipeBody, recipePerson, recipeLevel, recipeCook,
+				recipeTime, recipeStuff, recipeSauce, recipeMsgBody);
 		
 		int recipeId = recipeRepository.getLastInsertId();
 		

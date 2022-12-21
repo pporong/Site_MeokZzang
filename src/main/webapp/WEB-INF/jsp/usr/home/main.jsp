@@ -78,7 +78,7 @@
 			<div class="row bg-gray-100" style="text-align: center; position: absolute; left:0; top: 280px; padding-bottom: 30px; padding-top: 30px;">
 				<div class="title fc_blue text-center font-bold mb-8" style="" > < 최신 레시피 > </div>
 					<c:forEach var="recipe" items="${newRecipes }">
-						<div class=" hover cell " style="margin-right: 28px; margin-left: 30px; border: 1px solid #304899; box-sizing:border-box;">
+						<div class=" hover cell " style="margin-right: 25px; margin-left: 25px; border: 1px solid #304899; box-sizing:border-box;">
 							<div>${recipe.recipeId} 번 레시피</div>
 							<div>${recipe.forPrintType1RegDate}</div>
 							<div>
@@ -103,7 +103,7 @@
 			<div class="row bg-gray-100" style="text-align: center; position: absolute; left:0; top: 830px; padding-bottom: 30px; padding-top: 30px;">
 				<div class="title fc_red text-center font-bold mb-8" style="" > < 인기 레시피 > </div>
 					<c:forEach var="recipe" items="${topRecipes }">
-						<div class=" hover cell " style="margin-right: 28px; margin-left: 30px; border: 1px solid #e04241; box-sizing:border-box;">
+						<div class=" hover cell " style="margin-right: 25px; margin-left: 25px; border: 1px solid #e04241; box-sizing:border-box;">
 							<div>${recipe.recipeId} 번 레시피</div>
 							<div>${recipe.forPrintType1RegDate}</div>
 							<div>

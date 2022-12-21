@@ -194,12 +194,6 @@ public class Rq {
 
 		String requestUri = req.getRequestURI();
 
-		// 로그아웃 후 다시 돌아가면 안되는 URL
-//		switch (requestUri) {
-//		case "/usr/article/write":
-//		case "/usr/article/modify":
-//			return "../member/doLogout?afterLogoutUri=" + "/";
-//		}
 		return "/usr/member/doLogout?afterLogoutUri=" + getAfterLogoutUri();
 	}
 

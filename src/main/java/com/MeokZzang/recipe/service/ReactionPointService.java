@@ -30,7 +30,7 @@ public class ReactionPointService {
 		return ResultData.from("S-1", "추천기능 사용 가능!", "sumReactionPointByMemberId", sumReactionPointByMemberId);
 	}
 
-	// AddGood : 게시물 + 댓글
+	// AddGood : 게시물
 	public ResultData addGoodRp(int actorId, String relTypeCode, int relId) {
 
 		reactionPointRepository.addGoodReactionPoint(actorId, relTypeCode, relId);

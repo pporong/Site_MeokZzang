@@ -169,7 +169,9 @@ $(document).ready(function () {
 			<div class="mt-8" style="width: 100%; height: 335px; border: 1px solid grey;">
 				<!-- 이미지 미리보기 -->
 				<img id="preview-mainRecipe" name="recipeTitleImg" style="width: 100%; height: 100%;" class="bg-gray-100" 
-				src="https://raw.githubusercontent.com/pporong/Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png" alt="요리 완성 사진" />
+				src="https://raw.githubusercontent.com/pporong/
+				Site_MeokZzang/8a022c533f3e6e2214285320fa4d03ca3789bc55/MeokZzang_ImgFile/member/2022_12/1.png"
+				 alt="요리 완성 사진" />
 				
 				<div class="font-bold" style="margin-top: 10px;">▶ 완성 된 요리사진을 등록 해 주세요</div>
 				
@@ -186,7 +188,8 @@ $(document).ready(function () {
 		<div class="recipeInfoWrap mx-10">
 			<div class="titleBox mt-8 " style="width: 680px;">
 				<div class="recipeTitle fc_blue font-bold">▶ 레시피 제목</div>
-				<input name="recipeName" class="w-full input input-bordered" style="width: 100%; height: 60px; padding: 20px;" type="text" placeholder="제목을 입력 해 주세요"/>
+				<input name="recipeName" class="w-full input input-bordered" style="width: 100%; height: 60px; padding: 20px;" type="text" 
+				placeholder="제목을 입력 해 주세요"/>
 			</div>
 
 			<div class="cookerBox mt-8">
@@ -195,7 +198,8 @@ $(document).ready(function () {
 
 			<div class="bodyBox mt-8">
 				<div class="recipeInfo fc_blue font-bold">▶ 레시피 소개</div>
-					<textarea class="w-full input input-bordered" style="height: 160px; padding: 20px;" name="recipeBody" placeholder="자유롭게 레시피를 소개 해 주세요!" rows="5"/></textarea>
+					<textarea class="w-full input input-bordered" style="height: 160px; padding: 20px;" name="recipeBody" 
+					placeholder="자유롭게 레시피를 소개 해 주세요!" rows="5"/></textarea>
 			</div>
 		</div>
 	</div>

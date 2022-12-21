@@ -122,7 +122,7 @@ public class UsrMemberController {
 		}
 
 		//
-		System.err.println(" loginPw : " + loginPw);
+		System.err.println("loginPw : " + loginPw);
 		
 		rq.login(member);
 
@@ -203,7 +203,7 @@ public class UsrMemberController {
 		return "usr/member/myPage";
 	}
 
-	// 회원가입시 비밀번호 확인
+	// 회원정보 변경시 비밀번호 확인
 	@RequestMapping("/usr/member/checkPassword")
 	public String showCheckPassword() {
 

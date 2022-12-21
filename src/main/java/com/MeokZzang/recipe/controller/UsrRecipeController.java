@@ -90,7 +90,7 @@ public class UsrRecipeController {
 		
 		int recipiesCount = recipeService.getRecipiesCount(recipeCategory, searchKeywordTypeCode, searchKeyword);
 		
-		int itemsInAPage = 10;
+		int itemsInAPage = 5;
 		
 		// 한 페이지당 글 intemInAPage 갯수
 		int pagesCount = (int) Math.ceil((double) recipiesCount / itemsInAPage);
@@ -192,8 +192,10 @@ public class UsrRecipeController {
 	
 	@RequestMapping("/usr/recipe/doModify")
 	@ResponseBody
-	public String doModify(Model model, int recipeId, int recipeCategory, String recipeName, String recipeBody, int recipePerson, int recipeLevel, int recipeCook, int recipeTime,
-			 String recipeStuff, String recipeSauce, String recipeMsgBody, String replaceUri, MultipartRequest multipartRequest) {
+	public String doModify(Model model, int recipeId, int recipeCategory, String recipeName, String recipeBody, 
+			int recipePerson, int recipeLevel, int recipeCook, int recipeTime,
+			 String recipeStuff, String recipeSauce, String recipeMsgBody, String replaceUri,
+			 MultipartRequest multipartRequest) {
 
 		Recipe recipe = recipeService.getForPrintRecipe(rq.getLoginedMemberId(), recipeId);
 
@@ -211,7 +213,8 @@ public class UsrRecipeController {
 			return rq.jsHistoryBack(actorCanModifyRd.getMsg());
 		}
 		
-		recipeService.modifyRecipe(recipeId, recipeCategory, recipeName, recipeBody, recipePerson, recipeLevel, recipeCook, recipeTime,
+		recipeService.modifyRecipe(recipeId, recipeCategory, recipeName, recipeBody, recipePerson, 
+				recipeLevel, recipeCook, recipeTime,
 				 recipeStuff, recipeSauce, recipeMsgBody);
 		
 		Map<String, MultipartFile> fileMap = multipartRequest.getFileMap();
