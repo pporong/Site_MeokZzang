@@ -84,7 +84,8 @@ public class UsrRecipeController {
 	
 	// 레시피 목록
 	@RequestMapping("/usr/recipe/recipeList")
-	public String viewRecipeList(Model model, @RequestParam(defaultValue = "0") int recipeCategory, @RequestParam(defaultValue = "recipeName") String searchKeywordTypeCode,
+	public String viewRecipeList(Model model, @RequestParam(defaultValue = "0") int recipeCategory,
+			@RequestParam(defaultValue = "recipeName") String searchKeywordTypeCode,
 			@RequestParam(defaultValue = "") String searchKeyword,
 			@RequestParam(defaultValue = "1") int page) {
 		
@@ -95,7 +96,8 @@ public class UsrRecipeController {
 		// 한 페이지당 글 intemInAPage 갯수
 		int pagesCount = (int) Math.ceil((double) recipiesCount / itemsInAPage);
 		
-		List<Recipe> recipies = recipeService.getRecipeList(rq.getLoginedMemberId(), recipeCategory, page, itemsInAPage, searchKeywordTypeCode, searchKeyword);
+		List<Recipe> recipies = recipeService.getRecipeList(rq.getLoginedMemberId(),
+				recipeCategory, page, itemsInAPage, searchKeywordTypeCode, searchKeyword);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("pagesCount", pagesCount);

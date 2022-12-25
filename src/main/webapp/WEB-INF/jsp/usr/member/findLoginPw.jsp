@@ -6,7 +6,7 @@
 
 <script>
 	let MemberFindLoginPw__submitDone  = false;
-	function MemberFindLoginPw__submitDone (form) {
+	function MemberFindLoginPw__submit(form) {
 		if (MemberFindLoginPw__submitDone ) {
 			alert('처리중입니다');
 			return;

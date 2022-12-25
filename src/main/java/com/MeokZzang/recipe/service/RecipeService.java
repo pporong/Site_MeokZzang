@@ -20,12 +20,14 @@ public class RecipeService {
 	}
 
 	// 레시피 리스트
-	public List<Recipe> getRecipeList(int actorId, int recipeCategory , int page, int itemsInAPage, String searchKeywordTypeCode, String searchKeyword) {
+	public List<Recipe> getRecipeList(int actorId, int recipeCategory , int page, 
+			int itemsInAPage, String searchKeywordTypeCode, String searchKeyword) {
 		
 		int limitStart = (page - 1) * itemsInAPage;
 		int limitTake = itemsInAPage;
 		
-		List<Recipe> recipies = recipeRepository.getRecipeList(recipeCategory, searchKeywordTypeCode, searchKeyword, limitStart, limitTake);
+		List<Recipe> recipies = recipeRepository.getRecipeList(recipeCategory, 
+				searchKeywordTypeCode, searchKeyword, limitStart, limitTake);
 		
 		for (Recipe recipe : recipies) {
 			updateForPrintData(actorId, recipe);
