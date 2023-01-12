@@ -23,15 +23,15 @@
 # 💻 관련링크
 <span style="color: #ff0000"> 포트폴리오에 대한 설명은 기획서와 기술서를 확인해주세요 </span>
 
-- [먹짱 기획서](https://drive.google.com/file/d/1Z5_diBWEA_AiX-VOIwsLU2hA0H-CQmQD/view?usp=sharing)
+- [📌 먹짱 기획서](https://drive.google.com/file/d/1Z5_diBWEA_AiX-VOIwsLU2hA0H-CQmQD/view?usp=sharing)
 	-  프로젝트 관련 개요와 페이지 설명(PPT)
     - [ppt로 보기](https://www.canva.com/design/DAFVd4pV6j8/LbfbjZo-KhFi3fKRh_6XSw/view?utm_content=DAFVd4pV6j8&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel)
     	- 기획서 ppt로 보기
-- [먹짱 기술서](https://drive.google.com/file/d/1AQWctAY5csgyfyD4jTLBGeGz91dZWY7l/view?usp=sharing)
+- [📌 먹짱 기술서](https://drive.google.com/file/d/1AQWctAY5csgyfyD4jTLBGeGz91dZWY7l/view?usp=sharing)
 	- 기능의 동작과정을 소스코드와 함께 <span style="color: #ff0000"> 상세설명 </span>
-- [작업 목록](https://wiken.io/ken/11572)
+- [📌 작업 목록](https://wiken.io/ken/11572)
 	- 웹서비스에 대한 개요 및 과정을 볼 수 있습니다.
-- [페이지 정보 pdf 파일](https://drive.google.com/file/d/1vo1CJQ6wdfkoCYWfQufmHK9SjgeeCrCO/view?usp=sharing)
+- [📌 페이지 정보 pdf 파일](https://drive.google.com/file/d/1vo1CJQ6wdfkoCYWfQufmHK9SjgeeCrCO/view?usp=sharing)
 	- 현재 페이지 정보를 pdf 파일로 볼 수 있습니다.
 
 # 🔥 개요 및 목적
